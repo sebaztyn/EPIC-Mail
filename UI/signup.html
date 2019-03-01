@@ -4,55 +4,34 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sign up . Epic Mail</title>
+    <title>Sign up | Epic Mail</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="./css/andela-EPIC-MAIL.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/forms.css">
     <script src="andela-EPIC-MAIL.js"></script>
 </head>
 
-<body>
-    <header>
-        <h1>Welcome to Andela's EPIC Mail</h1>
+<body class="signup-container">
+    <header class="signup-header">
+        <h1>Welcome to EPIC Mail</h1>
     </header>
     <main>
-        <form action="./messages/index.html" class="signup-form">
-            <table>
-                <tr>
-                    <td>First Name:</td>
-                    <td><input type="text" required></td>
-                </tr>
-                <tr>
-                    <td>Last Name:</td>
-                    <td><input type="text" required></td>
-                </tr>
-                <tr>
-                    <td>Username:</td>
-                    <td><input type="text" required></td>
-                </tr>
-                <tr>
-                    <td>Email:</td>
-                    <td><input type="email" required></td>
-                </tr>
-                <tr>
-                    <td>Password:</td>
-                    <td><input type="password" required></td>
-                </tr>
-                <tr>
-                    <td>Password:</td>
-                    <td><input type="password" required></td>
-                </tr>
-                <tr>
-                    <td>Date of Birth:</td>
-                    <td><input type="date" required></td>
-                </tr>
-            </table>
-            <div>
-                <input type="submit" value="Submit" hr>
-                <input type="reset" value="Reset">
-            </div>
 
+        <form action="./messages/index.html" class="signup-form">
+            <ul>
+                <li><input type="text" value="First Name:" disabled><input type="text" placeholder="Enter your First Name" required></li>
+                <li><input type="text" value="Last Name:" disabled> <input type="text" placeholder="Enter your Last Name" required></li>
+                <li><input type="text" value="Username:" disabled> <input type="text" placeholder="Username" required></li>
+                <li><input type="text" value="Email:" disabled><input type="email" placeholder="Enter your Email" required></li>
+                <li><input type="text" value="Password:" disabled><input type="password" placeholder="Enter new password"></li>
+                <li><input type="text" value="Confirm Password:" disabled><input type="password" placeholder="Confirm Password" required></li>
+                <li><input type="text" value="Recovery Email:" disabled><input type="email" placeholder="Enter a Password recovery email" required></li>
+                <li>
+                    <span></span>
+                    <p> <button type="submit">Sign Up</button><button type="reset">Reset</button></p>
+                </li>
+            </ul>
         </form>
-        <p class="signin-message">Already have an Account? <a href="login.html">Login!</a></p>
+        <p class="signin-message">Already have an Account? <a href="login.html ">Login!</a></p>
     </main>
 </body>
 
