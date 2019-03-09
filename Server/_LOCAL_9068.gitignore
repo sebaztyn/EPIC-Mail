@@ -4,3 +4,6 @@ test/
 .babelrc
 .env
 .eslintrc
+.travis.yml
+package-lock.json
+package.json
