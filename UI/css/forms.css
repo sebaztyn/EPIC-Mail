@@ -1,6 +1,6 @@
 :root {
     box-sizing: border-box;
-    font-size: calc(1vw + 0.4em);
+    font-size: calc(1vw + 0.3em);
 }
 
 *,
@@ -76,6 +76,33 @@ body {
 .grp-form ul li input {
     grid-column: 2/-1;
     border: none;
+}
+
+.add-user {
+    text-align: center;
+    margin-top: 2em;
+}
+
+.add-user input {
+    margin-bottom: 1em;
+}
+
+.add-user input[disabled] {
+    background-color: #911d2e;
+    color: #fff;
+    text-align: center;
+    width: 5em;
+}
+
+.add-user input[type="submit"] {
+    display: block;
+    margin: 0 auto;
+    background-image: linear-gradient(to bottom, #e986a4ce, #940530ce);
+    box-shadow: 0 0.2em 0.2em rgba(0, 0, 0, 0.15);
+    color: #fff;
+    border-radius: 0.5em;
+    outline: none;
+    padding: 0.5em 1.5em
 }
 
 .message-form ul li textarea {
@@ -175,8 +202,14 @@ body {
     .grp-form ul li p button:first-child:hover {
         background-color: #f11557;
     }
+    .add-user input[type="submit"]:hover {
+        background-color: #f11557;
+    }
     .grp-form ul li p button:nth-child(2):hover {
         background-color: rgb(221, 218, 218);
+    }
+    .add-user input[disabled] {
+        text-align: end;
     }
 }
 
@@ -257,7 +290,7 @@ body .password-reset {
 
 .signup-form ul li {
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 120px auto;
     padding: 0.5em;
     min-height: 0.3em;
     width: 40%
@@ -330,7 +363,7 @@ body .password-reset {
     position: fixed;
     top: 0;
     left: 0.1em;
-    /* width: 70vw; */
+    width: 70vw;
     min-height: 100vh;
     opacity: 1;
     background-color: #6d0024;

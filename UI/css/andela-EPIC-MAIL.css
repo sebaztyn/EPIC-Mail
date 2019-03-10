@@ -1,270 +1,276 @@
 :root {
-    box-sizing: border-box;
-    font-size: calc(1vw + 0.6em);
+  box-sizing: border-box;
+  font-size: calc(1vw + 0.6em);
 }
 
 *,
 *::before,
 *::after {
-    box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Helvetica, Arial, sans-serif;
-    /* background-image: url(../andela-images/elephants.jpg); */
-    background-image: linear-gradient(to right bottom, rgba(213, 111, 145, 0.8), rgba(54, 1, 19, 0.8)), url(../andela-images/elephants.jpg);
-    /* background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.8), rgba(40, 180, 133, 0.8)), url(../img/hero.jpg); */
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    /* background-color: hsl(342, 86%, 14%); */
-    display: grid;
-    grid-template-rows: 1fr auto;
-    grid-template-columns: 2fr 1fr;
-    max-height: 95vh
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  /* background-image: url(../andela-images/elephants.jpg); */
+  background-image: linear-gradient(to right bottom, rgba(213, 111, 145, 0.8), rgba(54, 1, 19, 0.8)), url(../andela-images/elephants.jpg);
+  /* background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.8), rgba(40, 180, 133, 0.8)), url(../img/hero.jpg); */
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  /* background-color: hsl(342, 86%, 14%); */
+  max-height: 95vh
 }
 
 header {
-    color: white;
-    text-shadow: 0.1em 0.1em 0.3em #000;
-    grid-row: 1/2;
-    grid-column: 1/-1;
-    margin-block-end: 1em;
+  color: white;
+  text-shadow: 0.1em 0.1em 0.3em #000;
+  grid-row: 1/2;
+  grid-column: 1/-1;
+  margin-block-end: 1em;
 }
 
 h1 {
-    text-align: center;
-    font-size: 1.5rem;
+  text-align: center;
 }
 
 .brand-message {
-    font-size: 5rem;
-    font-weight: bolder;
-    color: #fff;
-    grid-row: 2/-1;
-    grid-column: 1/2;
+  font-size: 2rem;
+  font-weight: bolder;
+  color: #fff;
+  grid-row: 2/-1;
+  grid-column: 1/2;
+  margin-right: 1em;
 }
 
 .brand-message p {
-    margin: 0;
+  margin: 0;
 }
 
 .brand-message p:first-child {
-    padding-block-end: 0;
+  padding-block-end: 0;
 }
 
 .login-form {
-    /* transform: translate(0, 70%); */
-    margin: 0 auto;
-    box-shadow: 0.2em 0.2em 2.5em black;
-    grid-column: 2/-1;
-    grid-row: 2/-1;
-    background-color: #fff
+  /* transform: translate(0, 70%); */
+  margin: 0 1em;
+  box-shadow: 0.2em 0.2em 2.5em black;
+  grid-column: 2/-1;
+  grid-row: 2/-1;
+  background-color: #fff;
+  padding: 1em 1em;
 }
 
 label {
-    padding-top: 1em;
-    display: block;
-    margin: 0 auto;
-    text-align: center;
-    text-transform: uppercase;
-    color: #420417;
-    font-weight: bold
+  padding-top: 1em;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  text-transform: uppercase;
+  color: #420417;
+  font-weight: bold
 }
 
 .login-form input[type="password"],
 .login-form input[type="email"] {
-    display: block;
-    margin: 0 auto;
-    margin-bottom: 1em;
-    border: none;
-    outline: none;
-    background: transparent;
-    border-bottom: 2px solid #420417;
-    height: 2em;
-    text-align: center;
-    font-size: 0.8rem;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 1em;
+  border: none;
+  outline: none;
+  background: transparent;
+  border-bottom: 2px solid #420417;
+  height: 2em;
+  text-align: center;
+  font-size: 0.8rem;
 }
 
 #submit-button {
-    display: block;
-    background-color: #420417;
-    color: #fff;
-    text-transform: uppercase;
-    border-radius: 0.7em;
-    box-shadow: 0.1em 0.3em 1.5em black;
-    font-size: 1rem;
-    text-align: center;
-    outline: none;
-    padding: 0.8rem 1.5rem;
-    margin: 0 auto;
+  display: block;
+  background-color: #420417;
+  color: #fff;
+  text-transform: uppercase;
+  border-radius: 0.7em;
+  box-shadow: 0.1em 0.3em 1.5em black;
+  font-size: 1rem;
+  text-align: center;
+  outline: none;
+  padding: 0.8rem 1.5rem;
+  margin: 0 auto;
 }
 
 #submit-button:hover {
-    background-color: #911d2e;
-    cursor: pointer;
+  background-color: #911d2e;
+  cursor: pointer;
 }
 
 p {
-    margin: 1em;
-    text-align: center;
-    padding-bottom: 0.5em;
+  margin: 1em;
+  text-align: center;
+  padding-bottom: 0.5em;
 }
 
 p a {
-    text-decoration: none;
-    color: #420417;
+  text-decoration: none;
+  color: #420417;
 }
 
 p a:link {
-    text-decoration: none;
-    color: hsl(342, 86%, 14%);
+  text-decoration: none;
+  color: hsl(342, 86%, 14%);
 }
 
 p a:visited {
-    text-decoration: none;
-    color: hsl(342, 86%, 14%);
+  text-decoration: none;
+  color: hsl(342, 86%, 14%);
 }
 
 p a:hover {
-    text-decoration: underline;
-    color: goldenrod;
+  text-decoration: underline;
+  color: goldenrod;
 }
 
 p a:active {
-    text-decoration: none;
-    color: hsl(342, 86%, 14%);
+  text-decoration: none;
+  color: hsl(342, 86%, 14%);
 }
-
-table {
-    /* margin: 0 auto; */
-}
-
-
-/* .signup-form tr td {
-    padding-bottom: 1em;
-}
-
-.signup-form tr *+* input {
-    width: 100%
-}
-
-.signup-form div {
-    margin: 0;
-    display: flex;
-    width: 20vw;
-}
-
-.signup-form div input {
-    margin: 50px auto;
-    text-align: center;
-    padding: 0.5em 5em;
-    flex: 1
-}
-
-.signin-message {
-    text-align: start
-} */
 
 .signup-header {
-    text-align: center;
-    color: #420417
+  text-align: center;
+  color: #420417
 }
 
 .signup-container main {
-    display: block;
-    margin: 0 auto;
-    width: 100%
+  display: block;
+  margin: 0 auto;
+  width: 100%
 }
 
 .signup-form ul {
+  list-style: none;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 0;
+  width: 90%;
+}
+
+.signup-form ul li {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  padding: 0.5em;
+  min-height: 0.3em;
+}
+
+.signup-form ul li input {
+  grid-column: 2/-1;
+  border: none;
+}
+
+.signup-form ul li textarea {
+  grid-column: 2/-1;
+}
+
+.signup-form ul li input:first-child {
+  grid-column: 1/2;
+  background-color: #911d2e;
+  color: #fff;
+  padding-right: 0;
+  padding-left: 0.3em;
+}
+
+.signup-form ul li input:nth-child(2) {
+  padding: 0.5em 1em;
+}
+
+.signup-form ul li input:nth-child(2):hover {
+  border-right: solid 5px #911d2e
+}
+
+.signup-form p {
+  margin: 0 auto;
+}
+
+.signup-form ul li p button {
+  padding: 0.8em 1.5em;
+  margin: 0.5em;
+}
+
+.signup-form ul li p button:first-child {
+  background-image: linear-gradient(to bottom, #e986a4ce, #940530ce);
+  box-shadow: 0 0.2em 0.2em rgba(0, 0, 0, 0.15);
+  color: #fff;
+  border-radius: 0.5em;
+  outline: none;
+}
+
+.signup-form ul li p button:nth-child(2) {
+  background-color: beige;
+  color: #420417
+}
+
+.signin-message {
+  text-align: center;
+}
+
+@media(min-width: 35em) {
+  .brand-message p {
+    font-size: 3rem;
+    padding: 1.5em;
+  }
+  .brand-message p:first-child {
+    padding-bottom: 0;
+  }
+  .brand-message p:nth-child(2) {
+    padding-top: 0;
+  }
+  body {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    grid-template-columns: 2fr 2fr;
+  }
+  .signup-form ul {
     list-style: none;
     flex-direction: column;
     margin: 0 auto;
     padding: 0;
-    width: 90%;
-}
-
-.signup-form ul li {
-    display: grid;
-    grid-template-columns: 1fr 5fr;
-    padding: 0.5em;
-    min-height: 0.3em;
-}
-
-.signup-form ul li input {
-    grid-column: 2/-1;
-    border: none;
-}
-
-.signup-form ul li textarea {
-    grid-column: 2/-1;
-}
-
-.signup-form ul li input:first-child {
-    grid-column: 1/2;
-    background-color: #911d2e;
-    color: #fff;
-    padding-right: 0;
-    padding-left: 0.3em;
-}
-
-.signup-form ul li input:nth-child(2) {
-    padding: 0.5em 1em;
-}
-
-.signup-form ul li input:nth-child(2):hover {
-    border-right: solid 5px #911d2e
-}
-
-.signup-form p {
-    margin: 0 auto;
-}
-
-.signup-form ul li p button {
-    padding: 0.8em 1.5em;
-    margin: 0.5em;
-}
-
-.signup-form ul li p button:first-child {
-    background-image: linear-gradient(to bottom, #e986a4ce, #940530ce);
-    box-shadow: 0 0.2em 0.2em rgba(0, 0, 0, 0.15);
-    color: #fff;
-    border-radius: 0.5em;
-    outline: none;
-}
-
-.signup-form ul li p button:nth-child(2) {
-    background-color: beige;
-    color: #420417
-}
-
-.signin-message {
-    text-align: center;
-}
-
-@media(min-width: 35em) {
-    .signup-form ul {
-        list-style: none;
-        flex-direction: column;
-        margin: 0 auto;
-        padding: 0;
-        width: 60vw;
-    }
+    width: 60vw;
+  }
+  .login-form {
+    /* transform: translate(0, 70%); */
+    margin-right: 1em;
+  }
 }
 
 @media(min-width: 50em) {
-    .signup-form ul {
-        list-style: none;
-        flex-direction: column;
-        margin: 0 auto;
-        padding: 0;
-        width: 50vw;
-    }
-    .signup-form ul li input:nth-child(2) {
-        padding: 0.5em 1em;
-    }
+  body {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    grid-template-columns: 2fr 2fr;
+  }
+  .login-form {
+    margin-bottom: 1em;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 0;
+  }
+  .signup-form ul {
+    list-style: none;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 0;
+    width: 50vw;
+  }
+  .signup-form ul li input:nth-child(2) {
+    padding: 0.5em 1em;
+  }
+  .brand-message {
+    margin-right: 0;
+  }
+  .brand-message p {
+    font-size: 5rem;
+    padding: 0.5em;
+  }
 }
