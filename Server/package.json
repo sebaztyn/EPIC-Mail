@@ -1,5 +1,5 @@
 {
-  "name": "node-express-tutorial",
+  "name": "EPIC MAIL",
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",
@@ -18,6 +18,12 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sebaztyn/EPIC-Mail.git"
+  },
+  "engine": "nodeJS",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sebaztyn/EPIC-Mail.git",
+    "dev-start": "babel-watch src/server.js"
   },
   "keywords": [],
   "author": "",

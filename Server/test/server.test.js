@@ -5,7 +5,7 @@ import server from '../src/server';
 const { expect } = chai;
 chai.use(chaiHttp);
 
-describe('Create API endpoints', () => {
+describe('Fetch all Users API endpoint', () => {
   it('it  should return specific keys MESSAGE and STATUS when the User database has no registered user', (done) => {
     chai.request(server)
       .get('/api/v1/users')
@@ -203,30 +203,3 @@ describe('Creating a Message', () => {
       });
   });
 });
-
-
-// describe('Testing endpoints', () => {
-//   it('It should post user data to the database', (done) => {
-//     chai.request(server)
-//       .post('/api/v1/users')
-//       .type('form')
-//       .send({
-//         email: 'sebastinocj@yahoo.com',
-//         firstName: 'Chima',
-//         lastName: 'Ekeneme',
-//         password: 'klue',
-//         username: 'sebaztyn',
-//         recoveryEmail: 'sebastinechima@gmail.com'
-//       })
-//       .end((err, res) => {
-//         if (err) return done(err);
-//         expect(res.body).to.haveOwnProperty('status');
-//         expect(res.status).to.equal(404);
-//         expect((res.body)).to.be.an('object');
-//         expect((res.body)).to.have.all.keys('status', 'error');
-//         expect((res.body)).to.haveOwnProperty('status').that.equals(404);
-//         expect((res.body)).to.haveOwnProperty('error').that.is.a('string');
-//         expect((res.body)).to.haveOwnProperty('error').that.is.a('string');
-//         done();
-//       });
-//   })
