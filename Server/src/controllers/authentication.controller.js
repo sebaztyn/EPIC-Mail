@@ -49,6 +49,30 @@ const authenticationController = {
         data
       }]
     });
+  },
+
+  authorization(req, res) {
+    let { password, email } = req.body;
+    const allUsers = user.findAllUsers();
+    const userCheck = allUsers.find(u => u.email === email);
+    if (userCheck.email !== email || userCheck.password !== password) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Invalid email or Password'
+      });
+    }
+    const saltUser = bcrypt.genSaltSync(10);
+    const hashPassword = bcrypt.hashSync(password, saltUser);
+    password = hashPassword;
+
+    const token = jwt.sign(req.body, process.env.SECRET_KEY);
+
+    return res.status(200).json({
+      status: 200,
+      data: [{
+        token
+      }]
+    });
   }
 };
 export default authenticationController;

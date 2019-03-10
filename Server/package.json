@@ -1,11 +1,11 @@
 {
-  "name": "EPIC MAIL",
+  "name": "epic-mail",
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",
   "scripts": {
     "start": "nodemon --exec babel-node src/server.js",
-    "test": "nyc _mocha test/*.test.js --recursive --require @babel/register --timeout 10000 --exit",
+    "test": "nyc _mocha test/*.test.js --reporter=spec --recursive --require @babel/register --timeout 10000 --exit",
     "build": "babel src --out-dir build",
     "dev-start": "babel-watch src/server.js",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
@@ -13,11 +13,6 @@
     "coveralls-coverage": "coveralls < lcov.info",
     "codeclimate-coverage": "codeclimate-test-reporter < lcov.info",
     "coverage": "npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage"
-  },
-  "engine": "nodeJS",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sebaztyn/EPIC-Mail.git"
   },
   "engine": "nodeJS",
   "repository": {
