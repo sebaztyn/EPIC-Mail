@@ -15,13 +15,17 @@ const authenticationController = {
     /* eslint-disable prefer-destructuring */
     let password = req.body.password;
 
+    // validate user inputs (ommission)
+
     if (!firstName || !lastName || !password || !recoveryEmail || !username || !email) {
       return res.status(400).json({
         status: 400,
         error: 'All input fields are required'
       });
     }
+
     // validate user inputs (whitespace)
+
     if (!/^[a-z]+$/i.test(firstName) || !/^[a-z]+$/i.test(lastName) || !/^[a-z0-9]+$/i.test(username)) {
       return res.json({
         status: 404,
@@ -29,14 +33,22 @@ const authenticationController = {
       });
     }
 
+    // if everything is alright, then hash the password using bcrypt js package from npm
+
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 
+    // if that is done, then set the password to the hashed password
+
     password = hash;
+
+    // After that, generate a token for the user using jwt
 
     const payload = req.body;
     const secret = process.env.SECRET_KEY;
     const token = jwt.sign(payload, secret);
+
+    // then save the user to the database
 
     const data = user.addUser({
       email, firstName, lastName, password, username, recoveryEmail
@@ -49,6 +61,129 @@ const authenticationController = {
         data
       }]
     });
+  },
+  // authentication(req, res, next) {
+  //   const token = req.body.token || req.query.token || req.headers['x-access-token'];
+  //   console.log(req.headers['x-access-token'], req.headers, token);
+  //   console.log(token);
+  //   // if (token.startsWith('Bearer ')) {
+  //   //   token = token.slice(7, token.length);
+  //   // }
+  //   if (token) {
+  //     req.user = jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+  //       if (err) {
+  //         return res.status(401).json({
+  //           status: 401,
+  //           error: 'Authentication failed. Invalid Authentication Credential'
+  //         });
+  //       }
+  //       req.use = decoded;
+  //       next();
+
+  //     });
+  //     return res.json({
+  //       status: 200,
+  //       data: 'Authentication successful. Welcome to your mailbox'
+  //     });
+  //   }
+  //   return res.status(401).json({
+  //     status: 401,
+  //     error: 'Authentication Token not provided!'
+  //   });
+
+  // },
+  authorization(req, res) {
+    let { password, email } = req.body;
+    const allUsers = user.findAllUsers();
+    const userCheck = allUsers.find(u => u.email === email);
+    if (userCheck.email !== email || userCheck.password !== password) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Invalid email or Password'
+      });
+    }
+    const saltUser = bcrypt.genSaltSync(10);
+    const hashPassword = bcrypt.hashSync(password, saltUser);
+    password = hashPassword;
+
+    const token = jwt.sign(req.body, process.env.SECRET_KEY);
+
+    return res.status(200).json({
+      status: 200,
+      data: [{
+        token
+      }]
+    });
+
+
+    // // Comparing Passwords against stored Data
+    // const realPassword = bcrypt.compareSync(password, userCheck.password);
+
+    // if (!userCheck || !realPassword) {
+    //   return res.status(400).json({
+    //     status: 400,
+    //     error: 'Invalid email or Password'
+    //   });
+    // }
+    // return res.status(200).json({
+    //   status: 200,
+    //   data: [{
+    //     token
+    //   }]
+    // });
+
+    // if it belongs,check if the password is correct
+
+
+    // if () {
+    //   return res.status(400).json({
+    //     status: 400,
+    //     error: 'Invalid Password'
+    //   });
+    // }
+
+    // return next();
+
+    // check if the req comes with auth-token in its header
+
+    // const token = req.header('x-access-token');
+    // if (!token) {
+    //   return res.status(401).json({
+    //     status: 401,
+    //     error: 'Access denied. No authorization credential provided'
+    //   });
+    // }
+
+    // // if the req comes with auth token in its header, then confirm if it's correct
+    // try {
+    //   req.user = jwt.verify(token, process.env.SECRET_KEY);
+    //   return res.json({
+    //     status: 200,
+    //     data: 'Authentication successful. Welcome to your mailbox'
+    //   });
+    // } catch (error) {
+    //   return res.status(400).json({
+    //     status: 400,
+    //     error: 'Invalid authorization credential provided'
+    //   });
+    // }
   }
 };
+
+
+// if (!token) {
+//   return res.status(401).json({
+//     status: 401,
+//     error: 'Access denied. No authorization credential provided'
+//   });
+// }
+
+// // if the req comes with auth token in its header, then confirm if it's correct
+
+
+// // check if the email supplied belongs to any user in the db
+
+// user authorization
+
+
 export default authenticationController;
