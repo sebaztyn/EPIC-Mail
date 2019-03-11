@@ -88,27 +88,27 @@ describe('Creating and Testing  API endpoint for Receiving Messages', () => {
 });
 
 
-// describe('Fetching all unread Messages', () => {
-//   it('it  should return specific value:UNREAD when a call is made to all received unread messages', (done) => {
-//     chai.request(server)
-//       .get('/api/v1/messages/unread')
-//       .end((err, res) => {
-//         if (err) {
-//           done(err);
-//         }
-//         expect(res.body).to.have.keys('status', 'data');
-//         expect(res.body).to.have.ownProperty('status').that.equals(201);
-//         expect(res.body).to.have.ownProperty('data').to.be.an('array');
-//         expect(res.body.data[0].subject).to.be.a('string');
-//         expect(res.body.data[0].message).to.be.a('string');
-//         expect(res.body.data[0].id).to.be.a('number');
-//         expect(res.body.data[0].status).to.be.a('string');
-//         expect(res.body.data[0].status).to.equal('unread');
-//         expect(res.body.data[0].parentMessageId).to.be.a('number');
-//         done();
-//       });
-//   });
-// });
+describe('Fetching all unread Messages', () => {
+  it('it  should return specific value:UNREAD when a call is made to all received unread messages', (done) => {
+    chai.request(server)
+      .get('/api/v1/messages/unread')
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+        expect(res.body).to.have.keys('status', 'data');
+        expect(res.body).to.have.ownProperty('status').that.equals(201);
+        expect(res.body).to.have.ownProperty('data').to.be.an('array');
+        expect(res.body.data[0].subject).to.be.a('string');
+        expect(res.body.data[0].message).to.be.a('string');
+        expect(res.body.data[0].id).to.be.a('number');
+        expect(res.body.data[0].status).to.be.a('string');
+        expect(res.body.data[0].status).to.equal('unread');
+        expect(res.body.data[0].parentMessageId).to.be.a('number');
+        done();
+      });
+  });
+});
 // describe('Fetching all sent Messages', () => {
 //   it('it  should return specific value:SENT when a call is made to all sent messages', (done) => {
 //     chai.request(server)

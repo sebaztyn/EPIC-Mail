@@ -26,18 +26,18 @@ const messageServices = {
       }
     });
     return [...receivedMessages];
-  }
+  },
 
   // findSentMessages() {
   //   const messageArr = allData.messages;
   //   const sentMessages = messageArr.filter(each => each.status === 'sent');
   //   return sentMessages;
   // },
-  // findUnreadMessages() {
-  //   const messageArr = allData.messages;
-  //   const unreadMessages = messageArr.filter(each => each.status === 'unread');
-  //   return unreadMessages;
-  // },
+  findUnreadMessages() {
+    const messageArr = allData.messages;
+    const unreadMessages = messageArr.filter(each => each.status === 'unread');
+    return unreadMessages;
+  }
 
   // getOneMessage(id) {
   //   const messageArr = allData.messages;
