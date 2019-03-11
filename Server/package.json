@@ -17,8 +17,7 @@
   "engine": "nodeJS",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sebaztyn/EPIC-Mail.git",
-    "dev-start": "babel-watch src/server.js"
+    "url": "git+https://github.com/sebaztyn/EPIC-Mail.git"
   },
   "keywords": [],
   "author": "",

@@ -15,13 +15,17 @@ const authenticationController = {
     /* eslint-disable prefer-destructuring */
     let password = req.body.password;
 
+    // validate user inputs (ommission)
+
     if (!firstName || !lastName || !password || !recoveryEmail || !username || !email) {
       return res.status(400).json({
         status: 400,
         error: 'All input fields are required'
       });
     }
+
     // validate user inputs (whitespace)
+
     if (!/^[a-z]+$/i.test(firstName) || !/^[a-z]+$/i.test(lastName) || !/^[a-z0-9]+$/i.test(username)) {
       return res.json({
         status: 404,
@@ -29,14 +33,22 @@ const authenticationController = {
       });
     }
 
+    // if everything is alright, then hash the password using bcrypt js package from npm
+
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 
+    // if that is done, then set the password to the hashed password
+
     password = hash;
+
+    // After that, generate a token for the user using jwt
 
     const payload = req.body;
     const secret = process.env.SECRET_KEY;
     const token = jwt.sign(payload, secret);
+
+    // then save the user to the database
 
     const data = user.addUser({
       email, firstName, lastName, password, username, recoveryEmail
@@ -50,7 +62,6 @@ const authenticationController = {
       }]
     });
   },
-
   authorization(req, res) {
     let { password, email } = req.body;
     const allUsers = user.findAllUsers();
@@ -75,4 +86,5 @@ const authenticationController = {
     });
   }
 };
+
 export default authenticationController;
