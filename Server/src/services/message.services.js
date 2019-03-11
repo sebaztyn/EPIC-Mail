@@ -43,14 +43,14 @@ const messageServices = {
     const messageArr = allData.messages;
     const searchedMessage = messageArr.find(message => message.id === id);
     return searchedMessage;
-  }
+  },
 
-  // deleteMessage(id) {
-  //   const messageArr = allData.messages;
-  //   const messageIndex = messageArr.findIndex(message => message.id === id);
-  //   const messageToDelete = messageArr.splice(messageIndex, 1);
-  //   return messageToDelete;
-  // }
+  deleteMessage(id) {
+    const messageArr = allData.messages;
+    const messageIndex = messageArr.findIndex(message => message.id === id);
+    const messageToDelete = messageArr.splice(messageIndex, 1);
+    return messageToDelete;
+  }
 };
 
 export default messageServices;
