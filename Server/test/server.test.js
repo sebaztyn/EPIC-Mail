@@ -130,26 +130,26 @@ describe('Fetching all sent Messages', () => {
       });
   });
 });
-// describe('Fetching a specific Message', () => {
-//   it('it  should return a unique matching the ID of the searched Message', (done) => {
-//     chai.request(server)
-//       .get('/api/v1/messages/2')
-//       .end((err, res) => {
-//         if (err) {
-//           done(err);
-//         }
-//         expect(res.body).to.have.keys('status', 'data');
-//         expect(res.body).to.have.ownProperty('status').that.equals(201);
-//         expect(res.body).to.have.ownProperty('data').to.be.an('object');
-//         expect(res.body.data.subject).to.be.a('string');
-//         expect(res.body.data.message).to.be.a('string');
-//         expect(res.body.data.id).to.be.a('number');
-//         expect(res.body.data.status).to.be.a('string');
-//         expect(res.body.data.parentMessageId).to.be.a('number');
-//         done();
-//       });
-//   });
-// });
+describe('Fetching a specific Message', () => {
+  it('it  should return a unique message matching the ID of the searched Message', (done) => {
+    chai.request(server)
+      .get('/api/v1/messages/2')
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+        expect(res.body).to.have.keys('status', 'data');
+        expect(res.body).to.have.ownProperty('status').that.equals(201);
+        expect(res.body).to.have.ownProperty('data').to.be.an('object');
+        expect(res.body.data.subject).to.be.a('string');
+        expect(res.body.data.message).to.be.a('string');
+        expect(res.body.data.id).to.be.a('number');
+        expect(res.body.data.status).to.be.a('string');
+        expect(res.body.data.parentMessageId).to.be.a('number');
+        done();
+      });
+  });
+});
 // describe('Deleting a specific Message', () => {
 //   it('it  should return a unique matching the ID of the deleted Message', (done) => {
 //     chai.request(server)

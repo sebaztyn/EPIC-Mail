@@ -1,18 +1,13 @@
+
 language: node_js
 node_js:
   - "stable"
 cache:
-directories:
-  - "node_modules"
-
-before_install:
-  - cd Server/
-
-install:
-  - npm install
-
+  directories:
+    - "node_modules"
 script:
   - npm run test
+install: -npm install
 
 after_success: — npm run coverage
 env:

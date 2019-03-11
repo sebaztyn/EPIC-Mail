@@ -37,13 +37,13 @@ const messageServices = {
     const messageArr = allData.messages;
     const unreadMessages = messageArr.filter(each => each.status === 'unread');
     return unreadMessages;
-  }
+  },
 
-  // getOneMessage(id) {
-  //   const messageArr = allData.messages;
-  //   const searchedMessage = messageArr.find(message => message.id === id);
-  //   return searchedMessage;
-  // },
+  getOneMessage(id) {
+    const messageArr = allData.messages;
+    const searchedMessage = messageArr.find(message => message.id === id);
+    return searchedMessage;
+  }
 
   // deleteMessage(id) {
   //   const messageArr = allData.messages;

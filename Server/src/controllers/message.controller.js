@@ -45,16 +45,16 @@ const messageControllers = {
       status: 201,
       data: sentMessage
     });
-  }
+  },
 
-  // getOneMessage(req, res) {
-  //   const messageID = Number(req.params.id);
-  //   const message = messageServices.getOneMessage(messageID);
-  //   return res.json({
-  //     status: 201,
-  //     data: message
-  //   });
-  // },
+  getOneMessage(req, res) {
+    const messageID = Number(req.params.id);
+    const message = messageServices.getOneMessage(messageID);
+    return res.json({
+      status: 201,
+      data: message
+    });
+  }
   // deleteMessage(req, res) {
   //   const messageID = Number(req.params.id);
   //   const message = messageServices.deleteMessage(messageID);
