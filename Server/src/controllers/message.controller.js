@@ -38,14 +38,14 @@ const messageControllers = {
       status: 201,
       data: allMessages
     });
+  },
+  findSentMessages(req, res) {
+    const sentMessage = messageServices.findSentMessages();
+    return res.json({
+      status: 201,
+      data: sentMessage
+    });
   }
-  // findSentMessages(req, res) {
-  //   const sentMessage = messageServices.findSentMessages();
-  //   return res.json({
-  //     status: 201,
-  //     data: sentMessage
-  //   });
-  // },
 
   // getOneMessage(req, res) {
   //   const messageID = Number(req.params.id);
