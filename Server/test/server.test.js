@@ -66,7 +66,7 @@ describe('Testing endpoints', () => {
   });
 });
 
-describe('Creating and Testing API endpoints', () => {
+describe('Creating and Testing  API endpoint for Receiving Messages', () => {
   it('it  should return specific keys "allMessages and Status" when a call is made to all received messages', (done) => {
     chai.request(server)
       .get('/api/v1/messages')

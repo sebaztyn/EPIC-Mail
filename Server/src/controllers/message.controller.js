@@ -46,6 +46,7 @@ const messageControllers = {
   //     data: sentMessage
   //   });
   // },
+
   // getOneMessage(req, res) {
   //   const messageID = Number(req.params.id);
   //   const message = messageServices.getOneMessage(messageID);

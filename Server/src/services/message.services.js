@@ -18,6 +18,15 @@ const messageServices = {
     messageArr.push(messageObj);
     return messageObj;
   },
+  getAllReceivedMessages() {
+    const messageArr = allData.messages;
+    const receivedMessages = messageArr.filter((each) => {
+      if (each.status === 'read' || each.status === 'unread') {
+        return each;
+      }
+    });
+    return [...receivedMessages];
+  },
 
   // findSentMessages() {
   //   const messageArr = allData.messages;
@@ -28,16 +37,6 @@ const messageServices = {
     const messageArr = allData.messages;
     const unreadMessages = messageArr.filter(each => each.status === 'unread');
     return unreadMessages;
-  },
-
-  getAllReceivedMessages() {
-    const messageArr = allData.messages;
-    const receivedMessages = messageArr.filter((each) => {
-      if (each.status === 'read' || each.status === 'unread') {
-        return each;
-      }
-    });
-    return [...receivedMessages];
   }
 
   // getOneMessage(id) {
