@@ -17,28 +17,28 @@ const messageServices = {
     messageObj.createdOn = today;
     messageArr.push(messageObj);
     return messageObj;
-  }
+  },
 
   // findSentMessages() {
   //   const messageArr = allData.messages;
   //   const sentMessages = messageArr.filter(each => each.status === 'sent');
   //   return sentMessages;
   // },
-  // findUnreadMessages() {
-  //   const messageArr = allData.messages;
-  //   const unreadMessages = messageArr.filter(each => each.status === 'unread');
-  //   return unreadMessages;
-  // },
+  findUnreadMessages() {
+    const messageArr = allData.messages;
+    const unreadMessages = messageArr.filter(each => each.status === 'unread');
+    return unreadMessages;
+  },
 
-  // getAllReceivedMessages() {
-  //   const messageArr = allData.messages;
-  //   const receivedMessages = messageArr.filter((each) => {
-  //     if (each.status === 'read' || each.status === 'unread') {
-  //       return each;
-  //     }
-  //   });
-  //   return [...receivedMessages];
-  // },
+  getAllReceivedMessages() {
+    const messageArr = allData.messages;
+    const receivedMessages = messageArr.filter((each) => {
+      if (each.status === 'read' || each.status === 'unread') {
+        return each;
+      }
+    });
+    return [...receivedMessages];
+  }
 
   // getOneMessage(id) {
   //   const messageArr = allData.messages;
