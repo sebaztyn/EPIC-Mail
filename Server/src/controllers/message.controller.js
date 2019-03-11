@@ -54,15 +54,15 @@ const messageControllers = {
       status: 201,
       data: message
     });
+  },
+  deleteMessage(req, res) {
+    const messageID = Number(req.params.id);
+    const message = messageServices.deleteMessage(messageID);
+    return res.json({
+      status: 200,
+      data: message
+    });
   }
-  // deleteMessage(req, res) {
-  //   const messageID = Number(req.params.id);
-  //   const message = messageServices.deleteMessage(messageID);
-  //   return res.json({
-  //     status: 200,
-  //     data: message
-  //   });
-  // }
 
 };
 
