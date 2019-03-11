@@ -66,26 +66,26 @@ describe('Testing endpoints', () => {
   });
 });
 
-// describe('Creating and Testing API endpoints', () => {
-//   it('it  should return specific keys "allMessages and Status" when a call is made to all received messages', (done) => {
-//     chai.request(server)
-//       .get('/api/v1/messages')
-//       .end((err, res) => {
-//         if (err) {
-//           done(err);
-//         }
-//         expect(res.body).to.have.keys('status', 'data');
-//         expect(res.body).to.have.ownProperty('status').that.equals(201);
-//         expect(res.body).to.have.ownProperty('data').to.be.an('array');
-//         expect(res.body.data[0].subject).to.be.a('string');
-//         expect(res.body.data[0].message).to.be.a('string');
-//         expect(res.body.data[0].id).to.be.a('number');
-//         expect(res.body.data[0].status).to.be.a('string');
-//         expect(res.body.data[0].parentMessageId).to.be.a('number');
-//         done();
-//       });
-//   });
-// });
+describe('Creating and Testing  API endpoint for Receiving Messages', () => {
+  it('it  should return specific keys "allMessages and Status" when a call is made to all received messages', (done) => {
+    chai.request(server)
+      .get('/api/v1/messages')
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+        expect(res.body).to.have.keys('status', 'data');
+        expect(res.body).to.have.ownProperty('status').that.equals(201);
+        expect(res.body).to.have.ownProperty('data').to.be.an('array');
+        expect(res.body.data[0].subject).to.be.a('string');
+        expect(res.body.data[0].message).to.be.a('string');
+        expect(res.body.data[0].id).to.be.a('number');
+        expect(res.body.data[0].status).to.be.a('string');
+        expect(res.body.data[0].parentMessageId).to.be.a('number');
+        done();
+      });
+  });
+});
 
 
 // describe('Fetching all unread Messages', () => {

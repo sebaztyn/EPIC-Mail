@@ -23,6 +23,14 @@ const messageControllers = {
       status: 201,
       data: newMessage
     });
+  },
+
+  findAllReceivedMessages(req, res) {
+    const allMessages = messageServices.getAllReceivedMessages();
+    return res.json({
+      status: 201,
+      data: allMessages
+    });
   }
   // findSentMessages(req, res) {
   //   const sentMessage = messageServices.findSentMessages();
@@ -38,13 +46,7 @@ const messageControllers = {
   //     data: unreadMessages
   //   });
   // },
-  // findAllReceivedMessages(req, res) {
-  //   const allMessages = messageServices.getAllReceivedMessages();
-  //   return res.json({
-  //     status: 201,
-  //     data: allMessages
-  //   });
-  // },
+
   // getOneMessage(req, res) {
   //   const messageID = Number(req.params.id);
   //   const message = messageServices.getOneMessage(messageID);
