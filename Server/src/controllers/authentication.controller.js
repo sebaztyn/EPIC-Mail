@@ -62,36 +62,6 @@ const authenticationController = {
       }]
     });
   },
-  // authentication(req, res, next) {
-  //   const token = req.body.token || req.query.token || req.headers['x-access-token'];
-  //   console.log(req.headers['x-access-token'], req.headers, token);
-  //   console.log(token);
-  //   // if (token.startsWith('Bearer ')) {
-  //   //   token = token.slice(7, token.length);
-  //   // }
-  //   if (token) {
-  //     req.user = jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
-  //       if (err) {
-  //         return res.status(401).json({
-  //           status: 401,
-  //           error: 'Authentication failed. Invalid Authentication Credential'
-  //         });
-  //       }
-  //       req.use = decoded;
-  //       next();
-
-  //     });
-  //     return res.json({
-  //       status: 200,
-  //       data: 'Authentication successful. Welcome to your mailbox'
-  //     });
-  //   }
-  //   return res.status(401).json({
-  //     status: 401,
-  //     error: 'Authentication Token not provided!'
-  //   });
-
-  // },
   authorization(req, res) {
     let { password, email } = req.body;
     const allUsers = user.findAllUsers();
@@ -114,76 +84,7 @@ const authenticationController = {
         token
       }]
     });
-
-
-    // // Comparing Passwords against stored Data
-    // const realPassword = bcrypt.compareSync(password, userCheck.password);
-
-    // if (!userCheck || !realPassword) {
-    //   return res.status(400).json({
-    //     status: 400,
-    //     error: 'Invalid email or Password'
-    //   });
-    // }
-    // return res.status(200).json({
-    //   status: 200,
-    //   data: [{
-    //     token
-    //   }]
-    // });
-
-    // if it belongs,check if the password is correct
-
-
-    // if () {
-    //   return res.status(400).json({
-    //     status: 400,
-    //     error: 'Invalid Password'
-    //   });
-    // }
-
-    // return next();
-
-    // check if the req comes with auth-token in its header
-
-    // const token = req.header('x-access-token');
-    // if (!token) {
-    //   return res.status(401).json({
-    //     status: 401,
-    //     error: 'Access denied. No authorization credential provided'
-    //   });
-    // }
-
-    // // if the req comes with auth token in its header, then confirm if it's correct
-    // try {
-    //   req.user = jwt.verify(token, process.env.SECRET_KEY);
-    //   return res.json({
-    //     status: 200,
-    //     data: 'Authentication successful. Welcome to your mailbox'
-    //   });
-    // } catch (error) {
-    //   return res.status(400).json({
-    //     status: 400,
-    //     error: 'Invalid authorization credential provided'
-    //   });
-    // }
   }
 };
-
-
-// if (!token) {
-//   return res.status(401).json({
-//     status: 401,
-//     error: 'Access denied. No authorization credential provided'
-//   });
-// }
-
-// // if the req comes with auth token in its header, then confirm if it's correct
-
-
-// // check if the email supplied belongs to any user in the db
-
-// user authorization
-
 
 export default authenticationController;

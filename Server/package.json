@@ -5,7 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "nodemon --exec babel-node src/server.js",
-    "test": "nyc _mocha test/*.test.js --recursive --require @babel/register --timeout 10000 --exit",
+    "test": "nyc _mocha test/*.test.js --reporter=spec --recursive --require @babel/register --timeout 10000 --exit",
     "build": "babel src --out-dir build",
     "dev-start": "babel-watch src/server.js",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
