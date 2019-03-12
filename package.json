@@ -4,9 +4,9 @@
   "description": "",
   "main": "Server/src/server.js",
   "scripts": {
-    "start": "nodemon --exec babel-node Server/src/server.js",
+    "start": "node build/server.js",
     "test": "nyc _mocha Server/test/*.test.js --reporter=spec --recursive --require @babel/register --timeout 10000 --exit",
-    "build": "babel src --out-dir build",
+    "build": "babel Server/src --out-dir build",
     "dev-start": "babel-watch Server/src/server.js",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
     "generate-lcov": "nyc report --reporter=text-lcov >lcov.info",
