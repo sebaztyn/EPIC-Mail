@@ -2,32 +2,89 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Login | Epic Mail</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="./css/andela-EPIC-MAIL.css">
-    <script src="andela-EPIC-MAIL.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/andela-EPIC-MAIL.css" />
 </head>
 
 <body>
     <header>
-        <h1>Welcome to EPIC Mail</h1>
+        <h3>EPIC Mail</h3>
     </header>
-    <div class="brand-message">
-        <p>Communicate and</p>
-        <p>Collaborate</p>
+    <div class="wrapper">
+        <div class="form-links">
+            <span class="login-span" id="loginlink">Login</span>
+            <span class="signup-span" id="signuplink">Sign up</span>
+        </div>
+        <div class="form-question">
+            <p>
+                Got an Account? Enter your details on Login page
+            </p>
+        </div>
+        <div class="account-form" id="loginform-container">
+            <form action="messages/index.html" class="main-login" id="login-form">
+                <div>
+                    <input type="email" placeholder="Enter Email" required>
+                </div>
+                <div>
+                    <input type="password" placeholder="Enter Password" required>
+                </div>
+                <div class="form-footer">
+                    <button type="submit">Login</button>
+                    <span id="password-reset"> Forgot Password?</span>
+                </div>
+                <footer>
+                    <p>&#169 2019 EPIC Mail. All Rights Reserved</p>
+                </footer>
+            </form>
+            <form action="" class="main-login form-display" id="password-form">
+                <div>
+                    <input type="email" placeholder="Enter Recovery Email" required>
+                </div>
+                <div class="form-footer">
+                    <button type="submit">Reset my password</button>
+                </div>
+                <footer>
+                    <p>&#169 2019 EPIC Mail. All Rights Reserved</p>
+                </footer>
+            </form>
+            <form action="messages/index.html" class="main-signup form-display" id="signup-form">
+                <div>
+                    <input type="text" placeholder="First Name" required>
+                </div>
+                <div>
+                    <input type="text" placeholder="Last Name" required>
+                </div>
+                <div>
+                    <input type="text" placeholder="username" required>
+                </div>
+                <div>
+                    <input type="email" placeholder="Email" required>
+                </div>
+                <div>
+                    <input type="password" placeholder="Password" required>
+                </div>
+                <div>
+                    <input type="password" placeholder="Confirm Password" required>
+                </div>
+                <div>
+                    <input type="text" placeholder="Enter Recovery Password" required>
+                </div>
+                <div class="form-footer">
+                    <button type="submit">Sign up</button>
+                    <button type="reset">Reset</button>
+                </div>
+                <footer>
+                    <p>&#169 2019 EPIC Mail. All Rights Reserved</p>
+                </footer>
+            </form>
+        </div>
+        <div class="signup-form" id="signupform-container">
+        </div>
     </div>
-    <form action="./messages/index.html" class="login-form">
-        <label>Email</label>
-        <input type="email" id="mail-field" name="email" placeholder="Enter Email" required>
-
-        <label>Password</label>
-        <input type="password" id="password-field" name="password" placeholder="Enter Password" required>
-        <input type="submit" id="submit-button" value="Login">
-        <p><a href="signup.html">Don't have an Account? Sign up!</a></p>
-        <p><a href="password-reset.html">Forgot Password?</a></p>
-    </form>
+    <script src="messages/js/index.js"></script>
 </body>
 
 </html>
