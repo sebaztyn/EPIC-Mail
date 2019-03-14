@@ -20,12 +20,14 @@ button.addEventListener('click', (event) => {
   navContainer.classList.remove('toggle-off');
   modal.style.display = 'block';
   navContainer.classList.add('toggle-on');
+  button.style.display = 'none';
   mainBody[0].style.overflow = 'hidden';
 });
 
 window.addEventListener('mouseup', (event) => {
   if (event.target !== navContainer && event.target.parentNode !== navContainer) {
     navContainer.classList.add('toggle-off');
+    button.style.display = 'block';
     navContainer.classList.remove('toggle-on');
     modal.style.display = 'none';
     mainBody[0].style.overflow = 'auto';
@@ -49,6 +51,3 @@ passwordReset.addEventListener('click', () => {
   signupForm.classList.add('form-display');
   passwordForm.classList.remove('form-display');
 });
-
-
-
