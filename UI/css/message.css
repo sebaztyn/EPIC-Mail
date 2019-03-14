@@ -80,7 +80,7 @@ header h1 {
 
 .homepage-navbar {
   position: fixed;
-  top: 0;
+  top: 7vh;
   left: 0.1em;
   width: 70vw;
   min-height: 100vh;
@@ -211,6 +211,7 @@ header h1 {
   text-indent: 5em;
   white-space: nowrap;
   overflow: hidden;
+  outline: none;
 }
 
 .message-header button::after {
@@ -221,6 +222,7 @@ header h1 {
   content: "\2261";
   color: #fff;
   text-indent: 0;
+  outline: 0;
 }
 
 .toggle-on {
