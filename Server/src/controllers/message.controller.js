@@ -19,30 +19,30 @@ const messageControllers = {
         error: 'Subject and Message input fields are required'
       });
     }
-    return res.json({
+    return res.status(201).json({
       status: 201,
-      data: newMessage
+      data: [newMessage]
     });
   },
 
   findUnreadMessages(req, res) {
     const unreadMessages = messageServices.findUnreadMessages();
-    return res.json({
-      status: 201,
+    return res.status(200).json({
+      status: 200,
       data: unreadMessages
     });
   },
   findAllReceivedMessages(req, res) {
     const allMessages = messageServices.getAllReceivedMessages();
-    return res.json({
-      status: 201,
+    return res.status(200).json({
+      status: 200,
       data: allMessages
     });
   },
   findSentMessages(req, res) {
     const sentMessage = messageServices.findSentMessages();
-    return res.json({
-      status: 201,
+    return res.status(200).json({
+      status: 200,
       data: sentMessage
     });
   },
@@ -50,20 +50,29 @@ const messageControllers = {
   getOneMessage(req, res) {
     const messageID = Number(req.params.id);
     const message = messageServices.getOneMessage(messageID);
-    return res.json({
-      status: 201,
-      data: message
+    return res.status(200).json({
+      status: 200,
+      data: [message]
     });
   },
   deleteMessage(req, res) {
     const messageID = Number(req.params.id);
-    const message = messageServices.deleteMessage(messageID);
-    return res.json({
-      status: 200,
-      data: message
+    const messageItem = messageServices.deleteMessage(messageID);
+    if (messageItem) {
+      return res.status(200).json({
+        status: 200,
+        data: [{
+          message: 'message deleted successfully'
+        }]
+      });
+    }
+    return res.status(404).json({
+      status: 404,
+      data: [{
+        message: 'message deleted successfully'
+      }]
     });
   }
-
 };
 
 export default messageControllers;

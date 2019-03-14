@@ -48,8 +48,11 @@ const messageServices = {
   deleteMessage(id) {
     const messageArr = allData.messages;
     const messageIndex = messageArr.findIndex(message => message.id === id);
-    const messageToDelete = messageArr.splice(messageIndex, 1);
-    return messageToDelete;
+    if (messageIndex !== -1) {
+      messageArr.splice(messageIndex, 1);
+      return true;
+    }
+    return false;
   }
 };
 
