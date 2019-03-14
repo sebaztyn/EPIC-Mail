@@ -69,8 +69,13 @@ var messageServices = {
     var messageIndex = messageArr.findIndex(function (message) {
       return message.id === id;
     });
-    var messageToDelete = messageArr.splice(messageIndex, 1);
-    return messageToDelete;
+
+    if (messageIndex !== -1) {
+      messageArr.splice(messageIndex, 1);
+      return true;
+    }
+
+    return false;
   }
 };
 var _default = messageServices;

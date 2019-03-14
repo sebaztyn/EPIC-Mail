@@ -28,38 +28,33 @@ var authenticationController = {
         recoveryEmail = _req$body.recoveryEmail;
     /* eslint-disable prefer-destructuring */
 
-    var password = req.body.password; // validate user inputs (ommission)
+    var password = req.body.password;
 
     if (!firstName || !lastName || !password || !recoveryEmail || !username || !email) {
       return res.status(400).json({
         status: 400,
         error: 'All input fields are required'
       });
-    } // validate user inputs (whitespace)
-
+    }
 
     if (!/^[a-z]+$/i.test(firstName) || !/^[a-z]+$/i.test(lastName) || !/^[a-z0-9]+$/i.test(username)) {
-      return res.json({
+      return res.status(404).json({
         status: 404,
         error: 'Ensure all characters are valid and leave no space(s) within the input'
       });
-    } // if everything is alright, then hash the password using bcrypt js package from npm
-
+    }
 
     var salt = _bcryptjs.default.genSaltSync(10);
 
-    var hash = _bcryptjs.default.hashSync(password, salt); // if that is done, then set the password to the hashed password
+    var hash = _bcryptjs.default.hashSync(password, salt);
 
-
-    password = hash; // After that, generate a token for the user using jwt
-
+    password = hash;
     var payload = req.body;
     var secret = process.env.SECRET_KEY;
 
-    var token = _jsonwebtoken.default.sign(payload, secret); // then save the user to the database
+    var token = _jsonwebtoken.default.sign(payload, secret);
 
-
-    var data = _user.default.addUser({
+    _user.default.addUser({
       email: email,
       firstName: firstName,
       lastName: lastName,
@@ -71,8 +66,7 @@ var authenticationController = {
     return res.status(201).json({
       status: 201,
       data: [{
-        token: token,
-        data: data
+        token: token
       }]
     });
   },
