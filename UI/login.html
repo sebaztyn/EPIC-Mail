@@ -10,81 +10,44 @@
 </head>
 
 <body>
-    <header>
-        <h3>EPIC Mail</h3>
-    </header>
     <div class="wrapper">
-        <div class="form-links">
-            <span class="login-span" id="loginlink">Login</span>
-            <span class="signup-span" id="signuplink">Sign up</span>
+        <div class="card-container">
+            <div class="message-card">
+                <div>
+                    <p>
+                        Communicate and Collaborate
+                    </p>
+                    <h3>Welcome to EPIC Mail</h3>
+
+                </div>
+            </div>
+            <div class="logcard">
+                <div class="form-question">
+                    <p>
+                        Got an Account? Enter your details below
+                    </p>
+                </div>
+                <div class="account-form" id="loginform-container">
+                    <form action="messages/index.html" class="main-login" id="login-form">
+                        <div>
+                            <input type="email" placeholder="Enter Email" required>
+                        </div>
+                        <div>
+                            <input type="password" placeholder="Enter Password" required>
+                        </div>
+                        <div class="form-footer">
+                            <button type="submit">Login</button>
+                            <span id="password-reset"><a href="password-reset.html"> Forgot Password?</a></span>
+                        </div>
+                        <footer>
+                            <p>&#169 2019 EPIC Mail. All Rights Reserved</p>
+                        </footer>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="form-question">
-            <p>
-                Got an Account? Enter your details on Login page
-            </p>
-        </div>
-        <div class="account-form" id="loginform-container">
-            <form action="messages/index.html" class="main-login" id="login-form">
-                <div>
-                    <input type="email" placeholder="Enter Email" required>
-                </div>
-                <div>
-                    <input type="password" placeholder="Enter Password" required>
-                </div>
-                <div class="form-footer">
-                    <button type="submit">Login</button>
-                    <span id="password-reset"> Forgot Password?</span>
-                </div>
-                <footer>
-                    <p>&#169 2019 EPIC Mail. All Rights Reserved</p>
-                </footer>
-            </form>
-            <form action="" class="main-login form-display" id="password-form">
-                <div>
-                    <input type="email" placeholder="Enter Recovery Email" required>
-                </div>
-                <div class="form-footer">
-                    <button type="submit">Reset my password</button>
-                </div>
-                <footer>
-                    <p>&#169 2019 EPIC Mail. All Rights Reserved</p>
-                </footer>
-            </form>
-            <form action="messages/index.html" class="main-signup form-display" id="signup-form">
-                <div>
-                    <input type="text" placeholder="First Name" required>
-                </div>
-                <div>
-                    <input type="text" placeholder="Last Name" required>
-                </div>
-                <div>
-                    <input type="text" placeholder="username" required>
-                </div>
-                <div>
-                    <input type="email" placeholder="Email" required>
-                </div>
-                <div>
-                    <input type="password" placeholder="Password" required>
-                </div>
-                <div>
-                    <input type="password" placeholder="Confirm Password" required>
-                </div>
-                <div>
-                    <input type="text" placeholder="Enter Recovery Password" required>
-                </div>
-                <div class="form-footer">
-                    <button type="submit">Sign up</button>
-                    <button type="reset">Reset</button>
-                </div>
-                <footer>
-                    <p>&#169 2019 EPIC Mail. All Rights Reserved</p>
-                </footer>
-            </form>
-        </div>
-        <div class="signup-form" id="signupform-container">
-        </div>
+
     </div>
-    <script src="messages/js/index.js"></script>
 </body>
 
 </html>
