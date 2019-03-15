@@ -18,6 +18,7 @@ header {
   background-size: cover;
   background-position: center center;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  overflow: hidden;
 }
 
 ul.login-container {
@@ -47,10 +48,10 @@ ul.login-container {
 .message-card {
   position: absolute;
   top: 3em;
-  left: 30vw;
+  left: 10vw;
   height: 80%;
   line-height: 80%;
-  width: 40vw;
+  width: 80vw;
   box-shadow: 0.2em 0.2em 1.5em #fff;
   border-radius: 0.9em;
   text-align: center;
