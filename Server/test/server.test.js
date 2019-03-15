@@ -5,21 +5,6 @@ import server from '../src/server';
 const { expect } = chai;
 chai.use(chaiHttp);
 
-// describe('Create API endpoints', () => {
-//   it('it  should return specific keys MESSAGE and STATUS when the User database has no registered user', (done) => {
-//     chai.request(server)
-//       .get('/api/v1/users')
-//       .end((err, res) => {
-//         if (err) {
-//           done(err);
-//         }
-//         expect(res.body).contain.keys('status', 'data');
-//         done();
-//       });
-//   });
-// });
-
-
 describe('Testing endpoints', () => {
   it('It should post new user data to the database', (done) => {
     chai.request(server)
@@ -159,11 +144,8 @@ describe('Deleting a specific Message', () => {
         expect(res.body).to.have.keys('status', 'data');
         expect(res.body).to.have.ownProperty('status').that.equals(200);
         expect(res.body).to.have.ownProperty('data').to.be.an('array');
-        // expect(res.body.data[0].subject).to.be.a('string');
         expect(res.body.data[0].message).to.be.a('string');
-        // expect(res.body.data[0].id).to.be.a('number');
-        // expect(res.body.data[0].status).to.be.a('string');
-        // expect(res.body.data[0].parentMessageId).to.be.a('number');
+
         done();
       });
   });

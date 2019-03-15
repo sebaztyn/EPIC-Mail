@@ -15,17 +15,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var idGenerator = function () {
-  var id = 2;
-
-  function inner() {
-    id += 1;
-    return id;
-  }
-
-  return inner;
-}();
-
 var User =
 /*#__PURE__*/
 function () {
@@ -49,8 +38,11 @@ function () {
           password = user.password,
           username = user.username,
           recoveryEmail = user.recoveryEmail;
+      var userLength = this.usersList.length;
+      var lastUserID = this.usersList[userLength - 1].id;
+      user.id = lastUserID + 1;
       var newUser = {
-        id: idGenerator(),
+        id: user.id,
         email: email,
         firstName: firstName,
         lastName: lastName,
@@ -67,24 +59,6 @@ function () {
         username: username,
         recoveryEmail: recoveryEmail
       };
-    }
-  }, {
-    key: "findUser",
-    value: function findUser(id) {
-      var userArr = this.usersList;
-      var searchedUser = userArr.find(function (user) {
-        return user.id === id;
-      });
-      return searchedUser;
-    }
-  }, {
-    key: "deleteUser",
-    value: function deleteUser(id) {
-      var userArr = this.usersList;
-      var userToDelete = userArr.find(function (user) {
-        return user.id === id;
-      });
-      return userToDelete;
     }
   }]);
 
