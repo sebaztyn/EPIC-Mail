@@ -18,7 +18,7 @@ describe('Testing endpoints', function () {
       email: 'sebastinocj@yahoo.com',
       firstName: 'Chima',
       lastName: 'Ekeneme',
-      password: 'klue',
+      password: 'kluej',
       username: 'sebaztyn',
       recoveryEmail: 'sebastinechima@gmail.com'
     }).end(function (err, res) {

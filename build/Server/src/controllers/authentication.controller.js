@@ -37,6 +37,13 @@ var authenticationController = {
       });
     }
 
+    if (!/^[a-z0-9]{5,}$/i.test(password)) {
+      return res.status(404).json({
+        status: 404,
+        error: 'Password must be at least 5 characters long'
+      });
+    }
+
     if (!/^[a-z]+$/i.test(firstName) || !/^[a-z]+$/i.test(lastName) || !/^[a-z0-9]+$/i.test(username)) {
       return res.status(404).json({
         status: 404,
