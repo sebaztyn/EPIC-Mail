@@ -1,16 +1,5 @@
 import allData from '../utils/allData';
 
-const idGenerator = (() => {
-  let id = 2;
-
-  function inner() {
-    id += 1;
-    return id;
-  }
-
-  return inner;
-})();
-
 class User {
   constructor() {
     this.usersList = allData.users;
@@ -25,8 +14,12 @@ class User {
       email, firstName, lastName, password, username, recoveryEmail
     } = user;
 
+    const userLength = this.usersList.length;
+    const lastUserID = this.usersList[userLength - 1].id;
+    user.id = lastUserID + 1;
+
     const newUser = {
-      id: idGenerator(),
+      id: user.id,
       email,
       firstName,
       lastName,
@@ -45,18 +38,6 @@ class User {
       username,
       recoveryEmail
     };
-  }
-
-  findUser(id) {
-    const userArr = this.usersList;
-    const searchedUser = userArr.find(user => user.id === id);
-    return searchedUser;
-  }
-
-  deleteUser(id) {
-    const userArr = this.usersList;
-    const userToDelete = userArr.find(user => user.id === id);
-    return userToDelete;
   }
 }
 
