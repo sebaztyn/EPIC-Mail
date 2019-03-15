@@ -14,12 +14,106 @@ body {
   font-family: Arial, sans-serif;
   height: 100vh;
   background-image: linear-gradient(to right, rgba(7, 15, 29, 0.8), rgba(167, 194, 253, 0.8));
+  overflow: hidden
 }
 
 .message-form {
   width: 90vw;
   padding: 0;
   margin: 0 auto;
+}
+
+.new-template {
+  display: grid;
+  width: 80%;
+  padding-top: 3em
+}
+
+.new-template div {
+  margin: 0 auto;
+  padding-top: 1em;
+}
+
+.new-template span {
+  color: #fff
+}
+
+.new-template input {
+  margin-bottom: 1em;
+  outline: none;
+  padding: 0.5em 0;
+  border-radius: 0.4em;
+}
+
+.message-header button {
+  position: absolute;
+  top: 0.2em;
+  left: 0.1em;
+  padding: 0.2em 1.5em;
+  margin-bottom: 3em;
+  border: 0;
+  background-color: transparent;
+  font-size: 3em;
+  width: 1em;
+  height: 1em;
+  line-height: 0.4;
+  text-indent: 5em;
+  white-space: nowrap;
+  overflow: hidden;
+  outline: none;
+}
+
+.message-header button::after {
+  position: absolute;
+  top: 0.3em;
+  left: 0.2em;
+  display: block;
+  content: "\2261";
+  color: #fff;
+  text-indent: 0;
+  outline: 0;
+  z-index: 10
+}
+
+header {
+  text-align: center;
+  color: #fff;
+  position: relative;
+}
+
+.toggle-on {
+  animation: slides-out 0.4s ease-in;
+  animation-fill-mode: forwards;
+}
+
+.toggle-off {
+  animation: slides-in 0.4s ease-out;
+  animation-fill-mode: backwards;
+}
+
+@keyframes slides-out {
+  from {
+    visibility: visible;
+    width: 10%;
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+    width: 70%;
+  }
+}
+
+@keyframes slides-in {
+  from {
+    width: 70%;
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    width: 0;
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 .grp-form {
@@ -79,7 +173,6 @@ body {
 }
 
 .add-user {
-  text-align: center;
   margin-top: 2em;
 }
 
@@ -87,15 +180,12 @@ body {
   margin-bottom: 1em;
 }
 
-.add-user input[disabled] {
-  background-color: #002D40;
-  color: #fff;
-  text-align: center;
-  width: 5em;
+.add-user span {
+  color: #fff
 }
 
-.add-user input[type="submit"] {
-  display: block;
+button {
+  display: inline-block;
   margin: 0 auto;
   background-color: rgba(7, 15, 29, 0.8);
   box-shadow: 0 0.2em 0.2em rgba(0, 0, 0, 0.15);
@@ -103,6 +193,21 @@ body {
   border-radius: 0.5em;
   outline: none;
   padding: 0.5em 1.5em
+}
+
+.add-user input[type="submit"] {
+  display: inline-block;
+  margin: 0 auto;
+  background-color: rgba(7, 15, 29, 0.8);
+  box-shadow: 0 0.2em 0.2em rgba(0, 0, 0, 0.15);
+  color: #fff;
+  border-radius: 0.5em;
+  outline: none;
+  padding: 0.5em 1.5em
+}
+
+button:nth-child(2) {
+  background-color: rgba(3, 42, 110, 0.8);
 }
 
 .message-form ul li textarea {
@@ -193,6 +298,9 @@ body {
 }
 
 @media (min-width: 50em) {
+  .new-template span:first-child {
+    margin-top: 2em;
+  }
   .message-form ul li p button:first-child:hover {
     background-color: rgb(7, 16, 66);
   }

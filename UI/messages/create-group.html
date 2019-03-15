@@ -7,44 +7,40 @@
     <title>Create New Group | EPIC</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/forms.css">
-    <script src="main.js"></script>
 </head>
 
 <body>
+    <header class="message-header">
+        <h1> <i>Create Group</i></h1>
+    </header>
     <div id="modal-test">
         <div class="modal-backdrop" id="modal"></div>
         <nav class="homepage-navbar" id="homepage-navbar">
             <ul class="new-mail-navbar">
-                <li><a href="create-group.html"><span>Create Group</span></a></li>
-                <li><a href=""><span>My Group</span></a></li>
-                <li><a href="new-group.html"><span> Compose group Message</span></a></li>
-                <li><a href="new-single.html"><span>Compose Message</span></a></li>
-            </ul>
-            <ul id="all-list" class="all-list inbox-flex">
                 <li><a href="index.html"><span>Inbox</span></a></li>
                 <li><a href="unread.html"><span>Unread</span></a></li>
                 <li><a href="sent.html"><span>Sent</span></a></li>
+                <li><a href="all-mails.html"><span>All Mails</span></a></li>
+            </ul>
+            <ul id="all-list" class="all-list inbox-flex">
+                <li><a href="new-single.html"><span>Compose Message</span></a></li>
+                <li><a href=""><span>Create Group</span></a></li>
+                <li><a href=""><span>My Group</span></a></li>
+                <!-- <li><a href="new-group.html"><span> Compose group Message</span></a></li> -->
                 <li><a href="deleted.html"><span>Deleted</span></a></li>
                 <li><a href="draft.html"><span>Draft</span></a></li>
-                <li><a href="all-mails.html"><span>All Mails</span></a></li>
             </ul>
         </nav>
         <div class="new-grp-container">
             <form action="" class="grp-form">
-                <h2>Create new user</h2>
-                <ul>
-                    <li><input type="text" value="Group Name:" disabled> <input type="text" placeholder="Give new group a name"></li>
-                    <li><input type="text" value="Group Description:" disabled>
-                        <Textarea rows="10" cols="30"></Textarea>
-                    </li>
-                    <li>
-                        <span></span>
-                        <p> <button>Create Group</button><button>Cancel</button></p>
-                    </li>
-                </ul>
-                <div class="add-user"><input type="text" value="Add User:" disabled> <input type="text" placeholder="Enter username of user">
+                <div class="new-template">
+                    <span>Group Name:</span><input type="text" placeholder="Enter Group Address" required>
+                    <span>Group Description:</span><textarea name="" id="" cols="30" rows="10"></textarea>
+                    <div><button>Send</button><button>Cancel</button></div>
+                </div>
+                <div class="add-user"><span>Add User:</span> <input type="text" placeholder="Enter username of user">
                     <!-- <input type="text" placeholder="Name of Group">  -->
-                    <select name="name-og-group" id="select-grp">
+                    <select name="name-of-group" id="select-grp">
                         <option value="" selected disabled>--Select Group--</option>
                         <option value="">Group 1</option>
                         <option value="">Group 2</option>
@@ -53,7 +49,7 @@
                     <input type="submit" value="Add User"></div>
             </form>
         </div>
-
+        <script src="./js/index.js"></script>
 </body>
 
 </html>
