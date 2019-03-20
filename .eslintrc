@@ -11,7 +11,10 @@
     "mocha": true
   },
   "rules": {
-    "comma-dangle": ["error", "never"],
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
     "linebreak-style": "warn",
     "no-unused-vars": [
       "error",
@@ -20,6 +23,7 @@
         "args": "none"
       }
     ],
+    "quotes": "off",
     "react/jsx-filename-extension": 0
   }
 }

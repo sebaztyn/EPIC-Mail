@@ -1,7 +1,10 @@
 import { Router } from 'express';
-import authenticationController from '../controllers/authentication.controller';
+import authController from '../controller3/authControl';
 
 const router = Router();
-router.post('/signup', authenticationController.addUser);
-router.post('/login', authenticationController.authorization);
+router.post('/signup', authController.addUser);
+router.post('/login', authController.authorization);
+router.post('/reset', authController.passwordreset);
+// router.post('/signup', authenticationController.addUser);
+// router.post('/login', authenticationController.authorization);
 export default router;
