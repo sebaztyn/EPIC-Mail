@@ -60,7 +60,6 @@ const messageControllers = {
       const usersEmail = await pool.query(usersSql, [retrievedEmail]);
       console.log(usersEmail.rows[0]);
       const inboxSql = 'SELECT * FROM inbox WHERE receiver_id=$1';
-
       console.log(inboxSql.rows[0]);
 
       await pool.query(inboxSql, [usersSql.rows[0].id]);
