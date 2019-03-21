@@ -15,7 +15,6 @@ const authController = {
     let { email } = req.body;
     email = email.toLowerCase();
     req.body.email = email;
-    console.log(email);
 
     if (!firstName || !lastName || !password || !recoveryEmail || !username || !email) {
       return res.status(400).json({
@@ -41,7 +40,6 @@ const authController = {
       connectionString: process.env.DATABASE_URL
     });
     await pool.connect();
-    console.log('connected to the db');
     try {
       const salt = bcrypt.genSaltSync(10);
       const hash = bcrypt.hashSync(password, salt);
@@ -78,7 +76,6 @@ const authController = {
 
     const sql = 'SELECT * FROM users WHERE email=$1 AND password=$2';
     const result = await pool.query(sql, [email, password]);
-    console.log(result.rows);
     if (!result.rows.length) {
       return res.status(400).json({
         status: 400,

@@ -22,8 +22,8 @@ const authenticationController = {
       });
     }
 
-    if(!/^[a-z0-9]{5,}$/i.test(password)){
-       return res.status(404).json({
+    if (!/^[a-z0-9]{5,}$/i.test(password)) {
+      return res.status(404).json({
         status: 404,
         error: 'Password must be at least 5 characters long'
       });
