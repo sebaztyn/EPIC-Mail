@@ -1,7 +1,9 @@
+import '@babel/polyfill';
 import express from 'express';
 import YAML from 'yamljs';
 import swaggerUi from 'swagger-ui-express';
 import messageRouters from './routes/message.router';
+import groupRouters from './routes/group.route';
 import authenticationRouter from './routes/authenticationRouter';
 
 const swaggerDocument = YAML.load(`${__dirname}/../../swagger.yaml`);
@@ -15,6 +17,7 @@ app.get('/', (req, res) => {
 });
 app.use('/api/v1/auth', authenticationRouter);
 app.use('/api/v1/messages', messageRouters);
+app.use('/api/v1/groups', groupRouters);
 
 const port = process.env.PORT || 3000;
 

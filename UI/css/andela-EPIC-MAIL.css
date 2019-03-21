@@ -29,14 +29,21 @@ header h3 {
   width: 100%;
   margin: 0 auto;
   height: 90%;
+  overflow: hidden;
+}
+
+.signup-header {
+  text-align: center;
+  display: block;
+  margin: 1.5em auto;
+  /* margin-top: 2em; */
 }
 
 .form-question {
   width: 100%;
   background-color: #004792;
-  padding: 0;
+  padding: 1em 0;
   font-size: 0.8rem;
-  height: 10%;
 }
 
 .form-question p {
@@ -60,10 +67,7 @@ header h3 {
 
 .main-login {
   background-color: #fff;
-  padding-top: 1.5em;
-  padding-bottom: 2em;
   color: rgb(7, 16, 66);
-  height: 100%;
 }
 
 .main-login div {
@@ -109,7 +113,11 @@ header h3 {
 a[href="password-reset.html"] {
   text-decoration: none;
   color: red;
-  font-weight: 600
+  font-weight: 600;
+}
+
+span[id="password-reset"] {
+  margin-bottom: 1em
 }
 
 a[href="password-reset.html"]:hover {
@@ -128,10 +136,9 @@ a[href="password-reset.html"]:hover {
 
 .form-footer {
   width: 100%;
-  padding-bottom: 1em;
   padding-top: 1em;
   display: flex;
-  justify-content: center
+  justify-content: center;
 }
 
 .form-footer button {
@@ -159,10 +166,15 @@ a[href="password-reset.html"]:hover {
   color: rgb(246, 28, 8)
 }
 
+.form-footer form {
+  display: inline;
+}
+
 footer p {
   font-size: 0.6rem;
   text-align: center;
   color: #001429;
+  padding: 1em
 }
 
 .signup-form {
@@ -225,9 +237,6 @@ footer p {
 .message-card p {}
 
 .message-card h3 {
-  /* position: absolute;
-  top: 25%;
-  left: 8%; */
   font-size: 2em;
   line-height: 1.2;
   margin: 1em 0;
@@ -235,9 +244,6 @@ footer p {
 }
 
 .message-card p {
-  /* position: absolute;
-  top: 40%;
-  left: 8%; */
   line-height: 1.2;
   font-size: 2em;
 }
