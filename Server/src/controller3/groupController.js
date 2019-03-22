@@ -13,25 +13,32 @@ console.log('connected to the db');
 const groupControllers = {
   async createGroup(req, res) {
     let { name } = req.body;
+    if (!name) {
+      return res.status(400).json({
+        status: 400,
+        Error: 'Enter a name for the group'
+      });
+    }
     name = name.toLowerCase();
+    name = name.trim();
     req.body.name = name;
     try {
       const namesSql = 'SELECT * FROM my_group WHERE name=$1';
-      const nameDetails = await pool.query(namesSql, [name]);
-      if (nameDetails.rows[0]) {
+      const { rows } = await pool.query(namesSql, [name]);
+      if (rows.length === 1) {
         return res.status(400).json({
           status: 400,
           Error: 'Name already exists. Change your group name please'
         });
       }
       const groupSql = 'INSERT INTO my_group (name,role) VALUES ($1, $2) RETURNING * ';
-      const groupResult = await pool.query(groupSql, [name, 'admin']);
+      const { rows: groupResult } = await pool.query(groupSql, [name, 'admin']);
       return res.status(201).json({
         status: 201,
         data: [{
-          id: groupResult.rows[0].id,
-          name: groupResult.rows[0].name,
-          role: groupResult.rows[0].role
+          id: groupResult[0].id,
+          name: groupResult[0].name,
+          role: groupResult[0].role
         }]
       });
     } catch (err) {
@@ -59,12 +66,18 @@ const groupControllers = {
   },
 
   async changeGroupName(req, res) {
-    let { name } = req.params;
     const id = Number(req.params.id);
-
+    console.log(req.params.id);
+    let { name } = req.body;
+    if (!name) {
+      return res.status(400).json({
+        status: 400,
+        Error: "Provide a new group name"
+      });
+    }
     name = name.toLowerCase();
     name = name.trim();
-    req.params.name = name;
+
     try {
       const groupSql = 'SELECT * FROM my_group WHERE id=$1';
       await pool.query(groupSql, [id]);
@@ -86,7 +99,7 @@ const groupControllers = {
       const id = Number(req.params.id);
       const deleteSql = 'DELETE FROM my_group WHERE id=$1';
       const { rows: groupRow } = await pool.query(deleteSql, [id]);
-      if (!groupRow) {
+      if (!groupRow.length) {
         return res.status(404).json({
           status: 404,
           Error: "Group is missing or has already been deleted"
@@ -104,14 +117,17 @@ const groupControllers = {
     }
   },
   async addUser(req, res) {
+    const { id: groupId } = req.params;
+    const { email } = req.body;
     try {
-      const { email, role } = req.body;
+      const groupSql = 'SELECT * FROM my_group WHERE id=$1';
+      const{ rows: groupRow } = await pool.query(groupSql, groupId);
+
       const userSql = 'SELECT * FROM users WHERE email=$1';
       const { rows } = await pool.query(userSql, [email]);
-      console.log(rows);
-      const id = rows[0].id;
+      const { id } = rows[0];
       const userDetailsSql = 'INSERT INTO my_group_members(user_id,user_role) VALUES($1, $2) RETURNING *';
-      const { rows: userRows } = await pool.query(userDetailsSql, [id, role]);
+      const { rows: userRows } = await pool.query(userDetailsSql, [id, 'member']);
       return res.status(201).json({
         status: 201,
         data: [userRows]

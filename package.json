@@ -4,18 +4,21 @@
   "description": "",
   "main": "Server/src/server.js",
   "scripts": {
+    "create-test-tables": "cross-env NODE_ENV=test node ./db.js",
+    "try-test": "nyc mocha Server/test/*.js",
     "clean": "rm -rf build && mkdir build",
     "copy-swagger": "cp -R swagger.yaml build",
     "start": "node build/Server/src/server.js",
     "start-dev": "nodemon --exec babel-node Server/src/server.js",
-    "test": "nyc _mocha Server/test/*.test.js --reporter=spec --recursive --require @babel/register --timeout 10000 --exit",
+    "test": "npm run create-test-tables && NODE_ENV=test nyc _mocha Server/test/*.test.js --reporter=spec --require @babel/register --exit",
     "build": "npm run copy-swagger && babel -d build/Server Server",
     "dev-start": "babel-watch Server/src/server.js",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
     "generate-lcov": "nyc report --reporter=text-lcov >lcov.info",
     "coveralls-coverage": "coveralls < lcov.info",
     "codeclimate-coverage": "codeclimate-test-reporter < lcov.info",
-    "coverage": "npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage"
+    "coverage": "npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage",
+    "createTable": "node ./db.js --exit"
   },
   "engine": "nodeJS",
   "repository": {
@@ -49,6 +52,7 @@
     "chai-http": "^4.2.1",
     "codeclimate-test-reporter": "^0.5.1",
     "coveralls": "^3.0.3",
+    "cross-env": "^5.2.0",
     "eslint": "^5.3.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",

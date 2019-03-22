@@ -18,9 +18,7 @@ const messageControllers = {
     const msgKeys = Object.keys(newMessage);
     const msgField = Object.values(newMessage);
     for (let i = 0; i < msgField.length; i++) {
-      if (typeof msgField[i] === 'string') {
-        msgObj[msgKeys[i]] = msgField[i].trim();
-      }
+      if (typeof msgField[i] === 'string') { msgObj[msgKeys[i]] = msgField[i].trim(); }
     }
     if (!msgObj.subject || !msgObj.message || !msgObj.email) {
       return res.status(404).json({
@@ -35,13 +33,20 @@ const messageControllers = {
       const receiverId = receiverEmailSql.rows[0].id;
       const myUserObj = await pool.query('SELECT * FROM users WHERE email=($1);', [myUserEmail]);
       const myUserObjId = myUserObj.rows[0].id;
-      const result = await pool.query('INSERT INTO messages (messages, subject, receiver_id, sender_id) VALUES ($1, $2, $3, $4) RETURNING * ', [message, subject, receiverId, myUserObjId]);
-      const resultId = result.rows[0].id;
+      const { rows } = await pool.query('INSERT INTO messages (messages, subject, receiver_id, sender_id) VALUES ($1, $2, $3, $4) RETURNING * ', [message, subject, receiverId, myUserObjId]);
+      const resultId = rows[0].id;
       const readProperty = 'unread';
-      const inboxs = await pool.query('INSERT INTO inboxs (message_id, receiver_id, status) VALUES ($1, $2, $3) RETURNING * ', [resultId, receiverId, readProperty]);
+      await pool.query('INSERT INTO inboxs (message_id, receiver_id, status) VALUES ($1, $2, $3)', [resultId, receiverId, readProperty]);
       return res.status(201).json({
         status: 201,
-        data: [inboxs.rows]
+        data: [
+          {
+            subject: rows[0].subject,
+            message: rows[0].messages,
+            createdOn: rows[0].created_on,
+            senderId: myUserEmail
+          }
+        ]
       });
     } catch (err) {
       return res.status(404).json({
@@ -50,7 +55,6 @@ const messageControllers = {
       });
     }
   },
-
   async findUnreadMessages(req, res) {
     const retrievedEmail = req.tokenData.email;
     try {
@@ -61,13 +65,19 @@ const messageControllers = {
       const messageId = inbox.rows.map((each => each.message_id));
       const messageSql = 'SELECT * FROM messages WHERE id= ANY($1)';
       const { rows } = await pool.query(messageSql, [messageId]);
+      if (!row.length) {
+        return res.status(200).json({
+          status: 200,
+          data: 'You have no unread message'
+        });
+      }
       return res.status(200).json({
         status: 200,
         data: rows
       });
     } catch (err) {
-      return res.status(404).json({
-        status: 404,
+      return res.status(200).json({
+        status: 200,
         data: "No unread message found"
       });
     }
@@ -84,17 +94,22 @@ const messageControllers = {
       const messageId = inboxId.rows.map((each => each.message_id));
       const messageSql = 'SELECT * FROM messages WHERE id= ANY($1)';
       const { rows } = await pool.query(messageSql, [messageId]);
+      if (!rows.length) {
+        return res.status(200).json({
+          status: 200,
+          message: "You have no received message(s)"
+        });
+      }
       return res.status(200).json({
         status: 200,
         data: rows
       });
     } catch (err) {
-      return res.status(404).json({
+      return res.status(200).json({
         status: 200,
         data: 'No message found'
       });
     }
-
   },
   async findSentMessages(req, res) {
     const retrievedEmail = req.tokenData.email;
@@ -102,27 +117,35 @@ const messageControllers = {
       const sql = 'SELECT id FROM users WHERE email=$1';
       const retrievedId = await pool.query(sql, [retrievedEmail]);
       const messageSql = 'SELECT * FROM messages WHERE sender_id=$1';
-      const retrievedMessage = await pool.query(messageSql, [retrievedId.rows[0].id]);
+      const { rows } = await pool.query(messageSql, [retrievedId.rows[0].id]);
+      if (!rows.length)
+      {
+        return res.status(200).json({
+          status: 200,
+          message: "You have no sent message(s)"
+        });
+      }
+    } catch (err) {
       return res.status(200).json({
         status: 200,
-        data: [...retrievedMessage.rows]
-      });
-    } catch (err) {
-      return res.status(404).json({
-        status: 404,
         data: "No sent Message"
       });
     }
   },
-
   async getOneMessage(req, res) {
     const messageID = Number(req.params.id);
     try {
       const messageSql = 'SELECT * FROM messages WHERE id=$1';
-      const retrievedMessage = await pool.query(messageSql, [messageID]);
+      const { rows } = await pool.query(messageSql, [messageID]);
+      if (!rows.length) {
+        return res.status(404).json({
+          status: 404,
+          message: "Message not found"
+        });
+      }
       return res.status(200).json({
         status: 200,
-        data: [retrievedMessage.rows[0]]
+        data: [rows[0]]
       });
     } catch (err) {
       return res.status(404).json({
@@ -135,14 +158,13 @@ const messageControllers = {
     const messageID = Number(req.params.id);
     try {
       const messageTableSql = 'SELECT * FROM messages WHERE id=$1';
-      const messageTableId = await pool.query(messageTableSql, [messageID]);
-      if (!messageTableId.rows[0]) {
+      const { rows } = await pool.query(messageTableSql, [messageID]);
+      if (!rows.length) {
         return res.status(404).json({
           status: 404,
           Error: "Message is missing or has been deleted"
         });
       }
-      // const inboxSql = 'DELETE FROM inboxs USING messages WHERE messages.id = inboxs.message_id';
       const messageSql = 'DELETE FROM messages WHERE id=$1';
       await pool.query(messageSql, [messageID]);
       return res.status(200).json({
