@@ -140,15 +140,25 @@ const messageControllers = {
   },
   async getOneInboxMessage(req, res) {
     const messageID = Number(req.params.id);
+    const { id } = req.tokenData;
     try {
+      const inboxQuery = {
+        text: `UPDATE inbox
+        SET status = $1
+        WHERE receiver_id=$2 AND message_id=$3`,
+        values: ['read', id, messageID]
+      };
+      await dbQuery(inboxQuery);
+
       const messageData = {
         text: `SELECT msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, inbox.sender_email, msg.parent_message_id, inbox.status
         FROM messages AS msg
         JOIN inbox ON msg.receiver_id=inbox.receiver_id
-        WHERE msg.message_id=$1`,
-        values: [messageID]
+        WHERE msg.message_id=$1 AND msg.receiver_id=$2 AND inbox.status =$3`,
+        values: [messageID, id, 'read']
       };
       const { rows } = await dbQuery(messageData);
+
       if (!rows.length) {
         return res.status(404).json({
           status: 404,
