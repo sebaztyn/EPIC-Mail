@@ -1,17 +1,20 @@
 import '@babel/polyfill';
 import express from 'express';
+import 'dotenv/config';
 import YAML from 'yamljs';
 import swaggerUi from 'swagger-ui-express';
 import messageRouters from './routes/message.router';
 import groupRouters from './routes/group.route';
 import authenticationRouter from './routes/authenticationRouter';
 
+
 const swaggerDocument = YAML.load(`${__dirname}/../../swagger.yaml`);
 const app = express();
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
+console.log(app.get('env'));
 
 app.get('/', (req, res) => {
   res.send("Welcome to my EPIC Mail Endpoints' Page");

@@ -4,13 +4,13 @@
   "description": "",
   "main": "Server/src/server.js",
   "scripts": {
-    "create-test-tables": "cross-env NODE_ENV=test node ./db.js",
+    "create-test-tables": "node  Server/src/migration/db.js",
     "try-test": "nyc mocha Server/test/*.js",
     "clean": "rm -rf build && mkdir build",
     "copy-swagger": "cp -R swagger.yaml build",
     "start": "node build/Server/src/server.js",
-    "start-dev": "nodemon --exec babel-node Server/src/server.js",
-    "test": "npm run create-test-tables && NODE_ENV=test nyc _mocha Server/test/*.test.js --reporter=spec --require @babel/register --exit",
+    "start-dev": "set NODE_ENV=development&& nodemon --exec babel-node Server/src/server.js",
+    "test": "set NODE_ENV=test&& npm run create-test-tables&& nyc _mocha Server/test/*.test.js --reporter=spec --require @babel/register --exit",
     "build": "npm run copy-swagger && babel -d build/Server Server",
     "dev-start": "babel-watch Server/src/server.js",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
@@ -18,9 +18,11 @@
     "coveralls-coverage": "coveralls < lcov.info",
     "codeclimate-coverage": "codeclimate-test-reporter < lcov.info",
     "coverage": "npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage",
-    "createTable": "node ./db.js --exit"
+    "createTable": "node  Server/src/migration/db.js --exit"
   },
-  "engine": "nodeJS",
+  "engines": {
+    "node": "8.9.4"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sebaztyn/EPIC-Mail.git"
@@ -31,8 +33,10 @@
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "bcryptjs": "^2.4.3",
+    "config": "^3.1.0",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.0",
     "pg": "^7.9.0",
     "swagger-ui-express": "^4.0.2",
