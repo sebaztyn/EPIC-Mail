@@ -5,6 +5,7 @@
   "main": "Server/src/server.js",
   "scripts": {
     "create-test-tables": "node  Server/src/migration/db.js",
+    "create-production-tables": "node  build/src/migration/db.js",
     "try-test": "nyc mocha Server/test/*.js",
     "clean": "rm -rf build && mkdir build",
     "copy-swagger": "cp -R swagger.yaml build",
