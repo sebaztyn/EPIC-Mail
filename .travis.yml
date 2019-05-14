@@ -10,6 +10,7 @@ install:
 
 before_script:
   - psql -c 'create database epicmail;' -U postgres
+  - psql -c 'create database epicmail_test;' -U postgres
 
 script:
   - npm run test
