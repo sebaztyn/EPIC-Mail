@@ -1,10 +1,9 @@
 import { Router } from 'express';
-import authController from '../controller3/authControl';
+import authController from '../controller/authControl';
+import validate from '../middleware/validator';
 
 const router = Router();
-router.post('/signup', authController.addUser);
-router.post('/login', authController.authorization);
-router.post('/reset', authController.passwordreset);
-// router.post('/signup', authenticationController.addUser);
-// router.post('/login', authenticationController.authorization);
+router.post('/signup', validate.signupValidator, authController.addUser);
+router.post('/login', validate.loginValidator, authController.login);
+router.post('/reset', validate.passwordResetValidator, authController.passwordreset);
 export default router;

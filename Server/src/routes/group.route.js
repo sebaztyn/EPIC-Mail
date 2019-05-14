@@ -1,13 +1,22 @@
 import { Router } from 'express';
-import groupControllers from '../controller3/groupController';
-import authenticate from '../middleware';
+import groupControllers from '../controller/groupController';
+import authenticate from '../middleware/authentication';
+import isAdmin from '../middleware/isAdmin';
+import validate from '../middleware/validator';
 
 const router = Router();
 
-router.post('/', authenticate, groupControllers.createGroup);
-router.post('/:id/users/', authenticate, groupControllers.addUser);
-router.get('/', authenticate, groupControllers.getAllGroups);
-router.patch('/:id/name', authenticate, groupControllers.changeGroupName);
-router.delete('/:id', authenticate, groupControllers.deleteAgroup);
+router.post('', authenticate, validate.createNewGroup, groupControllers.createGroup);
+
+router.post('/:groupId/messages', authenticate, validate.groupMessageValidator, groupControllers.groupMessage);
+
+router.post('/:groupId/users/', authenticate, isAdmin, validate.addGroupUsers, groupControllers.addUser);
+
+router.get('/', authenticate, groupControllers.getAllGroupsByAUser);
+
+router.patch('/:groupId/name', authenticate, isAdmin, validate.changeGroupName, groupControllers.changeGroupName);
+
+router.delete('/:groupId', authenticate, isAdmin, groupControllers.deleteAgroup);
+router.delete('/:groupId/users/:userid', authenticate, isAdmin, groupControllers.deleteUser);
 
 export default router;
