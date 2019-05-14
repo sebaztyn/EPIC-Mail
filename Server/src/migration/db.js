@@ -21,9 +21,7 @@ const dropTables = async () => {
     await pool.query(sentTable);
     await pool.query(groupTable);
     await pool.query(groupMemberTable);
-    await console.log('tables dropped!>>>>>>>>>>>>>>>>');
   } catch (err) {
-    console.log(err);
   }
 
 };
@@ -81,9 +79,7 @@ const createTables = async () => {
     await pool.query(sentTable);
     await pool.query(myGroupTable);
     await pool.query(myGroupMembersTable);
-    console.log('tables created!>>>>>>>>>>>>>>>>');
   } catch (err) {
-    console.log(err);
   }
 };
 
@@ -94,26 +90,3 @@ const callTables = async () => {
 };
 
 callTables();
-
-
-
-
-
-
-// const truncateTables = async () => {
-//   const truncate = `TRUNCATE TABLE users CASCADE;
-//   TRUNCATE TABLE messages CASCADE;
-//   TRUNCATE TABLE inbox CASCADE;
-//   TRUNCATE TABLE my_group CASCADE;
-//   TRUNCATE TABLE my_group_members CASCADE;
-//   `;
-//   try {
-//     await pool.query(truncate);
-//     await console.log('tables truncated!>>>>>>>>>>>>>>>>');
-//     await process.exit(0);
-//   } catch (err) {
-//     console.log('Tables not truncated');
-//     console.log(err);
-//   }
-// };
-// truncateTables();
