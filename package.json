@@ -8,7 +8,7 @@
     "try-test": "nyc mocha Server/test/*.js",
     "clean": "rm -rf build && mkdir build",
     "copy-swagger": "cp -R swagger.yaml build",
-    "start": "node build/Server/src/server.js",
+    "start": "node build/src/server.js",
     "start-dev": "cross-env NODE_ENV=development nodemon --exec babel-node Server/src/server.js",
     "test": "cross-env NODE_ENV=test npm run create-test-tables&& cross-env NODE_ENV=test nyc _mocha Server/test/*.test.js --reporter=spec --require @babel/register --exit",
     "build": "babel Server --out-dir build",
