@@ -9,8 +9,8 @@
     "clean": "rm -rf build && mkdir build",
     "copy-swagger": "cp -R swagger.yaml build",
     "start": "node build/Server/src/server.js",
-    "start-dev": "set NODE_ENV=development&& nodemon --exec babel-node Server/src/server.js",
-    "test": "NODE_ENV=test&& npm run create-test-tables&& nyc _mocha Server/test/*.test.js --reporter=spec --require @babel/register --exit",
+    "start-dev": "cross-env NODE_ENV=development nodemon --exec babel-node Server/src/server.js",
+    "test": "cross-env NODE_ENV=test npm run create-test-tables&& cross-env NODE_ENV=test nyc _mocha Server/test/*.test.js --reporter=spec --require @babel/register --exit",
     "local-test": "set NODE_ENV=test&& npm run create-test-tables&& nyc _mocha Server/test/*.test.js --reporter=spec --require @babel/register --exit",
     "build": "npm run copy-swagger && babel -d build/Server Server",
     "dev-start": "babel-watch Server/src/server.js",
@@ -18,8 +18,7 @@
     "generate-lcov": "nyc report --reporter=text-lcov >lcov.info",
     "coveralls-coverage": "coveralls < lcov.info",
     "codeclimate-coverage": "codeclimate-test-reporter < lcov.info",
-    "coverage": "npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage",
-    "createTable": "node  Server/src/migration/db.js --exit"
+    "coverage": "npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage"
   },
   "engines": {
     "node": "8.9.4"
