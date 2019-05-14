@@ -37,6 +37,22 @@ describe('USER CREATION AND LOGIN', () => {
         done();
       });
   });
+  before((done) => {
+    chai.request(server)
+      .post('/api/v1/auth/signup')
+      .send({
+        email: 'Iheoma@yahoo.com',
+        firstName: 'Iheoma',
+        lastName: 'Ekeneme',
+        password: 'Qwertyuiop1?',
+        username: 'Alex',
+        recoveryEmail: 'Iheoma@gmail.com'
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        done();
+      });
+  });
   it('should post new user data to the database', (done) => {
     chai.request(server)
       .post('/api/v1/auth/signup')
@@ -348,7 +364,7 @@ describe('GROUP ENDPOINTS', () => {
       .post('/api/v1/groups')
       .set('x-authorization', testToken)
       .send({
-        name: 'My Test group 2!!'
+        name: 'My Test group 2'
       })
       .end((err, res) => {
         if (err) return done(err);
@@ -357,10 +373,10 @@ describe('GROUP ENDPOINTS', () => {
   });
   before((done) => {
     chai.request(server)
-      .post('/api/v1/groups')
+      .post('/api/v1/groups/1/users/')
       .set('x-authorization', testToken)
       .send({
-        name: 'My Test group 3!!!!!!'
+        email: 'Iheoma@yahoo.com'
       })
       .end((err, res) => {
         if (err) return done(err);
@@ -401,7 +417,6 @@ describe('GROUP ENDPOINTS', () => {
         expect(res.body).to.have.ownProperty('status').that.equals(200);
         expect(res.body).to.have.ownProperty('data').to.be.an('array');
         expect(res.body.data[0].name).to.be.a('string');
-        expect(res.body.data[0].role).to.be.a('string');
         expect(res.body.data[0].admin_id).to.be.a('number');
 
         // PostgreSQL BIGINT datatype returns a string and not a number
@@ -507,7 +522,7 @@ describe('GROUP ENDPOINTS', () => {
   });
   it('should delete a user\'s group in the database successfully', (done) => {
     chai.request(server)
-      .delete('/api/v1/groups/1')
+      .delete('/api/v1/groups/2')
       .set('x-authorization', testToken)
       .end((err, res) => {
         if (err) return done(err);

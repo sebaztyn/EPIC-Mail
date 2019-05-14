@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import dbQuery from '../models/db-connection';
 import serverError from '../helper/error';
+import messaging from '../helper/newMessage';
 
 const messageControllers = {
   async createMessage(req, res) {
@@ -9,29 +10,17 @@ const messageControllers = {
       const myEmail = req.tokenData.email;
       const myUserId = req.tokenData.id;
       const receiverQuery = {
-        text: 'SELECT * FROM users WHERE email=($1)',
+        text: `SELECT * FROM users WHERE email=$1`,
         values: [email]
       };
       const { rows: receiverData } = await dbQuery(receiverQuery);
       const receiverId = receiverData[0].id;
 
-      const messageQuery = {
-        text: 'INSERT INTO messages (message, subject, receiver_id, sender_id) VALUES ($1, $2, $3, $4) RETURNING * ',
-        values: [message, subject, receiverId, myUserId]
-      };
-      const { rows } = await dbQuery(messageQuery);
-      const resultId = rows[0].message_id;
+      const messageValues = [message, subject, receiverId, myUserId];
+      const inboxValues = [receiverId, myEmail, 'unread'];
+      const sentValues = [myUserId, receiverId, 'sent'];
+      const { rows } = await messaging(messageValues, inboxValues, sentValues);
 
-      const inboxQuery = {
-        text: 'INSERT INTO inbox (message_id, receiver_id, sender_email, status) VALUES ($1, $2, $3, $4)',
-        values: [resultId, receiverId, myEmail, 'unread']
-      };
-      await dbQuery(inboxQuery);
-      const sentMessageQuery = {
-        text: 'INSERT INTO sent (sent_message_id, sender_id, receiver_id, status) VALUES ($1, $2, $3, $4)',
-        values: [resultId, myUserId, receiverId, 'sent']
-      };
-      await dbQuery(sentMessageQuery);
       return res.status(201).json({
         status: 201,
         data: [
@@ -57,7 +46,8 @@ const messageControllers = {
       const userInfo = await dbQuery(userData);
 
       const inboxQuery = {
-        text: 'SELECT * FROM inbox WHERE receiver_id=$1 AND status=$2',
+        text: `SELECT * FROM inbox
+        WHERE receiver_id=$1 AND status=$2`,
         values: [userInfo.rows[0].id, 'unread']
       };
       const inbox = await dbQuery(inboxQuery);
@@ -203,7 +193,8 @@ const messageControllers = {
     const { id } = req.tokenData;
     try {
       const messageData = {
-        text: 'SELECT * FROM messages WHERE message_id=$1',
+        text: `SELECT * FROM messages
+        WHERE message_id=$1`,
         values: [messageID]
       };
       const { rows } = await dbQuery(messageData);
@@ -214,7 +205,8 @@ const messageControllers = {
         });
       }
       const inboxToDelete = {
-        text: 'DELETE FROM inbox WHERE message_id=$1 AND receiver_id=$2',
+        text: `DELETE FROM inbox
+        WHERE message_id=$1 AND receiver_id=$2`,
         values: [messageID, id]
       };
       await dbQuery(inboxToDelete);
@@ -230,7 +222,8 @@ const messageControllers = {
     try {
       const sentMessageID = Number(req.params.sentMessageId);
       const sentMessageData = {
-        text: 'SELECT * FROM sent WHERE sent_id=$1',
+        text: `SELECT * FROM sent
+         WHERE sent_id=$1`,
         values: [sentMessageID]
       };
       const { rows } = await dbQuery(sentMessageData);
@@ -241,7 +234,8 @@ const messageControllers = {
         });
       }
       const sentToDelete = {
-        text: 'DELETE FROM sent WHERE sent_id=$1',
+        text: `DELETE FROM sent
+         WHERE sent_id=$1`,
         values: [sentMessageID]
       };
       await dbQuery(sentToDelete);

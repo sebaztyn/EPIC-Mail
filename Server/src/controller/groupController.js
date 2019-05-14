@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import dbQuery from '../models/db-connection';
 import serverError from '../helper/error';
+import messaging from '../helper/newMessage';
 
 
 const groupControllers = {
@@ -20,8 +21,9 @@ const groupControllers = {
         });
       }
       const newGroupData = {
-        text: 'INSERT INTO my_group (name,role,admin_id) VALUES ($1, $2,$3) RETURNING * ',
-        values: [name, 'admin', adminId]
+        text: `INSERT INTO my_group (name,admin_id)
+         VALUES ($1, $2) RETURNING *`,
+        values: [name, adminId]
       };
       const { rows: newGroup } = await dbQuery(newGroupData);
       const firstMember = {
@@ -114,7 +116,8 @@ const groupControllers = {
   },
   async addUser(req, res) {
     const { groupId } = req.params;
-    const { email } = req.body;
+    let { email } = req.body;
+    email = email.toLowerCase().trim();
     try {
       const userData = {
         text: 'SELECT * FROM users WHERE email=$1',
@@ -140,16 +143,9 @@ const groupControllers = {
           error: 'User is already a member of the group'
         });
       }
-      const groupData = {
-        text: 'SELECT * FROM my_group WHERE id=$1',
-        values: [groupId]
-      };
-      const { rows: groupRow } = await dbQuery(groupData);
-      const { id: groupIdData } = groupRow[0];
-
       const newUserData = {
         text: 'INSERT INTO my_group_members(user_id,user_role, group_id) VALUES($1, $2, $3) RETURNING *',
-        values: [id, 'member', groupIdData]
+        values: [id, 'member', groupId]
       };
       const { rows: userRows } = await dbQuery(newUserData);
       return res.status(201).json({
@@ -197,45 +193,36 @@ const groupControllers = {
       const { message, subject } = req.body;
       const { email, id } = req.tokenData;
       const groupData = {
-        text: 'SELECT * FROM users JOIN my_group_members ON my_group_members.user_id = users.id AND my_group_members.group_id = $1',
+        text: `SELECT users.email, my_group_members.user_id FROM users
+        JOIN my_group_members ON my_group_members.user_id = users.id WHERE my_group_members.group_id = $1`,
         values: [groupId]
       };
       const { rows: groupInfo } = await dbQuery(groupData);
+
       const emailList = groupInfo.filter(each => each.email !== email);
-      let messageResult;
-      for (let i = 0; i < emailList.length; i++) {
-        const newMessageObj = {
-          text: 'INSERT INTO messages (message, subject, receiver_id, sender_id) VALUES ($1, $2, $3, $4) RETURNING * ',
-          values: [message, subject, emailList[i].user_id, id]
-        };
-        const { rows } = await dbQuery(newMessageObj);
-        messageResult = rows;
+      const groupMember = emailList.map(async (member) => {
+        const messageValues = [message, subject, member.user_id, id];
+        const inboxValues = [member.user_id, email, 'unread'];
+        const sentValues = [id, member.user_id, 'sent'];
+        const { rows } = await messaging(messageValues, inboxValues, sentValues);
+        return rows[0];
+      });
+      const result = await Promise.all(groupMember);
 
-        const inboxObj = {
-          text: 'INSERT INTO inbox (message_id, receiver_id, sender_email, status) VALUES ($1, $2, $3, $4)',
-          values: [rows[i].message_id, emailList[i].user_id, email, 'unread']
-        };
-        await dbQuery(inboxObj);
-
-        const sentMessageQuery = {
-          text: 'INSERT INTO sent (sent_message_id, sender_id, receiver_id, status) VALUES ($1, $2, $3, $4)',
-          values: [rows[i].message_id, id, emailList[i].user_id, 'sent']
-        };
-        await dbQuery(sentMessageQuery);
-      }
       return res.status(201).json({
         status: 201,
         data: [{
-          id: messageResult[0].message_id,
-          createdOn: messageResult[0].created_on,
-          subject: messageResult[0].subject,
-          message: messageResult[0].message,
-          parentMessageId: messageResult[0].parent_message_id,
+          id: result[0].message_id,
+          createdOn: result[0].created_on,
+          subject: result[0].subject,
+          message: result[0].message,
+          parentMessageId: result[0].parent_message_id,
           status: 'Sent'
         }]
 
       });
     } catch (err) {
+      console.log(err.message);
       return serverError(req, res);
     }
   }

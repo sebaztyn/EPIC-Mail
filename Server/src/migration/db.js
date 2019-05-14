@@ -65,7 +65,6 @@ const createTables = async () => {
   const myGroupTable = `CREATE TABLE my_group(
       id BIGSERIAL PRIMARY KEY NOT NULL,
       name VARCHAR(60),
-      role VARCHAR(40),
       admin_id INT REFERENCES users(id) NOT NULL
     );`;
 
