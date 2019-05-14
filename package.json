@@ -11,7 +11,7 @@
     "start": "node build/Server/src/server.js",
     "start-dev": "cross-env NODE_ENV=development nodemon --exec babel-node Server/src/server.js",
     "test": "cross-env NODE_ENV=test npm run create-test-tables&& cross-env NODE_ENV=test nyc _mocha Server/test/*.test.js --reporter=spec --require @babel/register --exit",
-    "build": "npm run copy-swagger && babel -d build/Server Server",
+    "build": "npm run copy-swagger && babel Server --out-dir build",
     "dev-start": "babel-watch Server/src/server.js",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
     "generate-lcov": "nyc report --reporter=text-lcov >lcov.info",
