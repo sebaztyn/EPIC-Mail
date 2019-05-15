@@ -63,15 +63,14 @@ const createTables = async () => {
     );`;
 
   const myGroupTable = `CREATE TABLE my_group(
-      id BIGSERIAL PRIMARY KEY NOT NULL,
+      group_id SERIAL PRIMARY KEY NOT NULL,
       name VARCHAR(60),
       admin_id INT REFERENCES users(id) NOT NULL
     );`;
 
   const myGroupMembersTable = `CREATE TABLE my_group_members(
-      id BIGSERIAL PRIMARY KEY NOT NULL,
       user_id INTEGER REFERENCES users(id) NOT NULL,
-      group_id INTEGER REFERENCES my_group(id) NOT NULL,
+      group_id INTEGER REFERENCES my_group(group_id) NOT NULL,
       user_role VARCHAR(20)
     );`;
   try {

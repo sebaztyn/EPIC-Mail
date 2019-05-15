@@ -2,7 +2,7 @@ import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import dbQuery from '../models/db-connection';
-import serverError from '../helper/error';
+import { serverError, serverResponse, userResponse } from '../helper/serverResponse';
 
 const authController = {
   async addUser(req, res) {
@@ -19,10 +19,7 @@ const authController = {
       };
       const { rows } = await dbQuery(query);
       if (rows.length) {
-        return res.status(403).json({
-          status: 403,
-          error: 'Action Forbidden. Email already exist'
-        });
+        return serverResponse(res, 403, 'status', 'error', "Action Forbidden. Email already exist");
       }
       const insertQuery = {
         text: 'INSERT INTO users (firstName, lastName, email, username, password, recoveryEmail) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
@@ -30,16 +27,14 @@ const authController = {
       };
       const { rows: newUserDetails } = await dbQuery(insertQuery);
       const token = await jwt.sign({ email, id: newUserDetails[0].id }, process.env.SECRET_KEY);
-      return res.header('x-authorization', token).status(201).json({
-        status: 201,
-        data: [{
-          firstName,
-          email,
-          token
-        }]
-      });
+      const displayResult = [{
+        firstName,
+        email,
+        token
+      }];
+      return userResponse(res, token, 201, 'status', 'data', displayResult);
     } catch (err) {
-      return serverError(req, res);
+      return serverError(res);
     }
     /* eslint-disable prefer-destructuring */
   },
@@ -53,30 +48,22 @@ const authController = {
       };
       const { rows } = await dbQuery(query);
       if (!rows.length) {
-        return res.status(400).json({
-          status: 400,
-          error: 'Invalid email or Password'
-        });
+        return serverResponse(res, 403, 'status', 'error', "Invalid email or Password");
       }
       const checkedPassword = await bcrypt.compare(password, rows[0].password);
       if (!checkedPassword) {
-        return res.status(422).json({
-          status: 422,
-          error: 'Incorrect Password'
-        });
+        return serverResponse(res, 422, 'status', 'error', "Incorrect Password");
       }
       const saltUser = await bcrypt.genSalt(10);
       password = await bcrypt.hash(password, saltUser);
       const token = jwt.sign({ email, id: rows[0].id }, process.env.SECRET_KEY);
-      return res.header('x-authorization', token).status(200).json({
-        status: 200,
-        data: [{
-          email,
-          token
-        }]
-      });
+      const displayResult = [{
+        email,
+        token
+      }];
+      return userResponse(res, token, 201, 'status', 'data', displayResult);
     } catch (err) {
-      return serverError(req, res);
+      return serverError(res);
     }
   },
   async passwordreset(req, res) {
@@ -88,20 +75,16 @@ const authController = {
       };
       const { rows } = await dbQuery(query);
       if (!rows.length) {
-        return res.status(404).json({
-          status: 404,
-          error: 'Email does not exist'
-        });
+        return serverResponse(res, 404, 'status', 'error', "Email not found");
       }
-      return res.status(201).json({
-        status: 201,
-        data: [{
-          message: 'Check your email for password reset link',
-          email: rows[0].email
-        }]
-      });
+      const token = jwt.sign({ email, id: rows[0].id }, process.env.SECRET_KEY);
+      const displayResult = [{
+        message: 'Check your email for password reset link',
+        email: rows[0].email
+      }];
+      return userResponse(res, token, 201, 'status', 'data', displayResult);
     } catch (err) {
-      return serverError(req, res);
+      return serverError(res);
     }
   }
 };

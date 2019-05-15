@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import { serverResponse } from '../helper/serverResponse';
 
 const signupSchema = Joi.object().keys({
   firstName: Joi.string().required(),
@@ -41,19 +42,17 @@ const messageSchema = Joi.object().keys({
   subject: Joi.string().required()
 });
 
-const errorMessage = (err, res) => res.status(422).json({
-  status: 422,
-  error: err.details[0].message
-});
+const errorMessage = (err, res) => {
+  const errMessage = err.details[0].message;
+  return serverResponse(res, 422, 'status', 'error', errMessage);
+};
 
 const validation = {
   signupValidator(req, res, next) {
     const { password } = req.body;
     let { email } = req.body;
-    email = email.toLowerCase();
-    email = email.trim();
+    email = email.toLowerCase().trim();
     req.body.email = email;
-
     const minMaxLength = /^[\s\S]{8,255}$/; const uppercaseRegex = /[A-Z]/; const lowercaseRegex = /[a-z]/; const numberRegex = /[0-9]/; const
       specialCharacterRegex = /[ !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/;
 
@@ -65,10 +64,7 @@ const validation = {
         return next();
       });
     }
-    return res.status(422).json({
-      status: 422,
-      error: 'Check password length and values. Ensure your password contains One uppercase, one lowercase, one number, one special character. Password length must also be at least 8 characters long'
-    });
+    return serverResponse(res, 422, 'status', 'error', 'Check password length and values. Ensure your password contains One uppercase, one lowercase, one number, one special character. Password length must also be at least 8 characters long');
   },
 
   createMessageValidator(req, res, next) {
@@ -91,8 +87,7 @@ const validation = {
 
   loginValidator(req, res, next) {
     let { email, password } = req.body;
-    email = email.toLowerCase();
-    email = email.trim();
+    email = email.toLowerCase().trim();
     password = password.trim();
     req.body.email = email;
     req.body.password = password;
@@ -106,8 +101,7 @@ const validation = {
 
   passwordResetValidator(req, res, next) {
     let { email } = req.body;
-    email = email.toLowerCase();
-    email = email.trim();
+    email = email.toLowerCase().trim();
     req.body.email = email;
     return Joi.validate(req.body, passwordResetSchema, (err, value) => {
       if (err) {
@@ -119,7 +113,7 @@ const validation = {
 
   createNewGroup(req, res, next) {
     let { name } = req.body;
-    name = name.trim();
+    name = name.toLowerCase().trim();
     req.body.name = name;
     return Joi.validate(req.body, newGroupSchema, (err, value) => {
       if (err) {
@@ -143,7 +137,7 @@ const validation = {
   },
   addGroupUsers(req, res, next) {
     let { email } = req.body;
-    email = email.trim();
+    email = email.toLowerCase().trim();
     req.body.email = email;
     return Joi.validate(req.body, newGroupMemberSchema, (err, value) => {
       if (err) {
@@ -154,8 +148,7 @@ const validation = {
   },
   changeGroupName(req, res, next) {
     let { name } = req.body;
-    name = name.trim();
-    name = name.toLowerCase();
+    name = name.toLowerCase().trim();
     req.body.name = name;
     return Joi.validate(req.body, changeGroupNameSchema, (err, value) => {
       if (err) {

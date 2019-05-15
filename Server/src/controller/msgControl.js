@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import dbQuery from '../models/db-connection';
-import serverError from '../helper/error';
+import { serverError, serverResponse } from '../helper/serverResponse';
 import messaging from '../helper/newMessage';
 
 const messageControllers = {
@@ -20,20 +20,17 @@ const messageControllers = {
       const inboxValues = [receiverId, myEmail, 'unread'];
       const sentValues = [myUserId, receiverId, 'sent'];
       const { rows } = await messaging(messageValues, inboxValues, sentValues);
+      const resultValues = [{
+        id: rows[0].message_id,
+        subject: rows[0].subject,
+        message: rows[0].message,
+        createdOn: rows[0].created_on,
+        senderId: myEmail
+      }];
 
-      return res.status(201).json({
-        status: 201,
-        data: [
-          {
-            subject: rows[0].subject,
-            message: rows[0].message,
-            createdOn: rows[0].created_on,
-            senderId: myEmail
-          }
-        ]
-      });
+      return serverResponse(res, 201, 'status', 'data', resultValues);
     } catch (err) {
-      return serverError(req, res);
+      return serverError(res);
     }
   },
   async findUnreadMessages(req, res) {
@@ -59,17 +56,11 @@ const messageControllers = {
       };
       const { rows } = await dbQuery(messageData);
       if (!rows.length) {
-        return res.status(200).json({
-          status: 200,
-          data: 'You have no unread message'
-        });
+        return serverResponse(res, 200, 'status', 'message', 'You have no unread message');
       }
-      return res.status(200).json({
-        status: 200,
-        data: rows
-      });
+      return serverResponse(res, 200, 'status', 'data', rows);
     } catch (err) {
-      return serverError(req, res);
+      return serverError(res);
     }
   },
   async findAllReceivedMessages(req, res) {
@@ -91,17 +82,11 @@ const messageControllers = {
       };
       const { rows } = await dbQuery(userInboxData);
       if (!rows.length) {
-        return res.status(200).json({
-          status: 200,
-          message: "You have no received message(s)"
-        });
+        return serverResponse(res, 200, 'status', 'message', 'You have no received message(s)');
       }
-      return res.status(200).json({
-        status: 200,
-        data: rows
-      });
+      return serverResponse(res, 200, 'status', 'data', rows);
     } catch (err) {
-      return serverError(req, res);
+      return serverError(res);
     }
   },
   async findSentMessages(req, res) {
@@ -115,17 +100,12 @@ const messageControllers = {
       };
       const { rows } = await dbQuery(sentMessageData);
       if (!rows.length) {
-        return res.status(200).json({
-          status: 200,
-          message: "You have no sent message(s)"
-        });
+        return serverResponse(res, 200, 'status', 'message', 'You have no sent message(s)');
       }
-      return res.status(200).json({
-        status: 200,
-        data: rows
-      });
+      return serverResponse(res, 200, 'status', 'data', rows);
+
     } catch (err) {
-      return serverError(req, res);
+      return serverError(res);
     }
   },
   async getOneInboxMessage(req, res) {
@@ -144,48 +124,38 @@ const messageControllers = {
         text: `SELECT msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, inbox.sender_email, msg.parent_message_id, inbox.status
         FROM messages AS msg
         JOIN inbox ON msg.receiver_id=inbox.receiver_id
-        WHERE msg.message_id=$1 AND msg.receiver_id=$2 AND inbox.status =$3`,
-        values: [messageID, id, 'read']
+        WHERE msg.message_id=$1 AND msg.receiver_id=$2`,
+        values: [messageID, id]
       };
       const { rows } = await dbQuery(messageData);
 
       if (!rows.length) {
-        return res.status(404).json({
-          status: 404,
-          message: "Message not found"
-        });
+        return serverResponse(res, 404, 'status', 'error', 'Message not found');
       }
-      return res.status(200).json({
-        status: 200,
-        data: [rows[0]]
-      });
+      return serverResponse(res, 200, 'status', 'data', rows);
+
     } catch (err) {
-      return serverError(req, res);
+      return serverError(res);
     }
   },
   async getOneSentMessage(req, res) {
     const messageID = Number(req.params.id);
+    const { id } = req.tokenData;
     try {
       const messageData = {
-        text: `SELECT msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, msg.parent_message_id, sent.status
+        text: `SELECT DISTINCT msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, msg.parent_message_id, sent.status
         FROM messages AS msg
         JOIN sent ON msg.sender_id=sent.sender_id
-        WHERE msg.message_id=$1`,
-        values: [messageID]
+        WHERE msg.message_id=$1 AND sent.sender_id=$2`,
+        values: [messageID, id]
       };
       const { rows } = await dbQuery(messageData);
       if (!rows.length) {
-        return res.status(404).json({
-          status: 404,
-          message: "Message not found"
-        });
+        return serverResponse(res, 404, 'status', 'error', 'Message not found');
       }
-      return res.status(200).json({
-        status: 200,
-        data: [rows[0]]
-      });
+      return serverResponse(res, 200, 'status', 'data', rows);
     } catch (err) {
-      return serverError(req, res);
+      return serverError(res);
     }
   },
   async deleteInboxMessage(req, res) {
@@ -199,10 +169,7 @@ const messageControllers = {
       };
       const { rows } = await dbQuery(messageData);
       if (!rows.length) {
-        return res.status(404).json({
-          status: 404,
-          Error: "Message is missing or has been deleted"
-        });
+        return serverResponse(res, 404, 'status', 'error', 'Message is missing or has been deleted');
       }
       const inboxToDelete = {
         text: `DELETE FROM inbox
@@ -210,12 +177,9 @@ const messageControllers = {
         values: [messageID, id]
       };
       await dbQuery(inboxToDelete);
-      return res.status(200).json({
-        status: 200,
-        data: [{ message: 'Message Deleted' }]
-      });
+      return serverResponse(res, 200, 'status', 'data', [{ message: 'Message Deleted' }]);
     } catch (err) {
-      return serverError(req, res);
+      return serverError(res);
     }
   },
   async deleteSentMessage(req, res) {
@@ -228,10 +192,7 @@ const messageControllers = {
       };
       const { rows } = await dbQuery(sentMessageData);
       if (!rows.length) {
-        return res.status(404).json({
-          status: 404,
-          Error: "Message is missing or has been deleted"
-        });
+        return serverResponse(res, 404, 'status', 'error', 'Message is missing or has been deleted');
       }
       const sentToDelete = {
         text: `DELETE FROM sent
@@ -239,12 +200,9 @@ const messageControllers = {
         values: [sentMessageID]
       };
       await dbQuery(sentToDelete);
-      return res.status(200).json({
-        status: 200,
-        data: [{ message: 'Message Deleted' }]
-      });
+      return serverResponse(res, 200, 'status', 'data', [{ message: 'Message Deleted' }]);
     } catch (err) {
-      return serverError(req, res);
+      return serverError(res);
     }
   }
 };

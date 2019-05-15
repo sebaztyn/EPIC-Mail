@@ -110,6 +110,117 @@ describe('USER CREATION AND LOGIN', () => {
 describe('MESSAGES ENDPOINTS', () => {
   let userToken = null;
   let secondToken = null;
+  describe('Checking for Errors and Empty Retrievals from server', () => {
+    let errorToken = null;
+    before((done) => {
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .send({
+          email: 'johndoe@yahoo.com',
+          firstName: 'John',
+          lastName: 'Doe',
+          password: 'Qwertyuiop1?',
+          username: 'Jon',
+          recoveryEmail: 'johndoe@gmail.com'
+        })
+        .end((err, res) => {
+          errorToken = res.body.data[0].token;
+          if (err) return done(err);
+          done();
+        });
+    });
+    it('should return status code 200 when a request is made to retrieve messages from an empty INBOX', (done) => {
+      chai.request(server)
+        .get('/api/v1/messages')
+        .set('x-authorization', errorToken)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.keys('status', 'message');
+          expect(res.body).to.have.ownProperty('status').that.equals(200);
+          expect(res.body).to.have.ownProperty('message').to.be.a('string');
+          done();
+        });
+    });
+    it('should return status code 200 when a request is made to retrieve UNREAD messages for user with NO UNREAD message', (done) => {
+      chai.request(server)
+        .get('/api/v1/messages/unread')
+        .set('x-authorization', errorToken)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.keys('status', 'message');
+          expect(res.body).to.have.ownProperty('status').that.equals(200);
+          expect(res.body).to.have.ownProperty('message').to.be.a('string');
+          done();
+        });
+    });
+    it('should return status code 200 when a request is made to retrieve SENT messages for user with NO SENT message', (done) => {
+      chai.request(server)
+        .get('/api/v1/messages/sent')
+        .set('x-authorization', errorToken)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.keys('status', 'message');
+          expect(res.body).to.have.ownProperty('status').that.equals(200);
+          expect(res.body).to.have.ownProperty('message').to.be.a('string');
+          done();
+        });
+    });
+    it('should return an Error 404 when the wrong messageID is used as a parameter in retrieving a specific SENT message', (done) => {
+      chai.request(server)
+        .get('/api/v1/messages/sent/1')
+        .set('x-authorization', errorToken)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.keys('status', 'error');
+          expect(res.body).to.have.ownProperty('status').that.equals(404);
+          expect(res.body).to.have.ownProperty('error').to.be.a('string');
+          done();
+        });
+    });
+    it('should return an Error 404 when the wrong messageID is used as a parameter in retrieving a specific INBOX message', (done) => {
+      chai.request(server)
+        .get('/api/v1/messages/30')
+        .set('x-authorization', errorToken)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.keys('status', 'error');
+          expect(res.body).to.have.ownProperty('status').that.equals(404);
+          expect(res.body).to.have.ownProperty('error').to.be.a('string');
+          done();
+        });
+    });
+    it('should return an Error 404 when the wrong messageID is used as a parameter in DELETING a specific INBOX message', (done) => {
+      chai.request(server)
+        .delete('/api/v1/messages/30')
+        .set('x-authorization', errorToken)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.keys('status', 'error');
+          expect(res.body).to.have.ownProperty('status').that.equals(404);
+          expect(res.body).to.have.ownProperty('error').to.be.a('string');
+          done();
+        });
+    });
+    it('should return an Error 404 when the wrong messageID is used as a parameter in DELETING a specific SENT message', (done) => {
+      chai.request(server)
+        .delete('/api/v1/messages/sent/30')
+        .set('x-authorization', errorToken)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.keys('status', 'error');
+          expect(res.body).to.have.ownProperty('status').that.equals(404);
+          expect(res.body).to.have.ownProperty('error').to.be.a('string');
+          done();
+        });
+    });
+  });
   before((done) => {
     chai.request(server)
       .post('/api/v1/auth/login')
@@ -192,6 +303,34 @@ describe('MESSAGES ENDPOINTS', () => {
         done();
       });
   });
+  before((done) => {
+    chai.request(server)
+      .post('/api/v1/messages')
+      .set('x-authorization', testToken)
+      .send({
+        subject: 'Let us check',
+        message: 'We are running a check',
+        email: 'uche@yahoo.com'
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        done();
+      });
+  });
+  before((done) => {
+    chai.request(server)
+      .post('/api/v1/messages')
+      .set('x-authorization', testToken)
+      .send({
+        subject: 'Let us go again',
+        message: 'We are running a check to be sure',
+        email: 'iheoma@yahoo.com'
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        done();
+      });
+  });
   it('should post user Message to the database', (done) => {
     chai.request(server)
       .post('/api/v1/messages')
@@ -258,9 +397,7 @@ describe('MESSAGES ENDPOINTS', () => {
       .get('/api/v1/messages/sent')
       .set('x-authorization', testToken)
       .end((err, res) => {
-        if (err) {
-          done(err);
-        }
+        if (err) done(err);
         expect(res.body).to.have.keys('status', 'data');
         expect(res.body).to.have.ownProperty('status').that.equals(200);
         expect(res.body).to.have.ownProperty('data').to.be.an('array');
@@ -295,7 +432,7 @@ describe('MESSAGES ENDPOINTS', () => {
   });
   it('should return a unique SENT message matching the message ID', (done) => {
     chai.request(server)
-      .get('/api/v1/messages/sent/1')
+      .get('/api/v1/messages/sent/5')
       .set('x-authorization', testToken)
       .end((err, res) => {
         if (err) return done(err);
@@ -347,6 +484,154 @@ describe('MESSAGES ENDPOINTS', () => {
 });
 
 describe('GROUP ENDPOINTS', () => {
+  describe('Checking for all groups where a user is a member or an admin', () => {
+    let errorToken2 = null;
+    before((done) => {
+      chai.request(server)
+        .post('/api/v1/auth/login')
+        .send({
+          email: 'johndoe@yahoo.com',
+          password: 'Qwertyuiop1?'
+        })
+        .end((err, res) => {
+          errorToken2 = res.body.data[0].token;
+          if (err) return done(err);
+          done();
+        });
+    });
+    it('should return status code 200 and a message stating that user should create or join a group when a request is made to retrieve ALL GROUPS by a user who has NEITHER JOINED OR CREATED A GROUP', (done) => {
+      chai.request(server)
+        .get('/api/v1/groups')
+        .set('x-authorization', errorToken2)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.keys('status', 'message');
+          expect(res.body).to.have.ownProperty('status').that.equals(200);
+          expect(res.body).to.have.ownProperty('message').to.be.a('string');
+          done();
+        });
+    });
+  });
+    describe('Checking if a group already exist at the point of creation', () => {
+         let errorToken3 = null;
+    before((done) => {
+      chai.request(server)
+        .post('/api/v1/auth/login')
+        .send({
+          email: 'johndoe@yahoo.com',
+          password: 'Qwertyuiop1?'
+        })
+        .end((err, res) => {
+          errorToken3 = res.body.data[0].token;
+          if (err) return done(err);
+          done();
+        });
+    });
+        before((done) => {
+      chai.request(server)
+        .post('/api/v1/groups')
+        .set('x-authorization', errorToken3)
+        .send({
+          name: 'My ERROR Test group 1'
+        })
+        .end((err, res) => {
+          if (err) return done(err);
+          done();
+        });
+    });
+    it('should return status code 404 when a request is made to send AN EMAIL TO GROUP WHERE THE ONLY MEMBER IS THE GROUP CREATOR', (done) => {
+      chai.request(server)
+        .post('/api/v1/groups/4/messages')
+        .set('x-authorization', errorToken3)
+        .send({
+          subject: 'Are you Available',
+          message: 'Can we meetup at 5pm?'
+        })
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.keys('status', 'error');
+          expect(res.body).to.have.ownProperty('status').that.equals(404);
+          expect(res.body).to.have.ownProperty('error').to.be.a('string');
+          done();
+        });
+    });
+    it('should return status code 400 when a request is made to retrieve AN ALREADY CREATED GROUP', (done) => {
+      chai.request(server)
+        .post('/api/v1/groups')
+        .set('x-authorization', errorToken3)
+        .send({
+          name: 'My ERROR Test group 1'
+        })
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.keys('status', 'Error');
+          expect(res.body).to.have.ownProperty('status').that.equals(400);
+          expect(res.body).to.have.ownProperty('Error').to.be.a('string');
+          done();
+        });
+    });
+    it('should return status code 403 when a request is made to DELETE a NON-EXISTENT group', (done) => {
+      chai.request(server)
+            .delete('/api/v1/groups/30')
+        .set('x-authorization', errorToken3)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.keys('status', 'error');
+          expect(res.body).to.have.ownProperty('status').that.equals(403);
+          expect(res.body).to.have.ownProperty('error').to.be.a('string');
+          done();
+        });
+    });
+    it('should return status code 404 when a request is made to DELETE a NON-EXISTENT USER from a group', (done) => {
+      chai.request(server)
+            .delete('/api/v1/groups/4/users/6')
+        .set('x-authorization', errorToken3)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.keys('status', 'error');
+          expect(res.body).to.have.ownProperty('status').that.equals(404);
+          expect(res.body).to.have.ownProperty('error').to.be.a('string');
+          done();
+        });
+    });
+    it('should return status code 400 when a request is made to CHANGE THE NAME AN EXISTING GROUP', (done) => {
+      chai.request(server)
+      .patch('/api/v1/groups/4/name')
+      .set('x-authorization', errorToken3)
+      .send({
+        name: ''
+      })
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.keys('status', 'error');
+          expect(res.body).to.have.ownProperty('status').that.equals(422);
+          expect(res.body).to.have.ownProperty('error').to.be.a('string');
+          done();
+        });
+    });
+    it('should return status code 400 when a request is made to ADD A USER TO GROUP with an unregistered email', (done) => {
+      chai.request(server)
+      .post('/api/v1/groups/4/users/')
+      .set('x-authorization', errorToken3)
+      .send({
+        email: 'dadadada@yahoo.com'
+      })
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.keys('status', 'Error');
+          expect(res.body).to.have.ownProperty('status').that.equals(400);
+  expect(res.body).to.have.ownProperty('Error').to.be.a('string');
+          done();
+        });
+    });
+  });
   before((done) => {
     chai.request(server)
       .post('/api/v1/groups')
@@ -420,7 +705,7 @@ describe('GROUP ENDPOINTS', () => {
         expect(res.body.data[0].admin_id).to.be.a('number');
 
         // PostgreSQL BIGINT datatype returns a string and not a number
-        expect(res.body.data[0].id).to.be.a('string');
+        expect(res.body.data[0].group_id).to.be.a('number');
         expect(res.body.data[0]).to.be.an('object');
         done();
       });
@@ -463,11 +748,10 @@ describe('GROUP ENDPOINTS', () => {
         expect(res.status).to.equal(201);
         expect((res.body)).to.be.an('object');
         expect((res.body.data[0])).to.be.an('object');
-        expect((res.body.data[0].id)).to.be.a('string');
         expect((res.body.data[0].userRole)).to.be.a('string');
         expect((res.body.data[0].userId)).to.be.a('number');
         expect((res.body)).to.have.all.keys('status', 'data');
-        expect((res.body.data[0])).to.have.all.keys('id', 'userId', 'userRole');
+        expect((res.body.data[0])).to.have.all.keys('groupId', 'userId', 'userRole');
         expect((res.body)).to.haveOwnProperty('status').that.equals(201);
         done();
       });

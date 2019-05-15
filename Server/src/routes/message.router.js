@@ -13,6 +13,5 @@ router.get('/:id', authenticate, msgControllers.getOneInboxMessage);
 router.get('/sent/:id', authenticate, msgControllers.getOneSentMessage);
 router.delete('/:id', authenticate, msgControllers.deleteInboxMessage);
 router.delete('/sent/:sentMessageId', authenticate, msgControllers.deleteSentMessage);
-// router.delete('/inbox/:inboxMessageId', authenticate, msgControllers.deleteMessage);
 
 export default router;
