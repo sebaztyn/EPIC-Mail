@@ -9,7 +9,7 @@ require("dotenv/config");
 
 var _dbConnection = _interopRequireDefault(require("../models/db-connection"));
 
-var _error = _interopRequireDefault(require("../helper/error"));
+var _serverResponse = require("../helper/serverResponse");
 
 var _newMessage = _interopRequireDefault(require("../helper/newMessage"));
 
@@ -24,7 +24,7 @@ var messageControllers = {
     var _createMessage = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee(req, res) {
-      var _req$body, message, subject, email, myEmail, myUserId, receiverQuery, _ref, receiverData, receiverId, messageValues, inboxValues, sentValues, _ref2, rows;
+      var _req$body, message, subject, email, myEmail, myUserId, receiverQuery, _ref, receiverData, receiverId, messageValues, inboxValues, sentValues, _ref2, rows, resultValues;
 
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
@@ -54,27 +54,26 @@ var messageControllers = {
             case 15:
               _ref2 = _context.sent;
               rows = _ref2.rows;
-              return _context.abrupt("return", res.status(201).json({
-                status: 201,
-                data: [{
-                  subject: rows[0].subject,
-                  message: rows[0].message,
-                  createdOn: rows[0].created_on,
-                  senderId: myEmail
-                }]
-              }));
+              resultValues = [{
+                id: rows[0].message_id,
+                subject: rows[0].subject,
+                message: rows[0].message,
+                createdOn: rows[0].created_on,
+                senderId: myEmail
+              }];
+              return _context.abrupt("return", (0, _serverResponse.serverResponse)(res, 201, 'status', 'data', resultValues));
 
-            case 20:
-              _context.prev = 20;
+            case 21:
+              _context.prev = 21;
               _context.t0 = _context["catch"](0);
-              return _context.abrupt("return", (0, _error.default)(req, res));
+              return _context.abrupt("return", (0, _serverResponse.serverError)(res));
 
-            case 23:
+            case 24:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 20]]);
+      }, _callee, null, [[0, 21]]);
     }));
 
     function createMessage(_x, _x2) {
@@ -132,21 +131,15 @@ var messageControllers = {
                 break;
               }
 
-              return _context2.abrupt("return", res.status(200).json({
-                status: 200,
-                data: 'You have no unread message'
-              }));
+              return _context2.abrupt("return", (0, _serverResponse.serverResponse)(res, 200, 'status', 'message', 'You have no unread message'));
 
             case 18:
-              return _context2.abrupt("return", res.status(200).json({
-                status: 200,
-                data: rows
-              }));
+              return _context2.abrupt("return", (0, _serverResponse.serverResponse)(res, 200, 'status', 'data', rows));
 
             case 21:
               _context2.prev = 21;
               _context2.t0 = _context2["catch"](0);
-              return _context2.abrupt("return", (0, _error.default)(req, res));
+              return _context2.abrupt("return", (0, _serverResponse.serverError)(res));
 
             case 24:
             case "end":
@@ -200,21 +193,15 @@ var messageControllers = {
                 break;
               }
 
-              return _context3.abrupt("return", res.status(200).json({
-                status: 200,
-                message: "You have no received message(s)"
-              }));
+              return _context3.abrupt("return", (0, _serverResponse.serverResponse)(res, 200, 'status', 'message', 'You have no received message(s)'));
 
             case 14:
-              return _context3.abrupt("return", res.status(200).json({
-                status: 200,
-                data: rows
-              }));
+              return _context3.abrupt("return", (0, _serverResponse.serverResponse)(res, 200, 'status', 'data', rows));
 
             case 17:
               _context3.prev = 17;
               _context3.t0 = _context3["catch"](0);
-              return _context3.abrupt("return", (0, _error.default)(req, res));
+              return _context3.abrupt("return", (0, _serverResponse.serverError)(res));
 
             case 20:
             case "end":
@@ -258,21 +245,15 @@ var messageControllers = {
                 break;
               }
 
-              return _context4.abrupt("return", res.status(200).json({
-                status: 200,
-                message: "You have no sent message(s)"
-              }));
+              return _context4.abrupt("return", (0, _serverResponse.serverResponse)(res, 200, 'status', 'message', 'You have no sent message(s)'));
 
             case 9:
-              return _context4.abrupt("return", res.status(200).json({
-                status: 200,
-                data: rows
-              }));
+              return _context4.abrupt("return", (0, _serverResponse.serverResponse)(res, 200, 'status', 'data', rows));
 
             case 12:
               _context4.prev = 12;
               _context4.t0 = _context4["catch"](0);
-              return _context4.abrupt("return", (0, _error.default)(req, res));
+              return _context4.abrupt("return", (0, _serverResponse.serverError)(res));
 
             case 15:
             case "end":
@@ -310,8 +291,8 @@ var messageControllers = {
 
             case 6:
               messageData = {
-                text: "SELECT msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, inbox.sender_email, msg.parent_message_id, inbox.status\n        FROM messages AS msg\n        JOIN inbox ON msg.receiver_id=inbox.receiver_id\n        WHERE msg.message_id=$1 AND msg.receiver_id=$2 AND inbox.status =$3",
-                values: [messageID, id, 'read']
+                text: "SELECT msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, inbox.sender_email, msg.parent_message_id, inbox.status\n        FROM messages AS msg\n        JOIN inbox ON msg.receiver_id=inbox.receiver_id\n        WHERE msg.message_id=$1 AND msg.receiver_id=$2",
+                values: [messageID, id]
               };
               _context5.next = 9;
               return (0, _dbConnection.default)(messageData);
@@ -325,21 +306,15 @@ var messageControllers = {
                 break;
               }
 
-              return _context5.abrupt("return", res.status(404).json({
-                status: 404,
-                message: "Message not found"
-              }));
+              return _context5.abrupt("return", (0, _serverResponse.serverResponse)(res, 404, 'status', 'error', 'Message not found'));
 
             case 13:
-              return _context5.abrupt("return", res.status(200).json({
-                status: 200,
-                data: [rows[0]]
-              }));
+              return _context5.abrupt("return", (0, _serverResponse.serverResponse)(res, 200, 'status', 'data', rows));
 
             case 16:
               _context5.prev = 16;
               _context5.t0 = _context5["catch"](2);
-              return _context5.abrupt("return", (0, _error.default)(req, res));
+              return _context5.abrupt("return", (0, _serverResponse.serverError)(res));
 
             case 19:
             case "end":
@@ -359,52 +334,47 @@ var messageControllers = {
     var _getOneSentMessage = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee6(req, res) {
-      var messageID, messageData, _ref7, rows;
+      var messageID, id, messageData, _ref7, rows;
 
       return regeneratorRuntime.wrap(function _callee6$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
               messageID = Number(req.params.id);
-              _context6.prev = 1;
+              id = req.tokenData.id;
+              _context6.prev = 2;
               messageData = {
-                text: "SELECT msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, msg.parent_message_id, sent.status\n        FROM messages AS msg\n        JOIN sent ON msg.sender_id=sent.sender_id\n        WHERE msg.message_id=$1",
-                values: [messageID]
+                text: "SELECT DISTINCT msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, msg.parent_message_id, sent.status\n        FROM messages AS msg\n        JOIN sent ON msg.sender_id=sent.sender_id\n        WHERE msg.message_id=$1 AND sent.sender_id=$2",
+                values: [messageID, id]
               };
-              _context6.next = 5;
+              _context6.next = 6;
               return (0, _dbConnection.default)(messageData);
 
-            case 5:
+            case 6:
               _ref7 = _context6.sent;
               rows = _ref7.rows;
 
               if (rows.length) {
-                _context6.next = 9;
+                _context6.next = 10;
                 break;
               }
 
-              return _context6.abrupt("return", res.status(404).json({
-                status: 404,
-                message: "Message not found"
-              }));
+              return _context6.abrupt("return", (0, _serverResponse.serverResponse)(res, 404, 'status', 'error', 'Message not found'));
 
-            case 9:
-              return _context6.abrupt("return", res.status(200).json({
-                status: 200,
-                data: [rows[0]]
-              }));
+            case 10:
+              return _context6.abrupt("return", (0, _serverResponse.serverResponse)(res, 200, 'status', 'data', rows));
 
-            case 12:
-              _context6.prev = 12;
-              _context6.t0 = _context6["catch"](1);
-              return _context6.abrupt("return", (0, _error.default)(req, res));
+            case 13:
+              _context6.prev = 13;
+              _context6.t0 = _context6["catch"](2);
+              return _context6.abrupt("return", (0, _serverResponse.serverError)(res));
 
-            case 15:
+            case 16:
             case "end":
               return _context6.stop();
           }
         }
-      }, _callee6, null, [[1, 12]]);
+      }, _callee6, null, [[2, 13]]);
     }));
 
     function getOneSentMessage(_x11, _x12) {
@@ -442,10 +412,7 @@ var messageControllers = {
                 break;
               }
 
-              return _context7.abrupt("return", res.status(404).json({
-                status: 404,
-                Error: "Message is missing or has been deleted"
-              }));
+              return _context7.abrupt("return", (0, _serverResponse.serverResponse)(res, 404, 'status', 'error', 'Message is missing or has been deleted'));
 
             case 10:
               inboxToDelete = {
@@ -456,17 +423,14 @@ var messageControllers = {
               return (0, _dbConnection.default)(inboxToDelete);
 
             case 13:
-              return _context7.abrupt("return", res.status(200).json({
-                status: 200,
-                data: [{
-                  message: 'Message Deleted'
-                }]
-              }));
+              return _context7.abrupt("return", (0, _serverResponse.serverResponse)(res, 200, 'status', 'data', [{
+                message: 'Message Deleted'
+              }]));
 
             case 16:
               _context7.prev = 16;
               _context7.t0 = _context7["catch"](2);
-              return _context7.abrupt("return", (0, _error.default)(req, res));
+              return _context7.abrupt("return", (0, _serverResponse.serverError)(res));
 
             case 19:
             case "end":
@@ -510,10 +474,7 @@ var messageControllers = {
                 break;
               }
 
-              return _context8.abrupt("return", res.status(404).json({
-                status: 404,
-                Error: "Message is missing or has been deleted"
-              }));
+              return _context8.abrupt("return", (0, _serverResponse.serverResponse)(res, 404, 'status', 'error', 'Message is missing or has been deleted'));
 
             case 9:
               sentToDelete = {
@@ -524,17 +485,14 @@ var messageControllers = {
               return (0, _dbConnection.default)(sentToDelete);
 
             case 12:
-              return _context8.abrupt("return", res.status(200).json({
-                status: 200,
-                data: [{
-                  message: 'Message Deleted'
-                }]
-              }));
+              return _context8.abrupt("return", (0, _serverResponse.serverResponse)(res, 200, 'status', 'data', [{
+                message: 'Message Deleted'
+              }]));
 
             case 15:
               _context8.prev = 15;
               _context8.t0 = _context8["catch"](0);
-              return _context8.abrupt("return", (0, _error.default)(req, res));
+              return _context8.abrupt("return", (0, _serverResponse.serverError)(res));
 
             case 18:
             case "end":

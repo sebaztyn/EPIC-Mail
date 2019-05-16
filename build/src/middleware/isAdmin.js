@@ -19,18 +19,18 @@ function () {
   var _ref = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee(req, res, next) {
-    var email, groupId, currentUserObj, _ref2, rows, userObj;
+    var id, groupId, currentUserObj, _ref2, rows;
 
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
-            email = req.tokenData.email;
+            id = req.tokenData.id;
             groupId = req.params.groupId;
             currentUserObj = {
-              text: 'SELECT * FROM users JOIN my_group_members ON users.id = my_group_members.user_id AND my_group_members.group_id=$1',
-              values: [groupId]
+              text: "SELECT * FROM users\n      JOIN my_group_members ON users.id = my_group_members.user_id\n      WHERE my_group_members.group_id=$1 AND users.id=$2",
+              values: [groupId, id]
             };
             _context.next = 6;
             return (0, _dbConnection.default)(currentUserObj);
@@ -38,34 +38,51 @@ function () {
           case 6:
             _ref2 = _context.sent;
             rows = _ref2.rows;
-            userObj = rows.filter(function (each) {
-              return each.email === email;
-            });
 
-            if (!(userObj[0].user_role === 'admin')) {
-              _context.next = 11;
+            if (rows.length) {
+              _context.next = 10;
+              break;
+            }
+
+            return _context.abrupt("return", res.status(403).json({
+              status: 403,
+              error: 'Task can only be performed by the admin of the Group'
+            }));
+
+          case 10:
+            if (!(rows[0].user_role !== 'undefined')) {
+              _context.next = 14;
+              break;
+            }
+
+            if (!(rows[0].user_role === 'admin')) {
+              _context.next = 13;
               break;
             }
 
             return _context.abrupt("return", next());
 
-          case 11:
+          case 13:
             return _context.abrupt("return", res.status(403).json({
               status: 403,
-              error: 'Task can only be performed by an Admin'
+              error: 'Task can only be performed by the admin of the Group'
             }));
 
           case 14:
-            _context.prev = 14;
+            _context.next = 19;
+            break;
+
+          case 16:
+            _context.prev = 16;
             _context.t0 = _context["catch"](0);
             return _context.abrupt("return", console.log(_context.t0.stack));
 
-          case 17:
+          case 19:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 14]]);
+    }, _callee, null, [[0, 16]]);
   }));
 
   return function admin(_x, _x2, _x3) {

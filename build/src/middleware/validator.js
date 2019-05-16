@@ -1,15 +1,17 @@
-
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
 
-const _joi = _interopRequireDefault(require("joi"));
+var _joi = _interopRequireDefault(require("joi"));
+
+var _serverResponse = require("../helper/serverResponse");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const signupSchema = _joi.default.object().keys({
+var signupSchema = _joi.default.object().keys({
   firstName: _joi.default.string().required(),
   lastName: _joi.default.string().required(),
   password: _joi.default.string().min(8).max(255).required(),
@@ -18,60 +20,57 @@ const signupSchema = _joi.default.object().keys({
   username: _joi.default.string().regex(/^[0-9a-z]+$/i).min(3).required()
 });
 
-const loginSchema = _joi.default.object().keys({
+var loginSchema = _joi.default.object().keys({
   password: _joi.default.string().min(8).max(255).required(),
   email: _joi.default.string().email().regex(/^\S+@\S+\.\S+$/).required()
 });
 
-const passwordResetSchema = _joi.default.object().keys({
+var passwordResetSchema = _joi.default.object().keys({
   email: _joi.default.string().email().regex(/^\S+@\S+\.\S+$/).required()
 });
 
-const newGroupMemberSchema = _joi.default.object().keys({
+var newGroupMemberSchema = _joi.default.object().keys({
   email: _joi.default.string().email().regex(/^\S+@\S+\.\S+$/).required()
 });
 
-const newGroupSchema = _joi.default.object().keys({
+var newGroupSchema = _joi.default.object().keys({
   name: _joi.default.string().min(5).required()
 });
 
-const changeGroupNameSchema = _joi.default.object().keys({
+var changeGroupNameSchema = _joi.default.object().keys({
   name: _joi.default.string().min(5).required()
 });
 
-const groupMessageSchema = _joi.default.object().keys({
+var groupMessageSchema = _joi.default.object().keys({
   subject: _joi.default.string().required(),
   message: _joi.default.string().required()
 });
 
-const messageSchema = _joi.default.object().keys({
+var messageSchema = _joi.default.object().keys({
   message: _joi.default.string().required(),
   email: _joi.default.string().email().regex(/^\S+@\S+\.\S+$/).required(),
   subject: _joi.default.string().required()
 });
 
-const errorMessage = function errorMessage(err, res) {
-  return res.status(422).json({
-    status: 422,
-    error: err.details[0].message
-  });
+var errorMessage = function errorMessage(err, res) {
+  var errMessage = err.details[0].message;
+  return (0, _serverResponse.serverResponse)(res, 422, 'status', 'error', errMessage);
 };
 
-const validation = {
+var validation = {
   signupValidator: function signupValidator(req, res, next) {
-    const password = req.body.password;
-    let email = req.body.email;
-    email = email.toLowerCase();
-    email = email.trim();
+    var password = req.body.password;
+    var email = req.body.email;
+    email = email.toLowerCase().trim();
     req.body.email = email;
-    const minMaxLength = /^[\s\S]{8,255}$/;
-    const uppercaseRegex = /[A-Z]/;
-    const lowercaseRegex = /[a-z]/;
-    const numberRegex = /[0-9]/;
-    const specialCharacterRegex = /[ !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/;
+    var minMaxLength = /^[\s\S]{8,255}$/;
+    var uppercaseRegex = /[A-Z]/;
+    var lowercaseRegex = /[a-z]/;
+    var numberRegex = /[0-9]/;
+    var specialCharacterRegex = /[ !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/;
 
     if (minMaxLength.test(password) && uppercaseRegex.test(password) && lowercaseRegex.test(password) && numberRegex.test(password) && specialCharacterRegex.test(password)) {
-      return _joi.default.validate(req.body, signupSchema, (err, value) => {
+      return _joi.default.validate(req.body, signupSchema, function (err, value) {
         if (err) {
           return errorMessage(err, res);
         }
@@ -80,24 +79,21 @@ const validation = {
       });
     }
 
-    return res.status(422).json({
-      status: 422,
-      error: 'Check password length and values. Ensure your password contains One uppercase, one lowercase, one number, one special character. Password length must also be at least 8 characters long'
-    });
+    return (0, _serverResponse.serverResponse)(res, 422, 'status', 'error', 'Check password length and values. Ensure your password contains One uppercase, one lowercase, one number, one special character. Password length must also be at least 8 characters long');
   },
   createMessageValidator: function createMessageValidator(req, res, next) {
-    const msgObj = {};
-    const msgKeys = Object.keys(req.body);
-    const msgField = Object.values(req.body);
+    var msgObj = {};
+    var msgKeys = Object.keys(req.body);
+    var msgField = Object.values(req.body);
 
-    for (let i = 0; i < msgField.length; i++) {
+    for (var i = 0; i < msgField.length; i++) {
       if (typeof msgField[i] === 'string') {
         msgObj[msgKeys[i]] = msgField[i].trim();
         req.body[msgKeys[i]] = msgObj[msgKeys[i]];
       }
     }
 
-    return _joi.default.validate(msgObj, messageSchema, (err, value) => {
+    return _joi.default.validate(msgObj, messageSchema, function (err, value) {
       if (err) {
         return errorMessage(err, res);
       }
@@ -106,19 +102,14 @@ const validation = {
     });
   },
   loginValidator: function loginValidator(req, res, next) {
-    const _req$body = req.body;
-
-
-    let email = _req$body.email;
-
-
-    let password = _req$body.password;
-    email = email.toLowerCase();
-    email = email.trim();
+    var _req$body = req.body,
+        email = _req$body.email,
+        password = _req$body.password;
+    email = email.toLowerCase().trim();
     password = password.trim();
     req.body.email = email;
     req.body.password = password;
-    return _joi.default.validate(req.body, loginSchema, (err, value) => {
+    return _joi.default.validate(req.body, loginSchema, function (err, value) {
       if (err) {
         return errorMessage(err, res);
       }
@@ -127,11 +118,10 @@ const validation = {
     });
   },
   passwordResetValidator: function passwordResetValidator(req, res, next) {
-    let email = req.body.email;
-    email = email.toLowerCase();
-    email = email.trim();
+    var email = req.body.email;
+    email = email.toLowerCase().trim();
     req.body.email = email;
-    return _joi.default.validate(req.body, passwordResetSchema, (err, value) => {
+    return _joi.default.validate(req.body, passwordResetSchema, function (err, value) {
       if (err) {
         return errorMessage(err, res);
       }
@@ -140,10 +130,10 @@ const validation = {
     });
   },
   createNewGroup: function createNewGroup(req, res, next) {
-    let name = req.body.name;
-    name = name.trim();
+    var name = req.body.name;
+    name = name.toLowerCase().trim();
     req.body.name = name;
-    return _joi.default.validate(req.body, newGroupSchema, (err, value) => {
+    return _joi.default.validate(req.body, newGroupSchema, function (err, value) {
       if (err) {
         return errorMessage(err, res);
       }
@@ -152,18 +142,14 @@ const validation = {
     });
   },
   groupMessageValidator: function groupMessageValidator(req, res, next) {
-    const _req$body2 = req.body;
-
-
-    let subject = _req$body2.subject;
-
-
-    let message = _req$body2.message;
+    var _req$body2 = req.body,
+        subject = _req$body2.subject,
+        message = _req$body2.message;
     subject = subject.trim();
     message = message.trim();
     req.body.subject = subject;
     req.body.message = message;
-    return _joi.default.validate(req.body, groupMessageSchema, (err, value) => {
+    return _joi.default.validate(req.body, groupMessageSchema, function (err, value) {
       if (err) {
         return errorMessage(err, res);
       }
@@ -172,10 +158,10 @@ const validation = {
     });
   },
   addGroupUsers: function addGroupUsers(req, res, next) {
-    let email = req.body.email;
+    var email = req.body.email;
     email = email.toLowerCase().trim();
     req.body.email = email;
-    return _joi.default.validate(req.body, newGroupMemberSchema, (err, value) => {
+    return _joi.default.validate(req.body, newGroupMemberSchema, function (err, value) {
       if (err) {
         return errorMessage(err, res);
       }
@@ -184,10 +170,10 @@ const validation = {
     });
   },
   changeGroupName: function changeGroupName(req, res, next) {
-    let name = req.body.name;
+    var name = req.body.name;
     name = name.toLowerCase().trim();
     req.body.name = name;
-    return _joi.default.validate(req.body, changeGroupNameSchema, (err, value) => {
+    return _joi.default.validate(req.body, changeGroupNameSchema, function (err, value) {
       if (err) {
         return errorMessage(err, res);
       }
@@ -196,5 +182,5 @@ const validation = {
     });
   }
 };
-const _default = validation;
+var _default = validation;
 exports.default = _default;

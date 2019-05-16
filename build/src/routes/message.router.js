@@ -23,7 +23,6 @@ router.get('/sent', _authentication.default, _msgControl.default.findSentMessage
 router.get('/:id', _authentication.default, _msgControl.default.getOneInboxMessage);
 router.get('/sent/:id', _authentication.default, _msgControl.default.getOneSentMessage);
 router.delete('/:id', _authentication.default, _msgControl.default.deleteInboxMessage);
-router.delete('/sent/:sentMessageId', _authentication.default, _msgControl.default.deleteSentMessage); // router.delete('/inbox/:inboxMessageId', authenticate, msgControllers.deleteMessage);
-
+router.delete('/sent/:sentMessageId', _authentication.default, _msgControl.default.deleteSentMessage);
 var _default = router;
 exports.default = _default;

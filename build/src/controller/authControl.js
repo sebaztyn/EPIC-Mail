@@ -13,7 +13,7 @@ var _bcryptjs = _interopRequireDefault(require("bcryptjs"));
 
 var _dbConnection = _interopRequireDefault(require("../models/db-connection"));
 
-var _error = _interopRequireDefault(require("../helper/error"));
+var _serverResponse = require("../helper/serverResponse");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26,7 +26,7 @@ var authController = {
     var _addUser = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee(req, res) {
-      var _req$body, email, firstName, lastName, username, recoveryEmail, password, salt, query, _ref, rows, insertQuery, _ref2, newUserDetails, token;
+      var _req$body, email, firstName, lastName, username, recoveryEmail, password, salt, query, _ref, rows, insertQuery, _ref2, newUserDetails, token, displayResult;
 
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
@@ -61,10 +61,7 @@ var authController = {
                 break;
               }
 
-              return _context.abrupt("return", res.status(403).json({
-                status: 403,
-                error: 'Action Forbidden. Email already exist'
-              }));
+              return _context.abrupt("return", (0, _serverResponse.serverResponse)(res, 403, 'status', 'error', "Action Forbidden. Email already exist"));
 
             case 16:
               insertQuery = {
@@ -85,26 +82,24 @@ var authController = {
 
             case 23:
               token = _context.sent;
-              return _context.abrupt("return", res.header('x-authorization', token).status(201).json({
-                status: 201,
-                data: [{
-                  firstName: firstName,
-                  email: email,
-                  token: token
-                }]
-              }));
+              displayResult = [{
+                firstName: firstName,
+                email: email,
+                token: token
+              }];
+              return _context.abrupt("return", (0, _serverResponse.userResponse)(res, token, 201, 'status', 'data', displayResult));
 
-            case 27:
-              _context.prev = 27;
+            case 28:
+              _context.prev = 28;
               _context.t0 = _context["catch"](0);
-              return _context.abrupt("return", (0, _error.default)(req, res));
+              return _context.abrupt("return", (0, _serverResponse.serverError)(res));
 
-            case 30:
+            case 31:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 27]]);
+      }, _callee, null, [[0, 28]]);
     }));
 
     function addUser(_x, _x2) {
@@ -117,7 +112,7 @@ var authController = {
     var _login = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee2(req, res) {
-      var password, email, query, _ref3, rows, checkedPassword, saltUser, token;
+      var password, email, query, _ref3, rows, checkedPassword, saltUser, token, displayResult;
 
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
@@ -142,10 +137,7 @@ var authController = {
                 break;
               }
 
-              return _context2.abrupt("return", res.status(400).json({
-                status: 400,
-                error: 'Invalid email or Password'
-              }));
+              return _context2.abrupt("return", (0, _serverResponse.serverResponse)(res, 403, 'status', 'error', "Invalid email or Password"));
 
             case 10:
               _context2.next = 12;
@@ -159,10 +151,7 @@ var authController = {
                 break;
               }
 
-              return _context2.abrupt("return", res.status(422).json({
-                status: 422,
-                error: 'Incorrect Password'
-              }));
+              return _context2.abrupt("return", (0, _serverResponse.serverResponse)(res, 422, 'status', 'error', "Incorrect Password"));
 
             case 15:
               _context2.next = 17;
@@ -179,25 +168,23 @@ var authController = {
                 email: email,
                 id: rows[0].id
               }, process.env.SECRET_KEY);
-              return _context2.abrupt("return", res.header('x-authorization', token).status(200).json({
-                status: 200,
-                data: [{
-                  email: email,
-                  token: token
-                }]
-              }));
+              displayResult = [{
+                email: email,
+                token: token
+              }];
+              return _context2.abrupt("return", (0, _serverResponse.userResponse)(res, token, 201, 'status', 'data', displayResult));
 
-            case 25:
-              _context2.prev = 25;
+            case 26:
+              _context2.prev = 26;
               _context2.t0 = _context2["catch"](0);
-              return _context2.abrupt("return", (0, _error.default)(req, res));
+              return _context2.abrupt("return", (0, _serverResponse.serverError)(res));
 
-            case 28:
+            case 29:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[0, 25]]);
+      }, _callee2, null, [[0, 26]]);
     }));
 
     function login(_x3, _x4) {
@@ -210,7 +197,7 @@ var authController = {
     var _passwordreset = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee3(req, res) {
-      var email, query, _ref4, rows;
+      var email, query, _ref4, rows, token, displayResult;
 
       return regeneratorRuntime.wrap(function _callee3$(_context3) {
         while (1) {
@@ -234,31 +221,30 @@ var authController = {
                 break;
               }
 
-              return _context3.abrupt("return", res.status(404).json({
-                status: 404,
-                error: 'Email does not exist'
-              }));
+              return _context3.abrupt("return", (0, _serverResponse.serverResponse)(res, 404, 'status', 'error', "Email not found"));
 
             case 9:
-              return _context3.abrupt("return", res.status(201).json({
-                status: 201,
-                data: [{
-                  message: 'Check your email for password reset link',
-                  email: rows[0].email
-                }]
-              }));
+              token = _jsonwebtoken.default.sign({
+                email: email,
+                id: rows[0].id
+              }, process.env.SECRET_KEY);
+              displayResult = [{
+                message: 'Check your email for password reset link',
+                email: rows[0].email
+              }];
+              return _context3.abrupt("return", (0, _serverResponse.userResponse)(res, token, 201, 'status', 'data', displayResult));
 
-            case 12:
-              _context3.prev = 12;
+            case 14:
+              _context3.prev = 14;
               _context3.t0 = _context3["catch"](0);
-              return _context3.abrupt("return", (0, _error.default)(req, res));
+              return _context3.abrupt("return", (0, _serverResponse.serverError)(res));
 
-            case 15:
+            case 17:
             case "end":
               return _context3.stop();
           }
         }
-      }, _callee3, null, [[0, 12]]);
+      }, _callee3, null, [[0, 14]]);
     }));
 
     function passwordreset(_x5, _x6) {

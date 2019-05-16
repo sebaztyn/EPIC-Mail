@@ -117,6 +117,7 @@ describe('Testing User SIGNUP/LOGIN and PASSWORD RESET validators', function () 
       email: 'james@yahoo.com',
       password: 'qwertyuiop1?'
     }).end(function (err, res) {
+      console.log(res.body);
       if (err) return done(err);
       expect(res.status).to.equal(422);
       expect(res.body).to.be.an('object');
@@ -203,7 +204,7 @@ describe('Testing Message Endpoints Validators', function () {
       done();
     });
   });
-  it('should return an error status code 422 when an the message field is left empty', function (done) {
+  it('should return an error status code 422 when the message field is left empty', function (done) {
     _chai.default.request(_server.default).post('/api/v1/messages').set('x-authorization', testToken).send({
       subject: 'Are you Available',
       message: '',
@@ -218,7 +219,7 @@ describe('Testing Message Endpoints Validators', function () {
       done();
     });
   });
-  it('should return an error status code 422 when an the subject field is left empty', function (done) {
+  it('should return an error status code 422 when the subject field is left empty', function (done) {
     _chai.default.request(_server.default).post('/api/v1/messages').set('x-authorization', testToken).send({
       subject: '',
       message: 'Can we meetup at 5pm?',
@@ -233,7 +234,7 @@ describe('Testing Message Endpoints Validators', function () {
       done();
     });
   });
-  it('should return an error status code 422 when an the email field is left empty', function (done) {
+  it('should return an error status code 422 when the email field is left empty', function (done) {
     _chai.default.request(_server.default).post('/api/v1/messages').set('x-authorization', testToken).send({
       subject: 'Are you Available',
       message: 'Can we meetup at 5pm?',

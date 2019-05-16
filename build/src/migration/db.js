@@ -93,8 +93,8 @@ function () {
             messagesTable = "CREATE TABLE messages(\n     message_id BIGSERIAL PRIMARY KEY NOT NULL,\n      message TEXT,\n      subject TEXT,\n      created_on TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n      sender_id INTEGER REFERENCES users(id) NOT NULL,\n      receiver_id INTEGER REFERENCES users(id) NOT NULL,\n      parent_message_id INTEGER\n    );";
             inboxTable = "CREATE TABLE inbox(\n      inbox_id BIGSERIAL PRIMARY KEY NOT NULL,\n      sender_email VARCHAR(128) REFERENCES users(email) NOT NULL,\n      message_id INTEGER REFERENCES messages(message_id) NOT NULL,\n      receiver_id INTEGER REFERENCES users(id) NOT NULL,\n      status VARCHAR(20) NOT NULL\n    );";
             sentTable = "CREATE TABLE sent(\n      sent_id BIGSERIAL PRIMARY KEY NOT NULL,\n      sent_message_id INTEGER REFERENCES messages(message_id) NOT NULL,\n      sender_id INTEGER REFERENCES users(id) NOT NULL,\n      receiver_id INTEGER REFERENCES users(id) NOT NULL,\n      status VARCHAR(20) NOT NULL\n    );";
-            myGroupTable = "CREATE TABLE my_group(\n      id BIGSERIAL PRIMARY KEY NOT NULL,\n      name VARCHAR(60),\n      admin_id INT REFERENCES users(id) NOT NULL\n    );";
-            myGroupMembersTable = "CREATE TABLE my_group_members(\n      id BIGSERIAL PRIMARY KEY NOT NULL,\n      user_id INTEGER REFERENCES users(id) NOT NULL,\n      group_id INTEGER REFERENCES my_group(id) NOT NULL,\n      user_role VARCHAR(20)\n    );";
+            myGroupTable = "CREATE TABLE my_group(\n      group_id SERIAL PRIMARY KEY NOT NULL,\n      name VARCHAR(60),\n      admin_id INT REFERENCES users(id) NOT NULL\n    );";
+            myGroupMembersTable = "CREATE TABLE my_group_members(\n      user_id INTEGER REFERENCES users(id) NOT NULL,\n      group_id INTEGER REFERENCES my_group(group_id) NOT NULL,\n      user_role VARCHAR(20)\n    );";
             _context2.prev = 6;
             _context2.next = 9;
             return pool.query(usersTable);
