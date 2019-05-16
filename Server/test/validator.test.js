@@ -132,7 +132,6 @@ describe('Testing User SIGNUP/LOGIN and PASSWORD RESET validators', () => {
         password: 'qwertyuiop1?'
       })
       .end((err, res) => {
-        console.log(res.body)
         if (err) return done(err);
         expect(res.status).to.equal(422);
         expect((res.body)).to.be.an('object');

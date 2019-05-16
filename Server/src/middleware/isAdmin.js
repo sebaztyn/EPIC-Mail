@@ -1,4 +1,5 @@
 import dbQuery from '../models/db-connection';
+import { serverResponse } from '../helper/serverResponse';
 
 const admin = async (req, res, next) => {
   try {
@@ -12,20 +13,12 @@ const admin = async (req, res, next) => {
     };
     const { rows } = await dbQuery(currentUserObj);
     if (!rows.length) {
-      return res.status(403).json({
-        status: 403,
-        error: 'Task can only be performed by the admin of the Group'
-      });
+      return serverResponse(res, 403, 'status', 'error', 'Task can only be performed by the admin of the Group')
     }
     if (rows[0].user_role !== 'undefined') {
       if (rows[0].user_role === 'admin') return next();
-      return res.status(403).json({
-        status: 403,
-        error: 'Task can only be performed by the admin of the Group'
-      });
+      return serverResponse(res, 403, 'status', 'error', 'Task can only be performed by the admin of the Group')
     }
-
-
   } catch (err) {
     return console.log(err.stack);
   }
