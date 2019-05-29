@@ -1,0 +1,273 @@
+@import "./message.css";
+.display-pane {
+  background-color: #fff;
+  height: 100vh;
+  text-align: center;
+  overflow: hidden;
+}
+
+.group-header {
+  margin: 5em auto 1em;
+  visibility: hidden;
+}
+
+.group-cover {
+  height: 55vh;
+  width: 60vw;
+  margin: 0 auto;
+  background-color: #002D40;
+  padding: 1em;
+}
+
+.group-card {
+  height: 75%;
+  width: 100%;
+  background-color: #fff;
+  padding: 1em;
+}
+
+#group-name {
+  width: 100%;
+  outline: none;
+  border: none;
+}
+
+.create-group-buttons {
+  color: #fff;
+  padding-top: 1.5em;
+  font-size: 0.7rem;
+}
+
+.group-cover>div:nth-child(2) span {
+  padding: 1em;
+}
+
+.group-cover>div:nth-child(2) span:hover {
+  cursor: pointer;
+  background-color: rgb(218, 218, 223);
+  color: black;
+}
+
+.group-list-pane {
+  position: fixed;
+  height: 92vh;
+  top: 8vh;
+  right: 0;
+  left: 0;
+  overflow: auto;
+  background-color: #fff;
+}
+
+.group-list-card ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  justify-content: space-around;
+  flex-flow: wrap;
+}
+
+.group-list-card ul li {
+  border: solid 1em #002D40;
+  margin: 1em;
+  padding: 0.5em;
+  flex-grow: 1;
+  text-align: center
+}
+
+.group-list-card ul li input {
+  margin: 0.3em;
+}
+
+.my-group-header {
+  display: none;
+}
+
+.my-group-modal {
+  position: fixed;
+  top: 8vh;
+  height: 92vh;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  background-color: rgba(0, 4, 0, 0.7);
+  display: none;
+}
+
+.group-name-edit {
+  margin: 15% auto;
+  width: 80%;
+  height: 65%;
+  text-align: center;
+  background-color: #fff;
+  position: relative;
+  border: #002D40 solid 1em;
+}
+
+.group-name-edit div {
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  height: 70%;
+  width: 70%;
+  display: block;
+  margin: auto;
+  text-align: center;
+  padding: 1em;
+}
+
+.group-name-edit div>hr {
+  margin: 0 1em 3em 1em
+}
+
+.group-name-edit input {
+  border: none;
+  outline: none;
+  width: 90%;
+  text-align: center;
+}
+
+.group-name-edit>span {
+  display: inline-block;
+  padding: 0.7em;
+  position: absolute;
+  top: 1%;
+  right: 1%;
+}
+
+.group-name-edit>span:hover {
+  background-color: #002D40;
+  color: #fff;
+  cursor: pointer
+}
+
+.group-name-edit div span {
+  padding: 1em;
+}
+
+.group-name-edit div span:hover {
+  background-color: #002D40;
+  color: #fff;
+  cursor: pointer;
+}
+
+.add-group-member {
+  margin: 15% auto;
+  width: 80%;
+  height: 65%;
+  text-align: center;
+  background-color: #fff;
+  position: relative;
+  border: #002D40 solid 1em;
+  display: none;
+}
+
+.add-group-member div {
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  height: 70%;
+  width: 70%;
+  display: block;
+  margin: auto;
+  text-align: center;
+  padding: 1em;
+}
+
+.add-group-member input {
+  border: none;
+  outline: none;
+  width: 90%;
+  text-align: center;
+}
+
+.add-group-member div span {
+  padding: 1em;
+}
+
+.add-group-member div span:hover {
+  background-color: #002D40;
+  color: #fff;
+}
+
+.add-group-member>span {
+  display: inline-block;
+  padding: 0.7em;
+  position: absolute;
+  top: 1%;
+  right: 1%;
+}
+
+.add-group-member>span:hover {
+  background-color: #002D40;
+  color: #fff;
+}
+
+.new-group-message {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: none;
+}
+
+@media(min-width: 35em) {
+  .add-group-member div span {
+    padding: 0.5em;
+  }
+  .group-name-edit div span {
+    padding: 0.5em;
+  }
+  .group-name-edit>span {
+    padding: 0.5em;
+  }
+  .add-group-member>span {
+    padding: 0.5em;
+  }
+  .my-group-modal {
+    top: 0;
+    height: 100vh;
+    left: 20vw;
+  }
+  .my-group-header {
+    display: block;
+    margin: 1em;
+    text-align: center;
+  }
+  .group-list-pane {
+    position: fixed;
+    width: 80vw;
+    left: 20vw;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    height: 100vh;
+  }
+  .group-list-card ul {
+    width: 100%;
+    height: 100%
+  }
+  .group-list-card ul li {
+    width: 25%
+  }
+  .group-card {
+    padding: 1em;
+  }
+  #group-name::placeholder {
+    text-align: start;
+  }
+  .display-pane {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 80vw;
+    padding: 2em;
+  }
+  .group-header {
+    visibility: visible
+  }
+  .group-cover {
+    height: 40vh;
+  }
+}

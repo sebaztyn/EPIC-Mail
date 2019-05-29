@@ -1,7 +1,6 @@
 :root {
   box-sizing: border-box;
   font-size: calc(1vw + 0.4em);
-  min-height: 100vh
 }
 
 *,
@@ -136,7 +135,6 @@ a[href="password-reset.html"]:hover {
 
 .form-footer {
   width: 100%;
-  padding-top: 1em;
   display: flex;
   justify-content: center;
 }
@@ -154,6 +152,10 @@ a[href="password-reset.html"]:hover {
 
 .form-footer button:active {
   background-color: rgb(7, 16, 66);
+}
+
+.form-footer button:hover {
+  cursor: pointer;
 }
 
 .form-footer span {
@@ -246,6 +248,14 @@ footer p {
 .message-card p {
   line-height: 1.2;
   font-size: 2em;
+}
+
+.user-notification {
+  margin: 1em 0.5em;
+  padding: 1em;
+  color: rgb(7, 16, 66);
+  font-weight: 300;
+  width: 100%
 }
 
 @media (min-width: 35em) {

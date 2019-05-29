@@ -7,6 +7,7 @@
     <title>Login | Epic Mail</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" media="screen" href="./css/andela-EPIC-MAIL.css" />
+    <script defer src="messages/js/login.js"></script>
 </head>
 
 <body>
@@ -28,32 +29,31 @@
                     </p>
                 </div>
                 <div class="account-form" id="loginform-container">
-                    <form action="messages/index.html" class="main-login" id="login-form">
+                    <div class="main-login" id="login-form">
                         <div>
-                            <input type="email" placeholder="Enter Email" required>
+                            <input type="email" placeholder="Enter Email" required id="login-email-input">
                         </div>
                         <div>
-                            <input type="password" placeholder="Enter Password" required>
+                            <input type="password" placeholder="Enter Password" required id="login-password-input">
                         </div>
                         <div class="form-footer">
                             <form action="login.html">
-                                <button type="submit">Login</button>
+                                <button type="submit" class="login-submit-button">Login</button>
                             </form>
                             <form action="signup.html">
-                                <button type="submit">Sign up</button>
+                                <button type="submit" class="login-signup-button">Sign up</button>
                             </form>
-                            <div class="forgot">
-                                <span id="password-reset"><a href="password-reset.html"> Forgot Password?</a></span>
-                            </div>
-                            <footer>
-                                <p>&#169 2019 EPIC Mail. All Rights Reserved</p>
-                            </footer>
                         </div>
-                    </form>
+                        <div class="forgot">
+                            <span id="password-reset"><a href="password-reset.html"> Forgot Password?</a></span>
+                        </div>
+                        <footer>
+                            <p>&#169 2019 EPIC Mail. All Rights Reserved</p>
+                        </footer>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 </body>
 

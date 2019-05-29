@@ -24,31 +24,32 @@
             </p>
         </div>
         <div class="account-form" id="loginform-container">
-            <form action="messages/index.html" class="main-login" id="login-form">
+            <form action="messages/index.html" class="main-login" id="login-form" method="POST">
                 <div>
-                    <input type="text" placeholder="First Name" required>
+                    <input id='signup-firstName' type="text" placeholder="First Name" required value="">
                 </div>
                 <div>
-                    <input type="text" placeholder="Last Name" required>
+                    <input id='signup-lastName' type="text" placeholder="Last Name" required value="">
                 </div>
                 <div>
-                    <input type="text" placeholder="username" required>
+                    <input id='signup-username' type="text" placeholder="username" required value="">
                 </div>
                 <div>
-                    <input type="email" placeholder="Email" required>
+                    <input id='signup-email' type="email" placeholder="Email" required value="">
                 </div>
                 <div>
-                    <input type="password" placeholder="Password" required>
+                    <input id='signup-password' type="password" placeholder="Password" required value="">
                 </div>
                 <div>
-                    <input type="password" placeholder="Confirm Password" required>
+                    <input id='signup-confirm-password' type="password" placeholder="Confirm Password" required
+                        value="">
                 </div>
                 <div>
-                    <input type="text" placeholder="Enter Recovery Password" required>
+                    <input id='signup-recoveryEmail' type="text" placeholder="Enter Recovery Email" required value="">
                 </div>
-                <div class="form-footer">
-                    <button type="submit">Sign up</button>
-                    <button type="reset">Reset</button>
+                <div id="signup-form-buttons">
+                    <button type="submit" id="signup-button">Sign up</button>
+                    <button type="reset" id="signup-reset-button">Reset</button>
                 </div>
                 <div class="footer-message">
                     <p> Got an Account? <a href="login.html">Click here to Login</a></p>
@@ -61,7 +62,7 @@
         <div class="signup-form" id="signupform-container">
         </div>
     </div>
-    <script src="messages/js/index.js"></script>
+    <script defer src="messages/js/signup.js"></script>
 </body>
 
 </html>
