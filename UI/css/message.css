@@ -1,6 +1,6 @@
 :root {
   box-sizing: border-box;
-  font-size: calc(1vw + 0.3em);
+  font-size: calc(1vw + 0.4em);
 }
 
 *,
@@ -17,7 +17,6 @@ body {
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
-  height: 100vh;
 }
 
 header {
@@ -27,7 +26,9 @@ header {
   text-align: center;
   position: fixed;
   top: 0;
-  height: 7vh;
+  left: 0;
+  right: 0;
+  height: 8vh;
   z-index: 3;
   width: 100vw
 }
@@ -35,32 +36,59 @@ header {
 header h1 {
   text-align: center;
   height: 100%;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.main {
+  display: flex;
+  position: fixed;
+  padding-right: 1em;
+  top: 7vh;
+  bottom: 0;
+  width: 100vw;
+  background-color: #fff;
+  max-height: 93vh;
+  overflow: hidden;
 }
 
 .container {
-  position: absolute;
-  top: 7vh;
-  width: 100vw
+  width: inherit;
+  min-height: 100vh;
+}
+
+.view-pane {
+  display: none;
+  width: inherit;
+  height: inherit;
+  overflow: auto;
 }
 
 .container ul {
+  position: absolute;
   margin: 0;
-  padding: 0 0.2em;
+  padding: 1em 0.2em 1em 0.2em;
   width: inherit;
-  background-color: #fff;
-  min-height: 100vh;
+  height: 100%;
   overflow: auto;
 }
 
 .container ul li {
   list-style: none;
-  border-bottom: solid 2px black;
-  padding: 0.8em;
+  border-bottom: solid 0.5px rgb(169, 169, 172);
+  padding: 0.5em;
+  cursor: pointer;
+}
+
+.container ul li:last-child {
+  margin-bottom: 1.3em;
 }
 
 .container ul li p {
   margin: 0;
+  border: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #modal-test {
@@ -83,7 +111,7 @@ header h1 {
   top: 7vh;
   left: 0.1em;
   width: 70vw;
-  min-height: 100vh;
+  height: 94vh;
   opacity: 1;
   background-color: #002D40;
   visibility: hidden;
@@ -99,7 +127,7 @@ header h1 {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 30vh;
+  height: 20%;
 }
 
 .homepage-navbar .new-mail-navbar li {
@@ -146,12 +174,13 @@ header h1 {
 
 .homepage-navbar .all-list {
   list-style: none;
-  margin-bottom: 3em;
   padding: 0;
+  padding-top: 0.5em;
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 50vh;
+  height: 100%;
+  margin: 0;
 }
 
 .homepage-navbar .all-list li {
@@ -198,16 +227,14 @@ header h1 {
 
 .message-header button {
   position: absolute;
-  top: 0.2em;
+  top: 0.1em;
   left: 0.1em;
-  padding: 0.2em 1.5em;
-  margin-bottom: 3em;
   border: 0;
   background-color: transparent;
   font-size: 3em;
-  width: 1em;
-  height: 1em;
-  line-height: 0.4;
+  width: 0.8em;
+  height: 0.8em;
+  line-height: 0.3;
   text-indent: 5em;
   white-space: nowrap;
   overflow: hidden;
@@ -260,11 +287,163 @@ header h1 {
   }
 }
 
+.unread-notification {
+  height: 100%;
+  position: relative;
+  text-align: center
+}
+
+.unread-notification p:first-child {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+}
+
+.unread-notification p:nth-child(2) {
+  position: absolute;
+  width: 100%;
+  top: 53%;
+}
+
+.message-showing {
+  display: block;
+}
+
+.new-template {
+  height: 100%;
+}
+
+.new-template div {
+  text-align: start;
+  padding-top: 0.5em;
+}
+
+.new-template div:first-child {
+  text-align: end;
+}
+
+.new-template div:first-child span {
+  margin-left: 1em;
+  color: black;
+  padding: 0.4em;
+}
+
+.new-template div:first-child span:hover {
+  background-color: rgb(218, 218, 223);
+  color: black;
+  cursor: pointer;
+}
+
+.new-template div span {
+  padding-right: 0.3em;
+  color: rgb(169, 169, 172);
+  font-size: 0.8em
+}
+
+.new-template input {
+  border: none;
+  outline: none;
+}
+
+.new-template input::placeholder {
+  font-size: 1em
+}
+
+.new-template textarea {
+  border: none;
+  outline: none;
+  padding: 0.5em;
+  width: 100%;
+  border-bottom: 2px solid rgb(169, 169, 172);
+}
+
+hr {
+  margin: 0;
+  margin-top: 0.3em;
+}
+
+.message-form {
+  height: 100%;
+}
+
+i {
+  padding-right: 0.3em;
+}
+
+.display-list-message {
+  height: inherit;
+  display: none;
+  padding: 2em;
+  background-color: #fff;
+}
+
+.new-msg-container {
+  height: 100%;
+  width: 100%;
+  padding: 0.5em;
+  display: none;
+}
+
+.sender {
+  margin-bottom: 3em;
+  font-size: 0.7em;
+}
+
+#sender-email {
+  width: 85%;
+}
+
+#email-subject {
+  width: 85%;
+}
+
+#recipient-email {
+  width: 85%;
+}
+
+.container-header {
+  text-align: center;
+  display: none;
+  text-transform: uppercase;
+  font-style: italic
+}
+
+.display-list-message div:first-child {
+  position: relative;
+}
+
+.display-list-message span:first-child {
+  /* border: 1px solid dimgray; */
+  padding: 0.3em;
+  margin-bottom: 1em;
+  font-size: 0.7rem;
+}
+
+.display-list-message span:nth-child(2) {
+  /* border: 1px solid dimgray; */
+  position: absolute;
+  right: 0;
+  padding: 0.3em;
+  margin-bottom: 1em;
+  font-size: 0.7rem;
+}
+
+.display-list-message span:first-child:hover {
+  background-color: rgb(151, 151, 160);
+  cursor: pointer;
+}
+
+.display-list-message span:nth-child(2):hover {
+  background-color: rgb(151, 151, 160);
+  cursor: pointer;
+}
+
 @media(min-width: 35em) {
-  body {
-    display: grid;
-    grid-template-rows: repeat(6, 1fr);
-    grid-template-columns: 20vw repeat(9, 1fr)
+  .container-header {
+    display: block;
+    color: dimgray;
+    margin: 0;
+    padding-top: 1em;
   }
   header {
     display: none
@@ -275,34 +454,30 @@ header h1 {
     top: 0;
     left: 0;
     background-color: #002D40;
-    min-height: 100vh;
+    height: 100vh;
     opacity: 1;
     visibility: visible;
   }
-  .container {
-    grid-row: 1/-1;
-    grid-column: 2/-1;
+  .main {
     left: 20vw;
+    width: 80vw;
     top: 0;
     bottom: 0;
     right: 0;
-    height: 100%;
-    overflow: auto;
-    width: 80vw
+    max-height: 100vh;
+    overflow: hidden;
+    overflow-x: hidden;
   }
   .container ul {
-    min-height: 100vh;
+    height: 100vh;
     overflow: auto;
+    overflow-x: hidden;
   }
   .message-header button {
     display: none;
   }
   #modal-test {
-    grid-row: 2/-1;
-    grid-column: 1/2;
     display: block !important;
-    background-color: #002D40;
-    min-height: 100vh;
   }
   .modal-backdrop {
     display: none;
@@ -316,11 +491,9 @@ header h1 {
 }
 
 @media (min-width: 50em) {
-  /* body {
-        display: grid;
-        grid-template-columns: 20vw 30vw 50vw;
-        max-height: 100vh;
-    } */
+  .display-list-message span:first-child {
+    display: none;
+  }
   .homepage-navbar {
     position: fixed;
     width: 20vw;
@@ -331,27 +504,42 @@ header h1 {
     opacity: 1;
     visibility: visible;
   }
-  .container {
-    grid-column: 2/3;
-    position: fixed;
-    top: 0;
+  .main {
     left: 20vw;
-    width: 30vw;
-    height: 100%;
-    overflow: auto;
+    width: 80vw;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    max-height: 100vh;
+    overflow: hidden;
+    overflow-x: hidden;
+  }
+  .container {
+    width: 27%;
+    height: 100vh;
+    border-right: 1px solid rgb(169, 169, 172);
+    /* padding-bottom: 2em; */
   }
   .container ul {
-    min-height: 100vh;
+    height: 100vh;
+    overflow: auto;
+  }
+  .view-pane {
+    display: flex;
+    width: 73%;
+    height: 100vh;
     overflow: auto;
   }
   .display-message {
-    position: fixed;
-    width: 50vw;
-    top: 0;
-    right: 0;
-    background: transparent;
-    max-height: 100vh;
-    overflow: auto
+    text-align: start;
+  }
+  .new-msg-container {
+    width: 100%;
+    padding-right: 2em;
+  }
+  .display-list-message {
+    width: 100%;
+    padding-right: 2em;
   }
   .container ul li:hover {
     background-color: rgb(195, 192, 192);
