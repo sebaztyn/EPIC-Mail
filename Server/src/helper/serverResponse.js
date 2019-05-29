@@ -18,7 +18,7 @@ export const authResponse = (response, statusValue, ...values) => {
 };
 export const userResponse = (response, token, statusValue, ...values) => {
   const [statusKey, dataKey, dataValue] = values;
-  return response.header('x-authorization', token).status(statusValue).json({
+  return response.header('authorization', token).status(statusValue).json({
     [statusKey]: statusValue,
     [dataKey]: dataValue
   });

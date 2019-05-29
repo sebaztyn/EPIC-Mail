@@ -11,8 +11,7 @@ const signupSchema = Joi.object().keys({
 });
 
 const loginSchema = Joi.object().keys({
-  password: Joi.string().min(8).max(255)
-    .required(),
+  password: Joi.required(),
   email: Joi.string().email().regex(/^\S+@\S+\.\S+$/).required()
 });
 
@@ -64,7 +63,7 @@ const validation = {
         return next();
       });
     }
-    return serverResponse(res, 422, 'status', 'error', 'Check password length and values. Ensure your password contains One uppercase, one lowercase, one number, one special character. Password length must also be at least 8 characters long');
+    return serverResponse(res, 422, 'status', 'error', 'Invalid password length or values');
   },
 
   createMessageValidator(req, res, next) {

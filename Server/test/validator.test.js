@@ -196,7 +196,7 @@ describe('Testing Message Endpoints Validators', () => {
   before((done) => {
     chai.request(server)
       .post('/api/v1/messages')
-      .set('x-authorization', testToken)
+      .set('Authorization', `Bearer ${testToken}`)
       .send({
         subject: 'Are you Ready',
         message: 'Chelsea is coming to town!!!!!!!',
@@ -210,7 +210,7 @@ describe('Testing Message Endpoints Validators', () => {
   before((done) => {
     chai.request(server)
       .post('/api/v1/messages')
-      .set('x-authorization', testToken)
+      .set('Authorization', `Bearer ${testToken}`)
       .send({
         subject: 'Integration test alert !!!!!!!!!',
         message: 'We are running an integrated tests on our endpoints',
@@ -224,7 +224,7 @@ describe('Testing Message Endpoints Validators', () => {
   it('should return an error status code 422 when an invalid email is supplied', (done) => {
     chai.request(server)
       .post('/api/v1/messages')
-      .set('x-authorization', testToken)
+      .set('Authorization', `Bearer ${testToken}`)
       .send({
         subject: 'Are you Available',
         message: 'Can we meetup at 5pm?',
@@ -243,7 +243,7 @@ describe('Testing Message Endpoints Validators', () => {
   it('should return an error status code 422 when the message field is left empty', (done) => {
     chai.request(server)
       .post('/api/v1/messages')
-      .set('x-authorization', testToken)
+      .set('Authorization', `Bearer ${testToken}`)
       .send({
         subject: 'Are you Available',
         message: '',
@@ -262,7 +262,7 @@ describe('Testing Message Endpoints Validators', () => {
   it('should return an error status code 422 when the subject field is left empty', (done) => {
     chai.request(server)
       .post('/api/v1/messages')
-      .set('x-authorization', testToken)
+      .set('Authorization', `Bearer ${testToken}`)
       .send({
         subject: '',
         message: 'Can we meetup at 5pm?',
@@ -281,7 +281,7 @@ describe('Testing Message Endpoints Validators', () => {
   it('should return an error status code 422 when the email field is left empty', (done) => {
     chai.request(server)
       .post('/api/v1/messages')
-      .set('x-authorization', testToken)
+      .set('Authorization', `Bearer ${testToken}`)
       .send({
         subject: 'Are you Available',
         message: 'Can we meetup at 5pm?',
@@ -303,7 +303,7 @@ describe('Testing GROUP Endpoints Validators', () => {
   before((done) => {
     chai.request(server)
       .post('/api/v1/groups')
-      .set('x-authorization', testToken)
+      .set('Authorization', `Bearer ${testToken}`)
       .send({
         name: 'My validator group 1'
       })
@@ -315,7 +315,7 @@ describe('Testing GROUP Endpoints Validators', () => {
   before((done) => {
     chai.request(server)
       .post('/api/v1/groups')
-      .set('x-authorization', testToken)
+      .set('Authorization', `Bearer ${testToken}`)
       .send({
         name: 'My validator group 2!!'
       })
@@ -327,7 +327,7 @@ describe('Testing GROUP Endpoints Validators', () => {
   before((done) => {
     chai.request(server)
       .post('/api/v1/groups')
-      .set('x-authorization', testToken)
+      .set('Authorization', `Bearer ${testToken}`)
       .send({
         name: 'My validator group 3!!!!!!'
       })
@@ -341,7 +341,7 @@ describe('Testing GROUP Endpoints Validators', () => {
   it('should return an error status code 422 when the new group name field is left empty- CREATE NEW GROUP ENDPOINT', (done) => {
     chai.request(server)
       .post('/api/v1/groups')
-      .set('x-authorization', testToken)
+      .set('Authorization', `Bearer ${testToken}`)
       .send({
         name: ''
       })
@@ -358,7 +358,7 @@ describe('Testing GROUP Endpoints Validators', () => {
   it('should return an error status code 422 when the new group name characters are less than 5 - CREATE NEW GROUP ENDPOINT', (done) => {
     chai.request(server)
       .post('/api/v1/groups')
-      .set('x-authorization', testToken)
+      .set('Authorization', `Bearer ${testToken}`)
       .send({
         name: 'Hey'
       })
@@ -375,7 +375,7 @@ describe('Testing GROUP Endpoints Validators', () => {
   it('should return an error status code 422 when the group name characters are less than 5 - CHANGE GROUP NAME ENDPOINT', (done) => {
     chai.request(server)
       .patch('/api/v1/groups/5/name')
-      .set('x-authorization', testToken)
+      .set('Authorization', `Bearer ${testToken}`)
       .send({
         name: 'test'
       })
@@ -392,7 +392,7 @@ describe('Testing GROUP Endpoints Validators', () => {
   it('should return an error status code 422 when the group name change field is empty- CHANGE GROUP NAME ENDPOINT', (done) => {
     chai.request(server)
       .patch('/api/v1/groups/5/name')
-      .set('x-authorization', testToken)
+      .set('Authorization', `Bearer ${testToken}`)
       .send({
         name: ''
       })
@@ -409,7 +409,7 @@ describe('Testing GROUP Endpoints Validators', () => {
   it('should return an error status code 422 when the new group member\'s email field is empty- ADD NEW USER TO GROUP ENDPOINT', (done) => {
     chai.request(server)
       .post('/api/v1/groups/5/users/')
-      .set('x-authorization', testToken)
+      .set('Authorization', `Bearer ${testToken}`)
       .send({
         email: ''
       })
@@ -426,7 +426,7 @@ describe('Testing GROUP Endpoints Validators', () => {
   it('should return an error status code 422 when the new group member\'s email is invalid- ADD NEW USER TO GROUP ENDPOINT', (done) => {
     chai.request(server)
       .post('/api/v1/groups/5/users/')
-      .set('x-authorization', testToken)
+      .set('Authorization', `Bearer ${testToken}`)
       .send({
         email: 'ucheyahoo.com'
       })
@@ -443,7 +443,7 @@ describe('Testing GROUP Endpoints Validators', () => {
   it('should return an error status code 422 when an the mail-subject field is left empty - NEW GROUP MESSAGE ENDPOINT', (done) => {
     chai.request(server)
       .post('/api/v1/groups/1/messages')
-      .set('x-authorization', testToken)
+      .set('Authorization', `Bearer ${testToken}`)
       .send({
         subject: '',
         message: 'Can we meetup at 5pm?'
@@ -461,7 +461,7 @@ describe('Testing GROUP Endpoints Validators', () => {
   it('should return an error status code 422 when an the new mail-message field is left empty - NEW GROUP MESSAGE ENDPOINT', (done) => {
     chai.request(server)
       .post('/api/v1/groups/1/messages')
-      .set('x-authorization', testToken)
+      .set('Authorization', `Bearer ${testToken}`)
       .send({
         subject: 'Are you home?',
         message: ''

@@ -25,7 +25,8 @@ const messageControllers = {
         subject: rows[0].subject,
         message: rows[0].message,
         createdOn: rows[0].created_on,
-        senderId: myEmail
+        senderId: myEmail,
+        receiverEmail: email
       }];
 
       return serverResponse(res, 201, 'status', 'data', resultValues);
@@ -48,10 +49,11 @@ const messageControllers = {
         values: [userInfo.rows[0].id, 'unread']
       };
       const inbox = await dbQuery(inboxQuery);
-
       const messageId = inbox.rows.map((each => each.message_id));
       const messageData = {
-        text: 'SELECT * FROM messages WHERE message_id=ANY($1)',
+        text: `SELECT * FROM messages AS msg
+        JOIN users ON msg.sender_id = users.id
+        WHERE msg.message_id=ANY($1)`,
         values: [messageId]
       };
       const { rows } = await dbQuery(messageData);
@@ -74,10 +76,12 @@ const messageControllers = {
       const usersId = userInfo.rows[0].id;
 
       const userInboxData = {
-        text: `SELECT msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, inbox.sender_email, msg.parent_message_id, inbox.status
+        text: `SELECT DISTINCT users.firstname, users.lastname, users.email,msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, inbox.sender_email, msg.parent_message_id, inbox.status
          FROM messages AS msg
          JOIN inbox ON msg.message_id=inbox.message_id
-         WHERE inbox.receiver_id=$1`,
+         JOIN users ON msg.sender_id = users.id
+         WHERE inbox.receiver_id=$1
+        ORDER BY msg.message_id ASC`,
         values: [usersId]
       };
       const { rows } = await dbQuery(userInboxData);
@@ -93,9 +97,12 @@ const messageControllers = {
     try {
       const { id } = req.tokenData;
       const sentMessageData = {
-        text: `SELECT * FROM messages AS msg
+        text: `SELECT DISTINCT users.firstname, users.lastname,users.email, msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, msg.parent_message_id
+        FROM messages AS msg
         JOIN sent ON msg.message_id = sent.sent_message_id
-        WHERE sent.sender_id=$1`,
+        JOIN users ON sent.receiver_id = users.id
+        WHERE sent.sender_id=$1
+        ORDER BY msg.message_id ASC`,
         values: [id]
       };
       const { rows } = await dbQuery(sentMessageData);
@@ -121,11 +128,11 @@ const messageControllers = {
       await dbQuery(inboxQuery);
 
       const messageData = {
-        text: `SELECT msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, inbox.sender_email, msg.parent_message_id, inbox.status
-        FROM messages AS msg
-        JOIN inbox ON msg.receiver_id=inbox.receiver_id
-        WHERE msg.message_id=$1 AND msg.receiver_id=$2`,
-        values: [messageID, id]
+        text: `SELECT DISTINCT users.email, msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, msg.parent_message_id
+		    FROM messages AS msg
+        JOIN users ON users.id=msg.sender_id
+        WHERE msg.message_id=$1;`,
+        values: [messageID]
       };
       const { rows } = await dbQuery(messageData);
 
@@ -143,8 +150,9 @@ const messageControllers = {
     const { id } = req.tokenData;
     try {
       const messageData = {
-        text: `SELECT DISTINCT msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, msg.parent_message_id, sent.status
+        text: `SELECT DISTINCT users.email, msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, msg.parent_message_id, sent.status
         FROM messages AS msg
+        JOIN users ON msg.receiver_id=users.id
         JOIN sent ON msg.sender_id=sent.sender_id
         WHERE msg.message_id=$1 AND sent.sender_id=$2`,
         values: [messageID, id]

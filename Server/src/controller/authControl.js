@@ -77,8 +77,7 @@ const authController = {
       if (!rows.length) {
         return serverResponse(res, 404, 'status', 'error', "Email not found");
       }
-      const token = jwt.sign({ email, id: rows[0].id }, process.env.SECRET_KEY);
-      const displayResult = [{
+      const token = jwt.sign({ email, id: rows[0].id }, process.env.SECRET_KEY); const displayResult = [{
         message: 'Check your email for password reset link',
         email: rows[0].email
       }];

@@ -24,14 +24,16 @@ const groupControllers = {
       };
       const { rows: newGroup } = await dbQuery(newGroupData);
       const firstMember = {
-        text: 'INSERT INTO my_group_members (user_id,user_role, group_id) VALUES($1, $2, $3) RETURNING *',
+        text: 'INSERT INTO my_group_members (user_id,user_role, group_id) VALUES($1, $2, $3)',
         values: [adminId, 'admin', newGroup[0].group_id]
       };
       await dbQuery(firstMember);
-      return serverResponse(res, 201, 'status', 'data', [{
-        id: newGroup[0].group_id,
-        name: newGroup[0].name
-      }]);
+      if (newGroup.length > 0) {
+        return serverResponse(res, 201, 'status', 'data', [{
+          id: newGroup[0].group_id,
+          name: newGroup[0].name
+        }]);
+      }
     } catch (err) {
       return serverError(res);
     }
@@ -120,8 +122,8 @@ const groupControllers = {
         groupId,
         userId: userRows[0].user_id,
         userRole: userRows[0].user_role
-      }]
-      return serverResponse(res, 201, 'status', 'data', displayResult );
+      }];
+      return serverResponse(res, 201, 'status', 'data', displayResult);
     } catch (err) {
       return serverError(res);
     }
@@ -172,7 +174,7 @@ const groupControllers = {
         message: result[0].message,
         parentMessageId: result[0].parent_message_id,
         status: 'Sent'
-      }]
+      }];
 
       return serverResponse(res, 201, 'status', 'data', displayResult);
     } catch (err) {

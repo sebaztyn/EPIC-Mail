@@ -6,7 +6,7 @@ import validate from '../middleware/validator';
 
 const router = Router();
 
-router.post('', authenticate, validate.createNewGroup, groupControllers.createGroup);
+router.post('/', authenticate, validate.createNewGroup, groupControllers.createGroup);
 
 router.post('/:groupId/messages', authenticate, validate.groupMessageValidator, groupControllers.groupMessage);
 
