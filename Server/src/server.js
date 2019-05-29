@@ -1,9 +1,7 @@
 import '@babel/polyfill';
 import express from 'express';
 import cors from 'cors';
-// import cookieParser from 'cookie-parser';
 import 'dotenv/config';
-import cookieParser from 'cookie-parser';
 import YAML from 'yamljs';
 import swaggerUi from 'swagger-ui-express';
 import messageRouters from './routes/message.router';
@@ -13,7 +11,6 @@ import authenticationRouter from './routes/authenticationRouter';
 
 const swaggerDocument = YAML.load(`${__dirname}/../../swagger.yaml`);
 const app = express();
-app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
