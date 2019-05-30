@@ -45,7 +45,7 @@ const groupMethods = {
   },
   createGroupHandler(event) {
     event.preventDefault();
-    const url = 'http://localhost:3000/api/v1/groups';
+    const url = 'https://epic-mail-2018.herokuapp.com/api/v1/groups';
     const newGroupName = document.querySelector('#group-name').value;
     const obj = {
       name: newGroupName
@@ -53,7 +53,7 @@ const groupMethods = {
     return postGroup(url, obj);
   },
   listGroupsHandler() {
-    const url = 'http://localhost:3000/api/v1/groups';
+    const url = 'https://epic-mail-2018.herokuapp.com/api/v1/groups';
     fetch(url, option)
       .then(res => res.json())
       .then((response) => {

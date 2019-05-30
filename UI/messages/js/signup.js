@@ -41,7 +41,7 @@ const signupHandler = (event) => {
     return notifyUser('Passwords do not match. Try again');
   }
   delete formData.confirmPassword;
-  fetch('http://localhost:3000/api/v1/auth/signup', {
+  fetch('https://epic-mail-2018.herokuapp.com/api/v1/auth/signup', {
     method: 'POST',
     body: JSON.stringify(formData),
     headers: {
@@ -52,9 +52,8 @@ const signupHandler = (event) => {
     .then((response) => {
       if (response.status === 201) {
         localStorage.setItem('token', response.data[0].token);
-        console.log(localStorage.getItem('token'));
         notifyUser('Signup successful');
-        setTimeout(() => { window.location.replace('http://127.0.0.1:5500/UI/messages/index.html'); }, 2000);
+        setTimeout(() => { window.location.replace('../index.html'); }, 2000);
       } else {
         return notifyUser(response.error);
       }

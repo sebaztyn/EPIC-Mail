@@ -15,7 +15,7 @@ const sendMailHandler = (event) => {
   const subject = document.querySelector('#email-subject').value;
   const message = document.querySelector('#email-message').value;
   const messageObj = { email, subject, message };
-  const url = 'http://localhost:3000/api/v1/messages';
+  const url = 'https://epic-mail-2018.herokuapp.com/api/v1/messages';
   return fetchPOST(url, 'POST', messageObj);
 };
 
