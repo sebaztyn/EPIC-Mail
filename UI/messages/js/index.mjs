@@ -41,7 +41,7 @@ const sendMailHandler = (event) => {
   const subject = document.querySelector('#email-subject').value;
   const message = document.querySelector('#email-message').value;
   const messageObj = { email, subject, message };
-  const url = 'http://localhost:3000/api/v1/messages';
+  const url = 'https://epic-mail-2018.herokuapp.com/api/v1/messages';
   return fetchPOST(url, 'POST', messageObj);
 };
 
@@ -79,39 +79,39 @@ const composeMessageHandler = () => {
 
 if (myGroupsBodyTag) groupMethods.listGroupsHandler();
 if (composeMessageTag) composeMessageHandler();
-if (inboxBodyTag) bodyHandler('http://localhost:3000/api/v1/messages');
-if (unreadBodyTag) bodyHandler('http://localhost:3000/api/v1/messages/unread');
-if (sentBodyTag) bodyHandler('http://localhost:3000/api/v1/messages/sent');
-if (draftBodyTag) bodyHandler('http://localhost:3000/api/v1/messages/draft');
+if (inboxBodyTag) bodyHandler('https://epic-mail-2018.herokuapp.com/api/v1/messages');
+if (unreadBodyTag) bodyHandler('https://epic-mail-2018.herokuapp.com/api/v1/messages/unread');
+if (sentBodyTag) bodyHandler('https://epic-mail-2018.herokuapp.com/api/v1/messages/sent');
+if (draftBodyTag) bodyHandler('https://epic-mail-2018.herokuapp.com/api/v1/messages/draft');
 
 const newMessageHandler = () => {
   if (localStorage.getItem('token')) {
-    window.location.href = 'http://127.0.0.1:5500/UI/messages/compose-message.html';
+    window.location.href = '../compose-message.html';
   }
 };
 const unreadHandler = () => {
   if (localStorage.getItem('token')) {
-    window.location.href = 'http://127.0.0.1:5500/UI/messages/unread.html';
+    window.location.href = '../unread.html';
   }
 };
 const sentMessageViewHandler = () => {
   if (localStorage.getItem('token')) {
-    window.location.href = 'http://127.0.0.1:5500/UI/messages/sent.html';
+    window.location.href = '../sent.html';
   }
 };
 const inboxHandler = () => {
   if (localStorage.getItem('token')) {
-    window.location.href = 'http://127.0.0.1:5500/UI/messages/index.html';
+    window.location.href = '../index.html';
   }
 };
 const myGroupHandler = () => {
   if (localStorage.getItem('token')) {
-    window.location.href = 'http://127.0.0.1:5500/UI/messages/my-group.html';
+    window.location.href = '../my-group.html';
   }
 };
 const createGroupLinkHandler = () => {
   if (localStorage.getItem('token')) {
-    window.location.href = 'http://127.0.0.1:5500/UI/messages/group.html';
+    window.location.href = '../group.html';
   }
 };
 const clickHandler = (url) => {
@@ -151,10 +151,10 @@ draft.addEventListener('click', clickHandler);
 if (messageReturnButton) {
   messageReturnButton.addEventListener('click', (event) => {
     event.preventDefault();
-    if (inboxBodyTag) window.location.href = 'http://127.0.0.1:5500/UI/messages/index.html';
-    if (unreadBodyTag) window.location.href = 'http://127.0.0.1:5500/UI/messages/unread.html';
-    if (sentBodyTag) window.location.href = 'http://127.0.0.1:5500/UI/messages/sent.html';
-    if (draftBodyTag) window.location.href = 'http://127.0.0.1:5500/UI/messages/draft.html';
-    if (deletedBodyTag) window.location.href = 'http://127.0.0.1:5500/UI/messages/deleted.html';
+    if (inboxBodyTag) window.location.href = '../index.html';
+    if (unreadBodyTag) window.location.href = '../unread.html';
+    if (sentBodyTag) window.location.href = '../sent.html';
+    if (draftBodyTag) window.location.href = '../draft.html';
+    if (deletedBodyTag) window.location.href = '../deleted.html';
   });
 }

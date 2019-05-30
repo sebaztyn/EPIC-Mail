@@ -1,5 +1,5 @@
 
-const ulContainerElement = document.querySelector('div[class="container"] ul');
+let ulContainerElement = document.querySelector('div[class="container"] ul');
 const mainContainerElement = document.querySelector('div[class="container"]');
 const inboxBodyTag = document.querySelector('#application-inbox-body-element');
 const deletedBodyTag = document.querySelector('#application-deleted-body-element');
@@ -61,8 +61,8 @@ const dataObj = (res) => {
   ulContainerElement.innerHTML = '';
   messages.forEach((message) => {
     const liElement = document.createElement('li');
-    if (unreadBodyTag || inboxBodyTag) liElement.addEventListener('click', event => displayMessageHandler(event, `http://localhost:3000/api/v1/messages/${liElement.dataset.message_id}`));
-    if (sentBodyTag) liElement.addEventListener('click', event => displayMessageHandler(event, `http://localhost:3000/api/v1/messages/sent/${liElement.dataset.message_id}`));
+    if (unreadBodyTag || inboxBodyTag) liElement.addEventListener('click', event => displayMessageHandler(event, `https://epic-mail-2018.herokuapp.com/api/v1/messages/${liElement.dataset.message_id}`));
+    if (sentBodyTag) liElement.addEventListener('click', event => displayMessageHandler(event, `https://epic-mail-2018.herokuapp.com/api/v1/messages/sent/${liElement.dataset.message_id}`));
 
     liElement.setAttribute('data-message_id', message.message_id);
     liElement.setAttribute('class', 'message_list');
@@ -147,13 +147,10 @@ export const deleteMessageHandler = (event) => {
   if (localStorage.getItem('token')) {
     let url;
     const messageId = messageBody.dataset.messageid;
-    console.log(messageId);
     if (sentBodyTag) {
-      console.log('SENT!!!!!!!!!!!!!!!!!!!!!!!');
-      url = `http://localhost:3000/api/v1/messages/sent/${messageId}`;
+      url = `https://epic-mail-2018.herokuapp.com/api/v1/messages/sent/${messageId}`;
     } else {
-      console.log('THE OTHER ONE!!!!!!!');
-      url = `http://localhost:3000/api/v1/messages/${messageId}`;
+      url = `https://epic-mail-2018.herokuapp.com/api/v1/messages/${messageId}`;
     }
     fetch(url, {
       method: 'DELETE',
@@ -164,30 +161,12 @@ export const deleteMessageHandler = (event) => {
     })
       .then(res => res.json())
       .then((response) => {
-        console.log(response);
         if (response.data) {
-          console.log(response.data[0].message);
-          if (sentBodyTag)window.location.href = 'http://127.0.0.1:5500/UI/messages/sent.html';
-          if (inboxBodyTag) window.location.href = 'http://127.0.0.1:5500/UI/messages/index.html';
-          if (unreadBodyTag) window.location.href = 'http://127.0.0.1:5500/UI/messages/unread.html';
+          if (sentBodyTag)window.location.href = '../sent.html';
+          if (inboxBodyTag) window.location.href = '../index.html';
+          if (unreadBodyTag) window.location.href = '../unread.html';
         }
       })
       .catch(err => console.log(err));
   }
 };
-
-// export const fetchDelete = (url) => {
-//   fetch(url, {
-//     method: 'DELETE',
-//     headers: {
-//       Authorization: `Bearer ${localStorage.getItem('token')}`,
-//       'Content-Type': 'application/json'
-//     }
-//   })
-//     .then(response => response.json())
-//     .then((res) => {
-//       if (res.data) {
-//         return res.data;
-//       }
-//     });
-// };
