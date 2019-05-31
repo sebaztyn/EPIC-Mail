@@ -32,8 +32,10 @@ const authController = {
         email,
         token
       }];
+      console.log(displayResult);
       return userResponse(res, token, 201, 'status', 'data', displayResult);
     } catch (err) {
+      console.log(err, 'Auth Handler');
       return serverError(res);
     }
     /* eslint-disable prefer-destructuring */

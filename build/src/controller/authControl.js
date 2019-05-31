@@ -87,19 +87,21 @@ var authController = {
                 email: email,
                 token: token
               }];
+              console.log(displayResult);
               return _context.abrupt("return", (0, _serverResponse.userResponse)(res, token, 201, 'status', 'data', displayResult));
 
-            case 28:
-              _context.prev = 28;
+            case 29:
+              _context.prev = 29;
               _context.t0 = _context["catch"](0);
+              console.log(_context.t0, 'Auth Handler');
               return _context.abrupt("return", (0, _serverResponse.serverError)(res));
 
-            case 31:
+            case 33:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 28]]);
+      }, _callee, null, [[0, 29]]);
     }));
 
     function addUser(_x, _x2) {

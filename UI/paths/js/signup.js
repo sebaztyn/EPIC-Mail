@@ -54,7 +54,7 @@ const signupHandler = (event) => {
         notifyUser('Signup successful');
         setTimeout(() => { window.location.replace('/UI/paths/index.html'); }, 2000);
       } else {
-        return notifyUser(response.error);
+        return notifyUser(response.error, "An error occurred");
       }
     })
     .catch(err => console.log(err));
