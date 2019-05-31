@@ -49,6 +49,7 @@ const signupHandler = (event) => {
   })
     .then(res => res.json())
     .then((response) => {
+      console.log(response);
       if (response.status === 201) {
         localStorage.setItem('token', response.data[0].token);
         notifyUser('Signup successful');
