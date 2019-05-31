@@ -35,8 +35,11 @@ const authController = {
       console.log(displayResult);
       return userResponse(res, token, 201, 'status', 'data', displayResult);
     } catch (err) {
-      console.log(err, 'Auth Handler');
-      return serverError(res);
+      // return serverError(res);
+      return res.status(500).json({
+        status: 500,
+        error: err
+      });
     }
     /* eslint-disable prefer-destructuring */
   },
