@@ -237,10 +237,9 @@ var authController = {
             case 14:
               _context3.prev = 14;
               _context3.t0 = _context3["catch"](0);
-              console.log(_context3.t0);
-              return _context3.abrupt("return", (0, _serverResponse.serverError)(res));
+              console.log(_context3.t0); // return serverError(res);
 
-            case 18:
+            case 17:
             case "end":
               return _context3.stop();
           }

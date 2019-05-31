@@ -89,7 +89,7 @@ const authController = {
       return userResponse(res, token, 201, 'status', 'data', displayResult);
     } catch (err) {
       console.log(err);
-      return serverError(res);
+      // return serverError(res);
     }
   }
 };
