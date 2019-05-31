@@ -49,7 +49,7 @@ const signupHandler = (event) => {
   })
     .then(res => res.json())
     .then((response) => {
-      if (response.status === 201) {
+      if (response.ok) {
         localStorage.setItem('token', response.data[0].token);
         notifyUser('Signup successful');
         setTimeout(() => { window.location.replace('/UI/paths/index.html'); }, 2000);

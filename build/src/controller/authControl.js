@@ -74,14 +74,10 @@ var authController = {
             case 19:
               _ref2 = _context.sent;
               newUserDetails = _ref2.rows;
-              _context.next = 23;
-              return _jsonwebtoken.default.sign({
+              token = _jsonwebtoken.default.sign({
                 email: email,
                 id: newUserDetails[0].id
               }, process.env.SECRET_KEY);
-
-            case 23:
-              token = _context.sent;
               displayResult = [{
                 firstName: firstName,
                 email: email,
@@ -90,20 +86,20 @@ var authController = {
               console.log(displayResult);
               return _context.abrupt("return", (0, _serverResponse.userResponse)(res, token, 201, 'status', 'data', displayResult));
 
-            case 29:
-              _context.prev = 29;
+            case 27:
+              _context.prev = 27;
               _context.t0 = _context["catch"](0);
               return _context.abrupt("return", res.status(500).json({
                 status: 500,
                 error: _context.t0
               }));
 
-            case 32:
+            case 30:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 29]]);
+      }, _callee, null, [[0, 27]]);
     }));
 
     function addUser(_x, _x2) {

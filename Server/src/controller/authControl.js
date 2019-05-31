@@ -26,7 +26,7 @@ const authController = {
         values: [firstName, lastName, email, username, password, recoveryEmail]
       };
       const { rows: newUserDetails } = await dbQuery(insertQuery);
-      const token = await jwt.sign({ email, id: newUserDetails[0].id }, process.env.SECRET_KEY);
+      const token = jwt.sign({ email, id: newUserDetails[0].id }, process.env.SECRET_KEY);
       const displayResult = [{
         firstName,
         email,

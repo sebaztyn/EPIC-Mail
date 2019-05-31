@@ -30,7 +30,7 @@ const loginHandler = (event) => {
   if (!loginData.password) {
     return notifyLoginUser('Password field cannot be empty');
   }
-  fetch('http://localhost:3000/api/v1/auth/login', {
+  fetch('https://epic-mail-2018.herokuapp.com/api/v1/auth/login', {
     method: 'POST',
     body: JSON.stringify(loginData),
     headers: {
