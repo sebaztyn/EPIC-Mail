@@ -5,14 +5,6 @@ import { fetchGET, fetchPOST, deleteMessageHandler } from './fetch.mjs';
 const button = document.getElementById('toggle-menu');
 const navContainer = document.getElementById('homepage-navbar');
 const modal = document.getElementById('modal-test');
-const inbox = document.querySelector('a[class="main-page-inbox"]');
-const unread = document.querySelector('a[class="main-page-unread"]');
-const sent = document.querySelector('a[class="main-page-sent"]');
-const createGroupLink = document.querySelector('a[class="main-page-create-group"]');
-const composeMessageLink = document.querySelector('a[class="main-page-compose-individual-mail"]');
-const myGroup = document.querySelector('a[class="main-page-my-group"]');
-const deletedMails = document.querySelector('a[class="main-page-deleted"]');
-const draft = document.querySelector('a[class="main-page-draft"]');
 const inboxBodyTag = document.querySelector('#application-inbox-body-element');
 const deletedBodyTag = document.querySelector('#application-deleted-body-element');
 const sentBodyTag = document.querySelector('#application-sent-body-element');
@@ -28,7 +20,7 @@ const composeMessage = document.querySelector('.new-msg-container');
 const headerString = document.querySelector(".header-string");
 const messageReturnButton = document.querySelector(".display-list-message span:first-child");
 const messageDeleteButton = document.querySelector(".display-list-message span:nth-child(2)");
-const createGroupReset = document.querySelector('.group-cover>div:nth-child(2) span');
+const createGroupReset = document.querySelector('.group-cover>div:nth-child(2)>span:first-child');
 const createNewGroupButton = document.querySelector('#submit-name');
 
 const bodyHandler = url => fetchGET(url);
@@ -77,48 +69,12 @@ const composeMessageHandler = () => {
   }
 };
 
-if (myGroupsBodyTag) groupMethods.listGroupsHandler();
-if (composeMessageTag) composeMessageHandler();
-if (inboxBodyTag) bodyHandler('https://epic-mail-2018.herokuapp.com/api/v1/messages');
-if (unreadBodyTag) bodyHandler('https://epic-mail-2018.herokuapp.com/api/v1/messages/unread');
-if (sentBodyTag) bodyHandler('https://epic-mail-2018.herokuapp.com/api/v1/messages/sent');
-if (draftBodyTag) bodyHandler('https://epic-mail-2018.herokuapp.com/api/v1/messages/draft');
-
-const newMessageHandler = () => {
-  if (localStorage.getItem('token')) {
-    window.location.href = '/UI/paths/compose-message.html';
-  }
-};
-const unreadHandler = () => {
-  if (localStorage.getItem('token')) {
-    window.location.href = '/UI/paths/unread.html';
-  }
-};
-const sentMessageViewHandler = () => {
-  if (localStorage.getItem('token')) {
-    window.location.href = '/UI/paths/sent.html';
-  }
-};
-const inboxHandler = () => {
-  if (localStorage.getItem('token')) {
-    window.location.href = '/UI/paths/index.html';
-  }
-};
-const myGroupHandler = () => {
-  if (localStorage.getItem('token')) {
-    window.location.href = '/UI/paths/my-group.html';
-  }
-};
-const createGroupLinkHandler = () => {
-  if (localStorage.getItem('token')) {
-    window.location.href = '/UI/paths/group.html';
-  }
-};
-// const clickHandler = (url) => {
-//   if (localStorage.getItem('token')) {
-//     window.location.href = url;
-//   }
-// };
+if (localStorage.getItem('token') && myGroupsBodyTag) groupMethods.listGroupsHandler();
+if (localStorage.getItem('token') && composeMessageTag) composeMessageHandler();
+if (localStorage.getItem('token') && inboxBodyTag) bodyHandler('https://epic-mail-2018.herokuapp.com/api/v1/messages');
+if (localStorage.getItem('token') && unreadBodyTag) bodyHandler('https://epic-mail-2018.herokuapp.com/api/v1/messages/unread');
+if (localStorage.getItem('token') && sentBodyTag) bodyHandler('https://epic-mail-2018.herokuapp.com/api/v1/messages/sent');
+if (localStorage.getItem('token') && draftBodyTag) bodyHandler('https://epic-mail-2018.herokuapp.com/api/v1/messages/draft');
 
 button.addEventListener('click', (event) => {
   event.preventDefault();
@@ -138,16 +94,8 @@ window.addEventListener('mouseup', (event) => {
   }
 });
 
-inbox.addEventListener('click', inboxHandler);
-unread.addEventListener('click', unreadHandler);
-sent.addEventListener('click', sentMessageViewHandler);
-composeMessageLink.addEventListener('click', newMessageHandler);
-myGroup.addEventListener('click', myGroupHandler);
-if (createGroupReset) createGroupReset.addEventListener('click', groupMethods.createGroupresetInputHandler);
-if (createGroupLink) createGroupLink.addEventListener("click", createGroupLinkHandler);
+createGroupReset.addEventListener('click', groupMethods.createGroupresetInputHandler);
 if (createNewGroupButton) createNewGroupButton.addEventListener('click', groupMethods.createGroupHandler);
-// deletedMails.addEventListener('click', clickHandler);
-// draft.addEventListener('click', clickHandler);
 if (messageReturnButton) {
   messageReturnButton.addEventListener('click', (event) => {
     event.preventDefault();
