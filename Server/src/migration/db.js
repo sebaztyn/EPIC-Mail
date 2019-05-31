@@ -8,7 +8,7 @@ dotenv.config();
 
 let dbString = process.env.DATABASE_URL;
 if (process.env.NODE_ENV === 'test') dbString = process.env.DATABASE_TEST;
-if (process.env.NODE_ENV === 'production') dbString = process.env.DATABASE_PRODUCTION;
+if (process.env.NODE_ENV === 'development') dbString = process.env.DATABASE_DEV_URL;
 const pool = new Pool({
   connectionString: dbString
 });
@@ -84,7 +84,7 @@ const createTables = async () => {
     await pool.query(sentTable);
     await pool.query(myGroupTable);
     await pool.query(myGroupMembersTable);
-    await console.log(err, 'database creation error');
+    await console.log('database creation created SUCCESSFULLY');
   } catch (err) {
     console.log(err, 'database creation error');
   }
