@@ -80,13 +80,16 @@ const createTables = async () => {
     await pool.query(sentTable);
     await pool.query(myGroupTable);
     await pool.query(myGroupMembersTable);
+    await console.log(err, 'database creation error');
   } catch (err) {
+    console.log(err, 'database creation error');
   }
 };
 
 const callTables = async () => {
   await dropTables();
   await createTables();
+  await console.log('database functions called successfully');
   await process.exit(0);
 };
 

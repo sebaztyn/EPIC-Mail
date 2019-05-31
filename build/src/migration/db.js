@@ -120,19 +120,24 @@ function () {
             return pool.query(myGroupMembersTable);
 
           case 19:
-            _context2.next = 23;
-            break;
+            _context2.next = 21;
+            return console.log(err, 'database creation error');
 
           case 21:
-            _context2.prev = 21;
-            _context2.t0 = _context2["catch"](6);
+            _context2.next = 26;
+            break;
 
           case 23:
+            _context2.prev = 23;
+            _context2.t0 = _context2["catch"](6);
+            console.log(_context2.t0, 'database creation error');
+
+          case 26:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[6, 21]]);
+    }, _callee2, null, [[6, 23]]);
   }));
 
   return function createTables() {
@@ -159,9 +164,13 @@ function () {
 
           case 4:
             _context3.next = 6;
-            return process.exit(0);
+            return console.log('database functions called successfully');
 
           case 6:
+            _context3.next = 8;
+            return process.exit(0);
+
+          case 8:
           case "end":
             return _context3.stop();
         }
