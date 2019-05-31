@@ -12,8 +12,11 @@ var _require = require('pg'),
 var dotenv = require('dotenv');
 
 dotenv.config();
+var dbString = process.env.DATABASE_URL;
+if (process.env.NODE_ENV === 'test') dbString = process.env.DATABASE_TEST;
+if (process.env.NODE_ENV === 'production') dbString = process.env.DATABASE_PRODUCTION;
 var pool = new Pool({
-  connectionString: process.env.DATABASE_TEST
+  connectionString: dbString
 });
 
 var dropTables =

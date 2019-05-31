@@ -5,8 +5,12 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
+
+let dbString = process.env.DATABASE_URL;
+if (process.env.NODE_ENV === 'test') dbString = process.env.DATABASE_TEST;
+if (process.env.NODE_ENV === 'production') dbString = process.env.DATABASE_PRODUCTION;
 const pool = new Pool({
-  connectionString: process.env.DATABASE_TEST
+  connectionString: dbString
 });
 
 const dropTables = async () => {
