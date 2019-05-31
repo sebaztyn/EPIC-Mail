@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
     integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK10YPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-  <!-- <link rel="stylesheet" type="text/css" href="../css/fontawesomecss/all.min.css"> -->
+  <link rel="stylesheet" type="text/css" href="../css/fontawesomecss/all.min.css">
   <link rel="stylesheet" type="text/css" media="screen" href="../css/message.css">
 </head>
 
@@ -21,41 +21,28 @@
     <div class="modal-backdrop" id="modal"></div>
     <nav class="homepage-navbar" id="homepage-navbar">
       <ul id="all-list" class="all-list inbox-flex">
-        <li><a href="#" class="main-page-inbox"><span><i class="fa fa-inbox"></i>Inbox</span></a></li>
-        <li><a href="#" class="main-page-unread"><span><i class="fa fa-envelope"></i>Unread</span></a></li>
-        <li><a href="#" class="main-page-sent"><span><i class="fa fa-paper-plane"></i>Sent</span></a></li>
-        <li><a href="#" class="main-page-compose-individual-mail"><span>Compose Message</span></a>
+        <li><a href="index.html" class="main-page-inbox"><span><i class="fa fa-inbox"></i>Inbox</span></a></li>
+        <li><a href="unread.html" class="main-page-unread"><span><i class="fa fa-envelope"></i>Unread</span></a>
         </li>
-        <li><a href="#" class="main-page-create-group"><span><i class="fa fa-users"></i>Create
+        <li><a href="sent.html" class="main-page-sent"><span><i class="fa fa-paper-plane"></i>Sent</span></a>
+        </li>
+        <li><a href="compose-message.html" class="main-page-compose-individual-mail"><span>Compose
+              Message</span></a>
+        </li>
+        <li><a href="group.html" class="main-page-create-group"><span><i class="fa fa-users"></i>Create
               Group</span></a>
         </li>
-        <li><a href="#" class="main-page-my-group"><span><i class="fa fa-layer-group"></i>My
+        <li><a href="my-group.html" class="main-page-my-group"><span><i class="fa fa-layer-group"></i>My
               Group</span></a>
         </li>
         <li><a href="#" class="main-page-deleted"><span><i class="fa fa-trash-alt"></i>Deleted</span></a>
         </li>
-        <li><a href="#" class="main-page-draft"><span><i class="fa fa-pen square"></i>Draft</span></a></li>
+        <li><a href="#" class="main-page-draft"><span><i class="fa fa-pen square"></i>Draft</span></a>
+        </li>
       </ul>
     </nav>
   </div>
   <div class="main">
-    <!-- <div class="container">
-      <h4 class="container-header">Inbox</h4>
-      <ul>
-      </ul>
-    </div> -->
-    <!-- <div class="view-pane"> -->
-    <!-- <div class="display-list-message">
-        <div>
-          <span><i class="fa fa-arrow-left"></i>Return to Inbox</span>
-          <span><i class="fa fa-trash-alt"></i>Delete Message</span>
-        </div>
-        <div class="display-message">
-          <p class="subject"></p>
-          <p class="sender"></p>
-          <div class="display-the-full-message"></div>
-        </div>
-      </div> -->
     <div class="new-msg-container">
       <div class="message-form">
         <div class="new-template">
@@ -81,8 +68,7 @@
       </div>
     </div>
   </div>
-  <!-- <script type="module" src="./js/compose-message.mjs"></script> -->
-  <script type="module" src="./js/index.mjs"></script>
+  <script type="module" src="/UI/paths/js/index.mjs"></script>
 </body>
 
 </html>
