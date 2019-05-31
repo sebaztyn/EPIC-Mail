@@ -211,6 +211,90 @@
   display: none;
 }
 
+.tooltip {
+  position: relative;
+}
+
+.group-list-card ul li>p {
+  margin-top: 0;
+  text-transform: uppercase;
+}
+
+.group-list-card ul li>span {
+  cursor: pointer;
+  padding: 0;
+  margin-right: 0.5em;
+}
+
+.tooltip>.edit {
+  position: absolute;
+  white-space: pre;
+  top: -15px;
+  display: none;
+  font-weight: 100;
+  font-style: italic;
+  z-index: 1;
+}
+
+.group-list-card ul li>span {
+  cursor: pointer;
+}
+
+.group-list-card ul li>span:hover .edit {
+  display: inline;
+  background-color: #002D40;
+  color: #fff;
+}
+
+.tooltip>.add-user {
+  position: absolute;
+  white-space: pre;
+  top: -15px;
+  display: none;
+  font-weight: 100;
+  font-style: italic;
+  z-index: 1;
+}
+
+.group-list-card ul li>span:hover .add-user {
+  display: inline;
+  background-color: #002D40;
+  color: #fff;
+}
+
+.tooltip>.delete-group {
+  position: absolute;
+  top: -15px;
+  white-space: pre;
+  display: none;
+  font-weight: 100;
+  font-style: italic;
+  z-index: 1;
+}
+
+.group-list-card ul li>span:hover .delete-group {
+  display: inline;
+  background-color: #002D40;
+  color: #fff;
+}
+
+.tooltip>.group-message {
+  position: absolute;
+  top: -13px;
+  right: 50%;
+  white-space: pre;
+  display: none;
+  font-weight: 100;
+  font-style: italic;
+  z-index: 1;
+}
+
+.group-list-card ul li>span:hover .group-message {
+  display: inline;
+  background-color: #002D40;
+  color: #fff;
+}
+
 @media(min-width: 35em) {
   .add-group-member div span {
     padding: 0.5em;
@@ -269,5 +353,20 @@
   }
   .group-cover {
     height: 40vh;
+  }
+}
+
+@media(min-width: 50em) {
+  .tooltip>.group-message {
+    top: -20px;
+  }
+  .tooltip>.delete-group {
+    top: -20px;
+  }
+  .tooltip>.add-user {
+    top: -20px;
+  }
+  .tooltip>.edit {
+    top: -20px;
   }
 }
