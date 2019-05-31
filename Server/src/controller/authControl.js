@@ -32,7 +32,6 @@ const authController = {
         email,
         token
       }];
-      console.log(newUserDetails);
       return userResponse(res, token, 201, 'status', 'data', displayResult);
     } catch (err) {
       return serverError(res);

@@ -40,7 +40,7 @@ const signupHandler = (event) => {
     return notifyUser('Passwords do not match. Try again');
   }
   delete formData.confirmPassword;
-  fetch("https://epic-mail-2018.herokuapp.com/api/v1/auth/signup", {
+  fetch('https://epic-mail-2018.herokuapp.com/api/v1/auth/signup', {
     method: 'POST',
     body: JSON.stringify(formData),
     headers: {
