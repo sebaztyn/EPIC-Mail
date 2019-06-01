@@ -47,7 +47,10 @@ const signupHandler = (event) => {
       'Content-Type': 'application/json'
     }
   })
-    .then(res => res.json())
+    .then((res) =>{
+      console.log(res);
+      res.json();
+    })
     .then((response) => {
       if (response.status === 201) {
         localStorage.setItem('token', response.headers.authorization);
