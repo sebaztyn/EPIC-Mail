@@ -43,7 +43,7 @@ const loginHandler = (event) => {
         localStorage.setItem('token', response.data[0].token);
         localStorage.setItem('email', loginData.email);
         notifyLoginUser('Login successful');
-        return setTimeout(() => { window.location.replace('/UI/paths/index.html'); }, 2000);
+        return setTimeout(() => { window.location.replace('/EPIC-Mail/UI/paths/index.html'); }, 2000);
       }
       return notifyLoginUser(response.error);
     })

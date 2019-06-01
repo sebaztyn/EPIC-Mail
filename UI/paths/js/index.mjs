@@ -99,10 +99,10 @@ if (createNewGroupButton) createNewGroupButton.addEventListener('click', groupMe
 if (messageReturnButton) {
   messageReturnButton.addEventListener('click', (event) => {
     event.preventDefault();
-    if (inboxBodyTag) window.location.href = '/UI/paths/index.html';
-    if (unreadBodyTag) window.location.href = '/UI/paths/unread.html';
-    if (sentBodyTag) window.location.href = '/UI/paths/sent.html';
-    if (draftBodyTag) window.location.href = '/UI/paths/draft.html';
-    if (deletedBodyTag) window.location.href = '/UI/paths/deleted.html';
+    if (inboxBodyTag) window.location.href = '/EPIC-Mail/UI/paths/index.html';
+    if (unreadBodyTag) window.location.href = '/EPIC-Mail/UI/paths/unread.html';
+    if (sentBodyTag) window.location.href = '/EPIC-Mail/UI/paths/sent.html';
+    if (draftBodyTag) window.location.href = '/EPIC-Mail/UI/paths/draft.html';
+    if (deletedBodyTag) window.location.href = '/EPIC-Mail/UI/paths/deleted.html';
   });
 }

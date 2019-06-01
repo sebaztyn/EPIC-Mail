@@ -4,7 +4,6 @@ import { fetchPOST } from './fetch.mjs';
 const button = document.getElementById('toggle-menu');
 const navContainer = document.getElementById('homepage-navbar');
 const modal = document.getElementById('modal-test');
-const composeMail = document.querySelector('a[class="main-page-compose-individual-mail"]');
 
 const sendMailButton = document.querySelector('#submit-message');
 
@@ -37,7 +36,3 @@ window.addEventListener('mouseup', (event) => {
     // mainBody[0].style.overflow = 'auto';
   }
 });
-
-
-// if (composeMail) composeMail.addEventListener('click', composeMessageHandler);
-// if (sendMailButton) sendMailButton.addEventListener('click', sendMailHandler);

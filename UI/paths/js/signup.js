@@ -52,7 +52,7 @@ const signupHandler = (event) => {
       if (response.status === 201) {
         localStorage.setItem('token', response.data[0].token);
         notifyUser('Signup successful');
-        setTimeout(() => { window.location.replace('/UI/paths/index.html'); }, 2000);
+        setTimeout(() => { window.location.replace('/EPIC-Mail/UI/paths/index.html'); }, 2000);
       } else {
         return notifyUser(response.error, "An error occurred");
       }
