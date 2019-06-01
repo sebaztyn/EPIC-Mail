@@ -37,7 +37,10 @@ const loginHandler = (event) => {
       'Content-Type': 'application/json'
     }
   })
-    .then(res => res.json())
+    .then((res) => {
+      res.json();
+      return res;
+    })
     .then((response) => {
       if (response.status === 201) {
         localStorage.setItem('token', response.headers.authorization);
