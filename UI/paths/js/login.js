@@ -39,8 +39,8 @@ const loginHandler = (event) => {
   })
     .then(res => res.json())
     .then((response) => {
+      console.log(response);
       if (response.status === 201) {
-        console.log(response.body);
         localStorage.setItem('token', response.body.data[0].token);
         localStorage.setItem('email', loginData.email);
         notifyLoginUser('Login successful');
