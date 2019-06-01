@@ -62,7 +62,7 @@ describe('USER CREATION AND LOGIN', () => {
         expect(res.body).to.haveOwnProperty('status');
         expect(res.status).to.equal(201);
         expect((res.body)).to.be.an('object');
-        expect((res.body)).to.have.all.keys('status', 'data', 'token');
+        expect((res.body)).to.have.all.keys('status', 'data');
         expect((res.body)).to.haveOwnProperty('status').that.equals(201);
         expect((res.body)).to.haveOwnProperty('data').that.is.an('array');
         expect((res.body.data)).to.be.an('array');
@@ -78,13 +78,13 @@ describe('USER CREATION AND LOGIN', () => {
         password: 'Qwertyuiop1?'
       })
       .end((err, res) => {
-        testToken = res.body.token;
+        testToken = res.headers.authorization;
         if (err) return done(err);
         expect(res.body).to.haveOwnProperty('status');
         expect(res.status).to.equal(201);
         expect(res.body).to.be.an('object');
         expect(res.body).to.haveOwnProperty('status').that.is.a('number');
-        expect((res.body)).to.have.all.keys('status', 'data', 'token');
+        expect((res.body)).to.have.all.keys('status', 'data');
         expect((res.body)).to.haveOwnProperty('status').that.equals(201);
         expect(res.body).to.haveOwnProperty('data').that.is.an('array');
         expect((res.body.data[0])).to.be.an('object');
@@ -127,7 +127,7 @@ describe('MESSAGES ENDPOINTS', () => {
           recoveryEmail: 'johndoe@gmail.com'
         })
         .end((err, res) => {
-          errorToken = res.body.token;
+          errorToken = res.headers.authorization;
           if (err) return done(err);
           done();
         });
@@ -232,7 +232,7 @@ describe('MESSAGES ENDPOINTS', () => {
         password: 'Qwertyuiop1?'
       })
       .end((err, res) => {
-        userToken = res.body.token;
+        userToken = res.headers.authorization;
         if (err) return done(err);
         done();
       });
@@ -245,7 +245,7 @@ describe('MESSAGES ENDPOINTS', () => {
         password: 'Qwertyuiop1?'
       })
       .end((err, res) => {
-        secondToken = res.body.token;
+        secondToken = res.headers.authorization;
         if (err) return done(err);
         done();
       });
@@ -496,7 +496,7 @@ describe('GROUP ENDPOINTS', () => {
           password: 'Qwertyuiop1?'
         })
         .end((err, res) => {
-          errorToken2 = res.body.token;
+          errorToken2 = res.headers.authorization;
           if (err) return done(err);
           done();
         });
@@ -525,7 +525,7 @@ describe('GROUP ENDPOINTS', () => {
           password: 'Qwertyuiop1?'
         })
         .end((err, res) => {
-          errorToken3 = res.body.token;
+          errorToken3 = res.headers.authorization;
           if (err) return done(err);
           done();
         });
