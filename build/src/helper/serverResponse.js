@@ -44,19 +44,11 @@ var authResponse = function authResponse(response, statusValue) {
 exports.authResponse = authResponse;
 
 var userResponse = function userResponse(response, token, statusValue, userData) {
-  return (// const [statusKey, dataKey, dataValue] = values;
-    response.status(statusValue).json({
-      status: 201,
-      data: userData,
-      token: token
-    })
-  );
-} // export const userResponse = (response, token, statusValue, ...values) => {
-//   const [statusKey, dataKey, dataValue] = values;
-//   return response.header('authorization', token).status(statusValue).json({
-//     [statusKey]: statusValue,
-//     [dataKey]: dataValue
-//   });
-;
+  response.set('authorization', token);
+  return response.header('Access-Control-Expose-Headers', 'authorization').status(statusValue).json({
+    status: 201,
+    data: userData
+  });
+};
 
 exports.userResponse = userResponse;

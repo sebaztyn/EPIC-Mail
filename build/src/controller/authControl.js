@@ -87,9 +87,16 @@ var authController = {
             case 26:
               _context.prev = 26;
               _context.t0 = _context["catch"](0);
+<<<<<<< HEAD
               return _context.abrupt("return", (0, _serverResponse.serverError)(res));
 
             case 29:
+=======
+              console.log(_context.t0);
+              return _context.abrupt("return", (0, _serverResponse.serverError)(res));
+
+            case 30:
+>>>>>>> bg-userSignup-fix
             case "end":
               return _context.stop();
           }
