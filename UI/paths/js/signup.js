@@ -50,6 +50,8 @@ const signupHandler = (event) => {
     .then((res) =>{
       console.log(res);
       res.json();
+      console.log(res);
+      return res;
     })
     .then((response) => {
       if (response.status === 201) {
