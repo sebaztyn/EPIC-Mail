@@ -28,11 +28,10 @@ const authController = {
       const { rows: newUserDetails } = await dbQuery(insertQuery);
       const token = jwt.sign({ email, id: newUserDetails[0].id }, process.env.SECRET_KEY);
       const displayResult = [{
-        firstName,
-        email,
+        firstname: newUserDetails[0].firstName,
+        email: newUserDetails[0].email,
         token
       }];
-      console.log(displayResult);
       return userResponse(res, token, 201, 'status', 'data', displayResult);
     } catch (err) {
       // return serverError(res);

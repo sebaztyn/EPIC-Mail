@@ -79,27 +79,26 @@ var authController = {
                 id: newUserDetails[0].id
               }, process.env.SECRET_KEY);
               displayResult = [{
-                firstName: firstName,
-                email: email,
+                firstname: newUserDetails[0].firstName,
+                email: newUserDetails[0].email,
                 token: token
               }];
-              console.log(displayResult);
               return _context.abrupt("return", (0, _serverResponse.userResponse)(res, token, 201, 'status', 'data', displayResult));
 
-            case 27:
-              _context.prev = 27;
+            case 26:
+              _context.prev = 26;
               _context.t0 = _context["catch"](0);
               return _context.abrupt("return", res.status(500).json({
                 status: 500,
                 error: _context.t0
               }));
 
-            case 30:
+            case 29:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 27]]);
+      }, _callee, null, [[0, 26]]);
     }));
 
     function addUser(_x, _x2) {
