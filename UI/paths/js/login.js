@@ -1,4 +1,4 @@
-const loginButton = document.querySelector('."login-submit-button');
+const loginButton = document.querySelector('.login-submit-button');
 const email = document.querySelector('#login-email-input');
 const password = document.querySelector('#login-password-input');
 
@@ -39,8 +39,8 @@ const loginHandler = (event) => {
   })
     .then(res => res.json())
     .then((response) => {
-      if (response.ok) {
-        localStorage.setItem('token', response.data[0].token);
+      if (response.status === 201) {
+        localStorage.setItem('token', response.body.token);
         localStorage.setItem('email', loginData.email);
         notifyLoginUser('Login successful');
         return setTimeout(() => { window.location.replace('/UI/paths/index.html'); }, 2000);
