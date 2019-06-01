@@ -16,10 +16,17 @@ export const authResponse = (response, statusValue, ...values) => {
     [dataKey]: dataValue
   });
 };
-export const userResponse = (response, token, statusValue, ...values) => {
-  const [statusKey, dataKey, dataValue] = values;
-  return response.header('authorization', token).status(statusValue).json({
-    [statusKey]: statusValue,
-    [dataKey]: dataValue
-  });
-};
+export const userResponse = (response, token, statusValue, userData) =>
+  // const [statusKey, dataKey, dataValue] = values;
+  response.status(statusValue).json({
+    status: 201,
+    data: userData,
+    token
+  })
+// export const userResponse = (response, token, statusValue, ...values) => {
+//   const [statusKey, dataKey, dataValue] = values;
+//   return response.header('authorization', token).status(statusValue).json({
+//     [statusKey]: statusValue,
+//     [dataKey]: dataValue
+//   });
+;

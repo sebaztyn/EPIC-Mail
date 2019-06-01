@@ -19,7 +19,6 @@ const checkToken = (req, res, next) => {
     req.tokenData = decoded;
     return next();
   } catch (err) {
-    console.log(err.message);
     return authResponse(res, 403, 'error', 'Authentication failed');
   }
 };

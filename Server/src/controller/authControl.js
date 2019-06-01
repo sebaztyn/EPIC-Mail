@@ -29,16 +29,11 @@ const authController = {
       const token = jwt.sign({ email, id: newUserDetails[0].id }, process.env.SECRET_KEY);
       const displayResult = [{
         firstname: newUserDetails[0].firstName,
-        email: newUserDetails[0].email,
-        token
+        email: newUserDetails[0].email
       }];
-      return userResponse(res, token, 201, 'status', 'data', displayResult);
+      return userResponse(res, token, 201, displayResult);
     } catch (err) {
-      // return serverError(res);
-      return res.status(500).json({
-        status: 500,
-        error: err
-      });
+      return serverError(res);
     }
     /* eslint-disable prefer-destructuring */
   },
@@ -62,10 +57,9 @@ const authController = {
       password = await bcrypt.hash(password, saltUser);
       const token = jwt.sign({ email, id: rows[0].id }, process.env.SECRET_KEY);
       const displayResult = [{
-        email,
-        token
+        email
       }];
-      return userResponse(res, token, 201, 'status', 'data', displayResult);
+      return userResponse(res, token, 201, displayResult);
     } catch (err) {
       return serverError(res);
     }
@@ -85,10 +79,9 @@ const authController = {
         message: 'Check your email for password reset link',
         email: rows[0].email
       }];
-      return userResponse(res, token, 201, 'status', 'data', displayResult);
+      return userResponse(res, token, 201, displayResult);
     } catch (err) {
-      console.log(err);
-      // return serverError(res);
+      return serverError(res);
     }
   }
 };
