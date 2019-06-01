@@ -43,9 +43,8 @@ var authResponse = function authResponse(response, statusValue) {
 
 exports.authResponse = authResponse;
 
-var userResponse = function userResponse(response, token, statusValue, userData) {
-  response.set('authorization', token);
-  return response.header('Access-Control-Expose-Headers', 'authorization').status(statusValue).json({
+var userResponse = function userResponse(response, statusValue, userData) {
+  return response.status(statusValue).json({
     status: 201,
     data: userData
   });

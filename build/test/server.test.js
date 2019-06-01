@@ -59,7 +59,7 @@ describe('USER CREATION AND LOGIN', function () {
       expect(res.body).to.haveOwnProperty('status');
       expect(res.status).to.equal(201);
       expect(res.body).to.be.an('object');
-      expect(res.body).to.have.all.keys('status', 'data', 'token');
+      expect(res.body).to.have.all.keys('status', 'data');
       expect(res.body).to.haveOwnProperty('status').that.equals(201);
       expect(res.body).to.haveOwnProperty('data').that.is.an('array');
       expect(res.body.data).to.be.an('array');
@@ -72,13 +72,13 @@ describe('USER CREATION AND LOGIN', function () {
       email: 'sebastinocj@yahoo.com',
       password: 'Qwertyuiop1?'
     }).end(function (err, res) {
-      testToken = res.body.token;
+      testToken = res.body.data[0].token;
       if (err) return done(err);
       expect(res.body).to.haveOwnProperty('status');
       expect(res.status).to.equal(201);
       expect(res.body).to.be.an('object');
       expect(res.body).to.haveOwnProperty('status').that.is.a('number');
-      expect(res.body).to.have.all.keys('status', 'data', 'token');
+      expect(res.body).to.have.all.keys('status', 'data');
       expect(res.body).to.haveOwnProperty('status').that.equals(201);
       expect(res.body).to.haveOwnProperty('data').that.is.an('array');
       expect(res.body.data[0]).to.be.an('object');
@@ -114,7 +114,7 @@ describe('MESSAGES ENDPOINTS', function () {
         username: 'Jon',
         recoveryEmail: 'johndoe@gmail.com'
       }).end(function (err, res) {
-        errorToken = res.body.token;
+        errorToken = res.body.data[0].token;
         if (err) return done(err);
         done();
       });
@@ -195,7 +195,7 @@ describe('MESSAGES ENDPOINTS', function () {
       email: 'uche@yahoo.com',
       password: 'Qwertyuiop1?'
     }).end(function (err, res) {
-      userToken = res.body.token;
+      userToken = res.body.data[0].token;
       if (err) return done(err);
       done();
     });
@@ -205,7 +205,7 @@ describe('MESSAGES ENDPOINTS', function () {
       email: 'sebastinocj@yahoo.com',
       password: 'Qwertyuiop1?'
     }).end(function (err, res) {
-      secondToken = res.body.token;
+      secondToken = res.body.data[0].token;
       if (err) return done(err);
       done();
     });
@@ -399,7 +399,7 @@ describe('GROUP ENDPOINTS', function () {
         email: 'johndoe@yahoo.com',
         password: 'Qwertyuiop1?'
       }).end(function (err, res) {
-        errorToken2 = res.body.token;
+        errorToken2 = res.body.data[0].token;
         if (err) return done(err);
         done();
       });
@@ -422,7 +422,7 @@ describe('GROUP ENDPOINTS', function () {
         email: 'johndoe@yahoo.com',
         password: 'Qwertyuiop1?'
       }).end(function (err, res) {
-        errorToken3 = res.body.token;
+        errorToken3 = res.body.data[0].token;
         if (err) return done(err);
         done();
       });

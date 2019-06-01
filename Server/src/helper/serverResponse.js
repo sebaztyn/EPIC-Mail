@@ -16,9 +16,8 @@ export const authResponse = (response, statusValue, ...values) => {
     [dataKey]: dataValue
   });
 };
-export const userResponse = (response, token, statusValue, userData) =>{
-  response.set('authorization', token);
-  return response.header('Access-Control-Expose-Headers', 'authorization').status(statusValue).json({
+export const userResponse = (response, statusValue, userData) =>{
+  return response.status(statusValue).json({
     status: 201,
     data: userData
   });

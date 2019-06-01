@@ -53,7 +53,7 @@ describe('Testing User SIGNUP/LOGIN and PASSWORD RESET validators', function () 
       email: 'james@yahoo.com',
       password: 'Qwertyuiop1?'
     }).end(function (err, res) {
-      testToken = res.body.token;
+      testToken = res.body.data[0].token;
       if (err) return done(err);
       return done();
     });

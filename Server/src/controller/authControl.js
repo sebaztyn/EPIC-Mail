@@ -29,11 +29,11 @@ const authController = {
       const token = jwt.sign({ email, id: newUserDetails[0].id }, process.env.SECRET_KEY);
       const displayResult = [{
         firstname: newUserDetails[0].firstName,
-        email: newUserDetails[0].email
+        email: newUserDetails[0].email,
+        token
       }];
-      return userResponse(res, token, 201, displayResult);
+      return userResponse(res, 201, displayResult);
     } catch (err) {
-      console.log(err);
       return serverError(res);
     }
     /* eslint-disable prefer-destructuring */
@@ -58,9 +58,10 @@ const authController = {
       password = await bcrypt.hash(password, saltUser);
       const token = jwt.sign({ email, id: rows[0].id }, process.env.SECRET_KEY);
       const displayResult = [{
-        email
+        email,
+        token
       }];
-      return userResponse(res, token, 201, displayResult);
+      return userResponse(res, 201, displayResult);
     } catch (err) {
       return serverError(res);
     }
@@ -78,9 +79,10 @@ const authController = {
       }
       const token = jwt.sign({ email, id: rows[0].id }, process.env.SECRET_KEY); const displayResult = [{
         message: 'Check your email for password reset link',
-        email: rows[0].email
+        email: rows[0].email,
+        token
       }];
-      return userResponse(res, token, 201, displayResult);
+      return userResponse(res, 201, displayResult);
     } catch (err) {
       return serverError(res);
     }

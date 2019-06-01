@@ -80,23 +80,17 @@ var authController = {
               }, process.env.SECRET_KEY);
               displayResult = [{
                 firstname: newUserDetails[0].firstName,
-                email: newUserDetails[0].email
+                email: newUserDetails[0].email,
+                token: token
               }];
-              return _context.abrupt("return", (0, _serverResponse.userResponse)(res, token, 201, displayResult));
+              return _context.abrupt("return", (0, _serverResponse.userResponse)(res, 201, displayResult));
 
             case 26:
               _context.prev = 26;
               _context.t0 = _context["catch"](0);
-<<<<<<< HEAD
               return _context.abrupt("return", (0, _serverResponse.serverError)(res));
 
             case 29:
-=======
-              console.log(_context.t0);
-              return _context.abrupt("return", (0, _serverResponse.serverError)(res));
-
-            case 30:
->>>>>>> bg-userSignup-fix
             case "end":
               return _context.stop();
           }
@@ -171,9 +165,10 @@ var authController = {
                 id: rows[0].id
               }, process.env.SECRET_KEY);
               displayResult = [{
-                email: email
+                email: email,
+                token: token
               }];
-              return _context2.abrupt("return", (0, _serverResponse.userResponse)(res, token, 201, displayResult));
+              return _context2.abrupt("return", (0, _serverResponse.userResponse)(res, 201, displayResult));
 
             case 26:
               _context2.prev = 26;
@@ -231,9 +226,10 @@ var authController = {
               }, process.env.SECRET_KEY);
               displayResult = [{
                 message: 'Check your email for password reset link',
-                email: rows[0].email
+                email: rows[0].email,
+                token: token
               }];
-              return _context3.abrupt("return", (0, _serverResponse.userResponse)(res, token, 201, displayResult));
+              return _context3.abrupt("return", (0, _serverResponse.userResponse)(res, 201, displayResult));
 
             case 14:
               _context3.prev = 14;
