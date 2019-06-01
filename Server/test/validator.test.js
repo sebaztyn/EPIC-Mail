@@ -53,7 +53,7 @@ describe('Testing User SIGNUP/LOGIN and PASSWORD RESET validators', () => {
         password: 'Qwertyuiop1?'
       })
       .end((err, res) => {
-        testToken = res.body.token;
+        testToken = res.headers.authorization;
         if (err) return done(err);
         return done();
       });
