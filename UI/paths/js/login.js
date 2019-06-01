@@ -40,8 +40,8 @@ const loginHandler = (event) => {
     .then(res => res.json())
     .then((response) => {
       if (response.status === 201) {
-        localStorage.setItem('token', response.body.data[0].token);
         console.log(response.body);
+        localStorage.setItem('token', response.body.data[0].token);
         localStorage.setItem('email', loginData.email);
         notifyLoginUser('Login successful');
         return setTimeout(() => { window.location.replace('/UI/paths/index.html'); }, 2000);
