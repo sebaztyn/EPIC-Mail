@@ -26,15 +26,19 @@ const authController = {
         values: [firstName, lastName, email, username, password, recoveryEmail]
       };
       const { rows: newUserDetails } = await dbQuery(insertQuery);
-      const token = await jwt.sign({ email, id: newUserDetails[0].id }, process.env.SECRET_KEY);
+      const token = jwt.sign({ email, id: newUserDetails[0].id }, process.env.SECRET_KEY);
       const displayResult = [{
-        firstName,
-        email,
+        firstname: newUserDetails[0].firstName,
+        email: newUserDetails[0].email,
         token
       }];
       return userResponse(res, token, 201, 'status', 'data', displayResult);
     } catch (err) {
-      return serverError(res);
+      // return serverError(res);
+      return res.status(500).json({
+        status: 500,
+        error: err
+      });
     }
     /* eslint-disable prefer-destructuring */
   },
@@ -83,7 +87,8 @@ const authController = {
       }];
       return userResponse(res, token, 201, 'status', 'data', displayResult);
     } catch (err) {
-      return serverError(res);
+      console.log(err);
+      // return serverError(res);
     }
   }
 };

@@ -1,4 +1,4 @@
-const signupButton = document.querySelector('button[id="signup-button"]');
+const signupButton = document.querySelector('#signup-button');
 const firstName = document.querySelector('#signup-firstName');
 const lastName = document.querySelector('#signup-lastName');
 const username = document.querySelector('#signup-username');
@@ -47,15 +47,18 @@ const signupHandler = (event) => {
       'Content-Type': 'application/json'
     }
   })
-    .then(res => res.json())
+    .then((res) => {
+      res.json();
+      console.log(res);
+      return res;
+    })
     .then((response) => {
-      console.log(response);
       if (response.ok) {
         localStorage.setItem('token', response.data[0].token);
         notifyUser('Signup successful');
         setTimeout(() => { window.location.replace('/UI/paths/index.html'); }, 2000);
       } else {
-        return notifyUser(response.error);
+        return notifyUser(response.error, "An error occurred");
       }
     })
     .catch(err => console.log(err));

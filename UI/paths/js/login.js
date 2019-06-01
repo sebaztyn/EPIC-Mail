@@ -1,4 +1,4 @@
-const loginButton = document.querySelector('button[class="login-submit-button"]');
+const loginButton = document.querySelector('."login-submit-button');
 const email = document.querySelector('#login-email-input');
 const password = document.querySelector('#login-password-input');
 
@@ -39,7 +39,6 @@ const loginHandler = (event) => {
   })
     .then(res => res.json())
     .then((response) => {
-      console.log(response);
       if (response.ok) {
         localStorage.setItem('token', response.data[0].token);
         localStorage.setItem('email', loginData.email);
