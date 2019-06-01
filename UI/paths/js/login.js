@@ -1,4 +1,4 @@
-const loginButton = document.querySelector('button[class="login-submit-button"]');
+const loginButton = document.querySelector('."login-submit-button');
 const email = document.querySelector('#login-email-input');
 const password = document.querySelector('#login-password-input');
 

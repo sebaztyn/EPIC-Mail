@@ -1,4 +1,4 @@
-const signupButton = document.querySelector('button[id="signup-button"]');
+const signupButton = document.querySelector('#signup-button');
 const firstName = document.querySelector('#signup-firstName');
 const lastName = document.querySelector('#signup-lastName');
 const username = document.querySelector('#signup-username');
