@@ -142,7 +142,7 @@ export const fetchPOST = (url, verb, bodyObj) => {
         popIn();
         popMessageDiv.addEventListener('transitionend', () => {
           popMessageDiv.textContent = '';
-          return window.location.assign("../../paths/index.html");
+          return window.location.assign('/EPIC-Mail/UI/paths/index.html');
         });
       }
     })
@@ -170,9 +170,9 @@ export const deleteMessageHandler = (event) => {
       .then(res => res.json())
       .then((response) => {
         if (response.data) {
-          if (sentBodyTag)window.location.href = '../sent.html';
-          if (inboxBodyTag) window.location.href = '../index.html';
-          if (unreadBodyTag) window.location.href = '../unread.html';
+          if (sentBodyTag)window.location.href = '/EPIC-Mail/UI/paths/sent.html';
+          if (inboxBodyTag) window.location.href = '/EPIC-Mail/UI/paths/index.html';
+          if (unreadBodyTag) window.location.href = '/EPIC-Mail/UI/paths/unread.html';
         }
       })
       .catch(err => console.log(err));

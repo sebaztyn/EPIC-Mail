@@ -94,7 +94,7 @@ const fetchPatch = (url, bodyObj) => fetch(url, {
       return groupPopMessage.addEventListener('transitionend', () => {
         changeGroupNameInput.value = '';
         groupPopMessage.textContent = '';
-        return setTimeout(() => window.location.reload('../my-group.html'), 1000);
+        return setTimeout(() => window.location.reload('/EPIC-Mail/UI/paths/my-group.html'), 1000);
       });
     }
     groupPopMessage.textContent = res.error;
@@ -117,7 +117,7 @@ const fetchDelete = url => fetch(url, {
       groupPopIn(res.data[0].message);
       return groupPopMessage.addEventListener('transitionend', () => {
         groupPopMessage.textContent = '';
-        return setTimeout(() => window.location.reload('../my-group.html'), 1000);
+        return setTimeout(() => window.location.reload('/EPIC-Mail/UI/paths/my-group.html'), 1000);
       });
     }
     groupPopMessage.textContent = res.error;
@@ -140,7 +140,7 @@ const fetchDeleteMember = url => fetch(url, {
       groupPopIn(res.data[0].message);
       return groupPopMessage.addEventListener('transitionend', () => {
         groupPopMessage.textContent = '';
-        return setTimeout(() => window.location.reload('../my-group.html'), 1000);
+        return setTimeout(() => window.location.reload('/EPIC-Mail/UI/paths/my-group.html'), 1000);
       });
     }
     groupPopMessage.textContent = res.error;
@@ -205,7 +205,7 @@ const postGroupMessage = (url, bodyObj) => fetch(url, {
         return setTimeout(() => {
           document.querySelector('#email-subject').value = '';
           document.querySelector('#email-message').value = '';
-          return window.location.reload('../my-group.html');
+          return window.location.reload('/EPIC-Mail/UI/paths/my-group.html');
         }, 1000);
       });
     } else {

@@ -44,7 +44,7 @@ const loginHandler = (event) => {
         localStorage.setItem('id', response.data[0].id);
         localStorage.setItem('email', response.data[0].email);
         spinner.classList.remove('fa-spinner');
-        window.location.replace('UI/paths');
+        window.location.replace('/EPIC-Mail/UI/paths/index.html');
       } else {
         spinner.classList.remove('fa-spinner');
         return notifyLoginUser(response.error);
