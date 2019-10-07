@@ -32,8 +32,7 @@ const messageControllers = {
 
       return serverResponse(res, 201, 'status', 'data', resultValues);
     } catch (err) {
-      console.log(err.message);
-      return serverError(res);
+      return serverError(res, err);
     }
   },
   async findUnreadMessages(req, res) {
@@ -65,7 +64,7 @@ const messageControllers = {
       }
       return serverResponse(res, 200, 'status', 'data', rows);
     } catch (err) {
-      return serverError(res);
+      return serverError(res, err);
     }
   },
   async findAllReceivedMessages(req, res) {
@@ -95,7 +94,7 @@ const messageControllers = {
       }
       return serverResponse(res, 200, 'status', 'data', rows);
     } catch (err) {
-      return serverError(res);
+      return serverError(res, err);
     }
   },
   async findSentMessages(req, res) {
@@ -117,7 +116,7 @@ const messageControllers = {
       return serverResponse(res, 200, 'status', 'data', rows);
 
     } catch (err) {
-      return serverError(res);
+      return serverError(res, err);
     }
   },
   async getOneInboxMessage(req, res) {
@@ -148,7 +147,7 @@ const messageControllers = {
       return serverResponse(res, 200, 'status', 'data', rows);
 
     } catch (err) {
-      return serverError(res);
+      return serverError(res, err);
     }
   },
   async getOneSentMessage(req, res) {
@@ -169,7 +168,7 @@ const messageControllers = {
       }
       return serverResponse(res, 200, 'status', 'data', rows);
     } catch (err) {
-      return serverError(res);
+      return serverError(res, err);
     }
   },
   async deleteInboxMessage(req, res) {
@@ -193,7 +192,7 @@ const messageControllers = {
       await dbQuery(inboxToDelete);
       return serverResponse(res, 200, 'status', 'data', [{ message: 'Message Deleted' }]);
     } catch (err) {
-      return serverError(res);
+      return serverError(res, err);
     }
   },
   async deleteSentMessage(req, res) {
@@ -216,7 +215,7 @@ const messageControllers = {
       await dbQuery(sentToDelete);
       return serverResponse(res, 200, 'status', 'data', [{ message: 'Message Deleted' }]);
     } catch (err) {
-      return serverError(res);
+      return serverError(res, err);
     }
   }
 };

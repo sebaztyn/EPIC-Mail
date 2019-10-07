@@ -34,7 +34,7 @@ const authController = {
       }];
       return userResponse(res, 201, displayResult);
     } catch (err) {
-      return serverError(res);
+      return serverError(res, err);
     }
     /* eslint-disable prefer-destructuring */
   },
@@ -64,7 +64,7 @@ const authController = {
       }];
       return userResponse(res, 201, displayResult);
     } catch (err) {
-      return serverError(res);
+      return serverError(res, err);
     }
   },
   async passwordreset(req, res) {
@@ -85,7 +85,7 @@ const authController = {
       }];
       return userResponse(res, 201, displayResult);
     } catch (err) {
-      return serverError(res);
+      return serverError(res, err);
     }
   }
 };

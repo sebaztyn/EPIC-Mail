@@ -35,7 +35,7 @@ const groupControllers = {
         }]);
       }
     } catch (err) {
-      return serverError(res);
+      return serverError(res, err);
     }
   },
 
@@ -52,7 +52,7 @@ const groupControllers = {
       if (!rows.length) return serverResponse(res, 200, 'status', 'message', 'Create or join a Group');
       return serverResponse(res, 200, 'status', 'data', rows);
     } catch (err) {
-      return serverError(res);
+      return serverError(res, err);
     }
   },
   async getAllUsersInGroup(req, res) {
@@ -70,7 +70,7 @@ const groupControllers = {
       if (!rows.length) return serverResponse(res, 200, 'status', 'message', 'No member found in group');
       return serverResponse(res, 200, 'status', 'data', rows);
     } catch (err) {
-      return serverError(res);
+      return serverError(res, err);
     }
   },
 
@@ -85,7 +85,7 @@ const groupControllers = {
       const { rows: changeName } = await dbQuery(newGroupName);
       return serverResponse(res, 201, 'status', 'data', changeName);
     } catch (err) {
-      return serverError(res);
+      return serverError(res, err);
     }
   },
 
@@ -106,7 +106,7 @@ const groupControllers = {
       const { rows: groupRow } = await dbQuery(groupToDelete);
       return serverResponse(res, 200, 'status', 'data', [{ message: 'Group Deleted' }]);
     } catch (err) {
-      return serverError(res);
+      return serverError(res, err);
     }
   },
   async addUser(req, res) {
@@ -143,7 +143,7 @@ const groupControllers = {
       }];
       return serverResponse(res, 201, 'status', 'data', displayResult);
     } catch (err) {
-      return serverError(res);
+      return serverError(res, err);
     }
   },
   async deleteUser(req, res) {
@@ -159,7 +159,7 @@ const groupControllers = {
       }
       return serverResponse(res, 200, 'status', 'data', [{ message: 'User removed successfully' }]);
     } catch (err) {
-      return serverError(res);
+      return serverError(res, err);
     }
   },
 
@@ -196,7 +196,7 @@ const groupControllers = {
 
       return serverResponse(res, 201, 'status', 'data', displayResult);
     } catch (err) {
-      return serverError(res);
+      return serverError(res, err);
     }
   }
 };
