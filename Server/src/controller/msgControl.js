@@ -13,6 +13,7 @@ const messageControllers = {
         text: `SELECT * FROM users WHERE email=$1`,
         values: [email]
       };
+      console.log(receiverQuery);
       const { rows: receiverData } = await dbQuery(receiverQuery);
       const receiverId = receiverData[0].id;
 
@@ -31,6 +32,7 @@ const messageControllers = {
 
       return serverResponse(res, 201, 'status', 'data', resultValues);
     } catch (err) {
+      console.log(err.message);
       return serverError(res);
     }
   },

@@ -44,7 +44,7 @@ const loginHandler = (event) => {
         localStorage.setItem('id', response.data[0].id);
         localStorage.setItem('email', response.data[0].email);
         spinner.classList.remove('fa-spinner');
-        window.location.replace('../index.html');
+        window.location.replace('UI/paths');
       } else {
         spinner.classList.remove('fa-spinner');
         return notifyLoginUser(response.error);

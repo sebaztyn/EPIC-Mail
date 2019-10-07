@@ -142,7 +142,7 @@ export const fetchPOST = (url, verb, bodyObj) => {
         popIn();
         popMessageDiv.addEventListener('transitionend', () => {
           popMessageDiv.textContent = '';
-          return window.location.assign("../index.html");
+          return window.location.assign("../../paths/index.html");
         });
       }
     })
