@@ -16,7 +16,6 @@ body {
   color: #fff;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   width: 100vw;
-  height: 100vh;
 }
 
 header h3 {
@@ -27,15 +26,15 @@ header h3 {
 .wrapper {
   width: 100%;
   margin: 0 auto;
-  height: 90%;
+  height: 95%;
   overflow: hidden;
+  text-align: center;
 }
 
 .signup-header {
   text-align: center;
   display: block;
-  margin: 1.5em auto;
-  /* margin-top: 2em; */
+  margin: 1em auto;
 }
 
 .form-question {
@@ -112,7 +111,6 @@ header h3 {
 a[href="password-reset.html"] {
   text-decoration: none;
   color: red;
-  font-weight: 600;
 }
 
 span[id="password-reset"] {
@@ -154,8 +152,14 @@ a[href="password-reset.html"]:hover {
   background-color: rgb(7, 16, 66);
 }
 
-.form-footer button:hover {
+.login-submit-button:hover {
   cursor: pointer;
+  background-color: rgb(15, 43, 202);
+}
+
+.login-signup-button:hover {
+  cursor: pointer;
+  background-color: rgb(43, 255, 89);
 }
 
 .form-footer span {
@@ -197,15 +201,47 @@ footer p {
   background-color: rgba(0, 37, 82, 0.5);
 }
 
+#signup-form-buttons>:not(#signup-form-buttons>span:first-child) {
+  margin: 0.5em;
+  padding: 0.5em 1em;
+  line-height: 1;
+  background-color: #001429;
+  color: #fff;
+  border: none;
+  outline: none;
+  border-radius: 0.2em;
+}
+
+#signup-form-buttons>button {
+  margin: 0.5em;
+  padding: 0.5em 1em;
+  line-height: 1;
+  background-color: #001429;
+  color: #fff;
+  border: none;
+  outline: none;
+  border-radius: 0.2em;
+  margin-right: 0.5em;
+}
+
+#signup-form-buttons>button:first-child:hover {
+  cursor: pointer;
+  background-color: rgb(15, 43, 202);
+}
+
+#signup-form-buttons>button:nth-child(2):hover {
+  cursor: pointer;
+  background-color: rgb(246, 28, 8);
+}
+
+.fa-spinner {
+  margin-right: 0.7em;
+}
+
 .card-container {
   width: 100%;
-  display: grid;
   grid-template-rows: 1fr 1fr;
-  margin: 2em;
-  margin-right: 3em;
-  margin-left: 0.5em;
-  padding-right: 2em;
-  height: 70%
+  margin-top: 2em;
 }
 
 .message-card {
@@ -213,12 +249,12 @@ footer p {
   border-radius: 0.1em;
   text-align: center;
   color: white;
-  grid-row: 1/2;
 }
 
 .logcard {
-  grid-row: 2/-1;
   border-radius: 0.9em;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .footer-message p a {
@@ -229,6 +265,10 @@ footer p {
 .footer-message p a:hover {
   color: red;
   cursor: pointer;
+}
+
+div.footer-message {
+  margin-bottom: 1em;
 }
 
 .message-card div {
@@ -263,11 +303,14 @@ div.forgot {
 }
 
 @media (min-width: 35em) {
+  .logcard {
+    width: 70%;
+  }
   ul.login-container {
     margin: 0 auto;
   }
   .wrapper {
-    width: 50%;
+    width: 80%;
   }
   .login-form {
     margin: 0 auto;
@@ -284,6 +327,9 @@ div.forgot {
 }
 
 @media (min-width: 50em) {
+  .wrapper {
+    width: 60%;
+  }
   .signup-form ul {
     list-style: none;
     flex-direction: column;

@@ -569,9 +569,9 @@ describe('GROUP ENDPOINTS', () => {
         .end((err, res) => {
           if (err) return done(err);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.keys('status', 'Error');
+          expect(res.body).to.have.keys('status', 'error');
           expect(res.body).to.have.ownProperty('status').that.equals(400);
-          expect(res.body).to.have.ownProperty('Error').to.be.a('string');
+          expect(res.body).to.have.ownProperty('error').to.be.a('string');
           done();
         });
     });
@@ -627,9 +627,9 @@ describe('GROUP ENDPOINTS', () => {
         .end((err, res) => {
           if (err) return done(err);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.keys('status', 'Error');
+          expect(res.body).to.have.keys('status', 'error');
           expect(res.body).to.have.ownProperty('status').that.equals(400);
-          expect(res.body).to.have.ownProperty('Error').to.be.a('string');
+          expect(res.body).to.have.ownProperty('error').to.be.a('string');
           done();
         });
     });
@@ -694,7 +694,27 @@ describe('GROUP ENDPOINTS', () => {
         done();
       });
   });
-  it('should return all groups created by a particular user when a request to the endpoint', (done) => {
+  it('should return all groups a particular user is part of when a request to the endpoint', (done) => {
+    chai.request(server)
+      .get('/api/v1/groups/1/members')
+      .set('Authorization', `Bearer ${testToken}`)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body).to.have.keys('status', 'data');
+        expect(res.body).to.have.ownProperty('status').that.equals(200);
+        expect(res.body).to.have.ownProperty('data').to.be.an('array');
+        expect(res.body.data[0].firstname).to.be.a('string');
+        expect(res.body.data[0].lastname).to.be.a('string');
+
+        // PostgreSQL BIGINT datatype returns a string and not a number
+        expect(res.body.data[0].id).to.be.a('string');
+        expect(res.body.data[0].email).to.be.a('string');
+        expect(res.body.data[0]).to.be.an('object');
+        done();
+      });
+  });
+
+  it('should return all groups a particular user is part of when a request to the endpoint', (done) => {
     chai.request(server)
       .get('/api/v1/groups')
       .set('Authorization', `Bearer ${testToken}`)

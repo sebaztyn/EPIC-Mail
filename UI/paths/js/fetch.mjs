@@ -11,8 +11,7 @@ const subject = document.querySelector('.subject');
 const sender = document.querySelector('.sender');
 const messageBody = document.querySelector('.display-the-full-message');
 const displayMessage = document.querySelector('.display-list-message');
-const composeMsg = document.querySelector('.new-msg-container');
-
+const popMessageDiv = document.querySelector('.new-msg-container>div:last-child');
 const viewPane = document.querySelector('.view-pane');
 
 const option = {
@@ -34,11 +33,9 @@ const displayMessageHandler = (event, url) => {
             mainContainerElement.style.display = 'none';
             viewPane.style.display = 'block';
             displayMessage.style.display = 'block';
-            composeMsg.style.display = 'none';
           } else {
             mainContainerElement.style.display = 'block';
             displayMessage.style.display = 'block';
-            composeMsg.style.display = 'none';
           }
           if (res.data[0].status === 'sent') {
             sender.innerHTML = `To:<em>${res.data[0].email}</em>`;
@@ -76,7 +73,7 @@ const dataObj = (res) => {
   return mainContainerElement.appendChild(ulContainerElement);
 };
 
-const emptyDataObj = (res) => {
+export const emptyDataObj = (res) => {
   if (!ulContainerElement) ulContainerElement = document.querySelector('.container ul');
   if (ulContainerElement) ulContainerElement.style.display = 'none';
   const messages = res.message;
@@ -124,6 +121,10 @@ export const fetchGET = (url) => {
 };
 
 export const fetchPOST = (url, verb, bodyObj) => {
+  const popIn = () => {
+    popMessageDiv.textContent = 'Message Sent Successfully!';
+    popMessageDiv.style.bottom = '-10vh';
+  };
   fetch(url, {
     method: verb,
     headers: {
@@ -134,8 +135,15 @@ export const fetchPOST = (url, verb, bodyObj) => {
   })
     .then(res => res.json())
     .then((response) => {
+      if (response.status !== 201) {
+        return popMessageDiv.textContent = response.error;
+      }
       if (response.status === 201) {
-        return response.data;
+        popIn();
+        popMessageDiv.addEventListener('transitionend', () => {
+          popMessageDiv.textContent = '';
+          return window.location.assign("../../paths/index.html");
+        });
       }
     })
     .catch(err => console.log(err));

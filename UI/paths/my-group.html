@@ -5,9 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-  <!-- <link rel="stylesheet" type="text/css" href="../css/fontawesomecss/all.min.css"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/fontawesomecss/all.min.css">
   <link rel="stylesheet" type="text/css" href="../css/group.css">
   <title>My Group | EPIC</title>
 </head>
@@ -17,8 +16,7 @@
     <button id="toggle-menu" class="inbox-flex">Toggle Menu</button>
     <h1> <i class="header-string">My Groups</i></h1>
   </header>
-  <div id="modal-test">
-    <div class="modal-backdrop" id="modal"></div>
+  <div class="modal-backdrop">
     <nav class="homepage-navbar" id="homepage-navbar">
       <ul id="all-list" class="all-list inbox-flex">
         <li><a href="index.html" class="main-page-inbox"><span><i class="fa fa-inbox"></i>Inbox</span></a></li>
@@ -45,38 +43,50 @@
   <div class="group-list-pane">
     <h4 class="my-group-header">MY GROUPS</h4>
     <div class="group-list-card">
-      <div class="my-group-modal">
-        <div class="group-name-edit">
-          <span><i class="fa fa-times-circle"></i>close</span>
-          <div>
-            <input type="text" id="change-group-name" placeholder="Enter New Group Name">
-            <hr>
-            <span><i class="fa fa-ban"></i>Reset</span>
-            <span><i class="fa fa-exchange-alt"></i>Change</span>
-          </div>
-
-        </div>
-        <div class="add-group-member">
-          <span><i class="fa fa-times-circle"></i>close</span>
-          <div>
-            <input type="email" id="add-group-member" placeholder="Enter New Member Email">
-            <hr>
-            <span><i class="fa fa-undo"></i>Reset</span>
-            <span><i class="fa fa-plus"></i>Add User</span>
-          </div>
-        </div>
-        <div class="new-group-message">
-
-        </div>
-      </div>
       <ul>
       </ul>
     </div>
-    <div class="create-group-buttons"><span type="button"><i class="fa fa-undo"></i>Reset</span>
-      <span id="submit-message"><i class="fa fa-plus"></i>Create Group</span>
+    <div class="my-group-modal">
+      <div class="group-manipulation">
+        <span><i class="fa fa-times-circle"></i>close</span>
+        <div class="group-name-edit">
+          <input type="text" id="change-group-name" placeholder="New Group Name">
+          <hr>
+          <span id="group-name-reset"><i class="fa fa-ban"></i>Reset</span>
+          <span id="group-name-change"><i class="fa fa-exchange-alt"></i>Change</span>
+        </div>
+        <div class="add-group-user">
+          <input type="email" id="add-group-member" placeholder="New Member Email">
+          <hr>
+          <span id="addUser-reset"><i class="fa fa-undo"></i>Reset</span>
+          <span id="add-group-user"><i class="fa fa-plus"></i>Add User</span>
+        </div>
+        <div class="delete-group-div">
+          <p><strong><em class="confirm-group-delete">Confirm Delete?</em></strong></p>
+          <span id="delete-group-button"><i class="fa fa-trash"></i>Delete Group</span>
+        </div>
+        <div id="new-group-message">
+          <br>
+          <input type="text" required id="email-subject" placeholder="Enter Email Subject">
+          <hr>
+          <textarea name="" id="email-message" cols="30" rows="18" required></textarea>
+          <span type="button" id="reset-group-message><i class=" fa fa-trash"></i>Discard</span>
+          <span id="submit-group-message"><i class="fa fa-paper-plane"></i>Send</span>
+        </div>
+        <div id="group-members-list">
+          <p class="group-name"></p>
+          <p><em><span>*</span> Only Group Owner can delete a member</em></p>
+          <ul class="group-member-container">
+          </ul>
+          <!-- <div class="member-delete-confirm">
+            <span><i class="fa fa-times-circle"></i>cancel</span>
+          </div> -->
+        </div>
+      </div>
+      <div id="group-popup-message"></div>
     </div>
   </div>
-  <script type="module" src="/EPIC-Mail/UI/paths/js/index.mjs"></script>
+  <script type="module" src="js/index.mjs"></script>
 </body>
 
 </html>

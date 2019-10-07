@@ -1,6 +1,7 @@
 const loginButton = document.querySelector('.login-submit-button');
 const email = document.querySelector('#login-email-input');
 const password = document.querySelector('#login-password-input');
+const spinner = document.querySelector('.fa');
 
 
 const getUserData = () => {
@@ -16,18 +17,17 @@ const notifyLoginUser = (message) => {
   notifyLoginDiv.innerHTML = notifyParagraph;
   return notifyLoginDiv;
 };
-const removeNotificationMsg = () => {
-  notifyLoginDiv.innerHTML = '';
-  return notifyLoginDiv;
-};
 
 const loginHandler = (event) => {
+  spinner.classList.add('fa-spinner');
   event.preventDefault();
   const loginData = getUserData();
   if (!loginData.email) {
+    spinner.classList.remove('fa-spinner');
     return notifyLoginUser('Email field cannot be empty');
   }
   if (!loginData.password) {
+    spinner.classList.remove('fa-spinner');
     return notifyLoginUser('Password field cannot be empty');
   }
   fetch('https://epic-mail-2018.herokuapp.com/api/v1/auth/login', {
@@ -41,13 +41,21 @@ const loginHandler = (event) => {
     .then((response) => {
       if (response.status === 201) {
         localStorage.setItem('token', response.data[0].token);
-        localStorage.setItem('email', loginData.email);
-        notifyLoginUser('Login successful');
-        return setTimeout(() => { window.location.replace('/EPIC-Mail/UI/paths/index.html'); }, 2000);
+        localStorage.setItem('id', response.data[0].id);
+        localStorage.setItem('email', response.data[0].email);
+        spinner.classList.remove('fa-spinner');
+        window.location.replace('../index.html');
+      } else {
+        spinner.classList.remove('fa-spinner');
+        return notifyLoginUser(response.error);
       }
-      return notifyLoginUser(response.error);
     })
     .catch(err => console.log(err));
+};
+const removeNotificationMsg = () => {
+  spinner.classList.remove('fa-spinner');
+  notifyLoginDiv.innerHTML = '';
+  return notifyLoginDiv;
 };
 loginButton.addEventListener('click', loginHandler);
 

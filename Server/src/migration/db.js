@@ -1,9 +1,7 @@
 import '@babel/polyfill';
+import 'dotenv/config';
 
 const { Pool } = require('pg');
-const dotenv = require('dotenv');
-
-dotenv.config();
 
 
 let dbString = process.env.DATABASE_URL;
@@ -73,6 +71,7 @@ const createTables = async () => {
     );`;
 
   const myGroupMembersTable = `CREATE TABLE my_group_members(
+      group_members_id SERIAL PRIMARY KEY NOT NULL,
       user_id INTEGER REFERENCES users(id) NOT NULL,
       group_id INTEGER REFERENCES my_group(group_id) NOT NULL,
       user_role VARCHAR(20)
