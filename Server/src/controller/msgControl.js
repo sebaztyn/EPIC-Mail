@@ -13,10 +13,9 @@ const messageControllers = {
         text: `SELECT * FROM users WHERE email=$1`,
         values: [email]
       };
-      console.log(receiverQuery);
       const { rows: receiverData } = await dbQuery(receiverQuery);
+      if (!receiverQuery.length) return serverResponse(res, 400, 'status', 'error', 'Email is not signed up');
       const receiverId = receiverData[0].id;
-
       const messageValues = [message, subject, receiverId, myUserId];
       const inboxValues = [receiverId, myEmail, 'unread'];
       const sentValues = [myUserId, receiverId, 'sent'];
