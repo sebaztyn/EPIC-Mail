@@ -51,7 +51,8 @@ const messageControllers = {
       const inbox = await dbQuery(inboxQuery);
       const messageId = inbox.rows.map((each => each.message_id));
       const messageData = {
-        text: `SELECT * FROM messages AS msg
+        text: `SELECT DISTINCT inbox.sender_email,users.firstname,users.lastname, msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, msg.parent_message_id, inbox.status FROM messages AS msg
+        JOIN inbox ON msg.message_id=inbox.message_id
         JOIN users ON msg.sender_id = users.id
         WHERE msg.message_id=ANY($1)`,
         values: [messageId]
@@ -76,12 +77,14 @@ const messageControllers = {
       const usersId = userInfo.rows[0].id;
 
       const userInboxData = {
-        text: `SELECT DISTINCT users.firstname, users.lastname, users.email,msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, inbox.sender_email, msg.parent_message_id, inbox.status
+        text: `SELECT DISTINCT msg.message_id, msg.subject, msg.message,
+        u.firstname,u.lastname, msg.created_on, msg.sender_id, msg.receiver_id, inbox.sender_email, msg.parent_message_id, inbox.status
          FROM messages AS msg
          JOIN inbox ON msg.message_id=inbox.message_id
-         JOIN users ON msg.sender_id = users.id
+         JOIN users ON msg.receiver_id = users.id
+         JOIN users AS u ON msg.sender_id=u.id
          WHERE inbox.receiver_id=$1
-        ORDER BY msg.message_id ASC`,
+        ORDER BY msg.message_id DESC`,
         values: [usersId]
       };
       const { rows } = await dbQuery(userInboxData);
@@ -102,7 +105,7 @@ const messageControllers = {
         JOIN sent ON msg.message_id = sent.sent_message_id
         JOIN users ON sent.receiver_id = users.id
         WHERE sent.sender_id=$1
-        ORDER BY msg.message_id ASC`,
+        ORDER BY msg.message_id DESC`,
         values: [id]
       };
       const { rows } = await dbQuery(sentMessageData);
@@ -128,9 +131,10 @@ const messageControllers = {
       await dbQuery(inboxQuery);
 
       const messageData = {
-        text: `SELECT DISTINCT users.email, msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, msg.parent_message_id
+        text: `SELECT DISTINCT inbox.sender_email,users.firstname,users.lastname, msg.message_id, msg.subject, msg.message, msg.created_on, msg.sender_id, msg.receiver_id, msg.parent_message_id, inbox.status
 		    FROM messages AS msg
         JOIN users ON users.id=msg.sender_id
+        JOIN inbox ON msg.message_id=inbox.message_id
         WHERE msg.message_id=$1;`,
         values: [messageID]
       };

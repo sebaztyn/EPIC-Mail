@@ -2,6 +2,7 @@ import '@babel/polyfill';
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
+import path from 'path';
 import YAML from 'yamljs';
 import swaggerUi from 'swagger-ui-express';
 import messageRouters from './routes/message.router';
@@ -9,7 +10,7 @@ import groupRouters from './routes/group.route';
 import authenticationRouter from './routes/authenticationRouter';
 
 
-const swaggerDocument = YAML.load(`${__dirname}/../../swagger.yaml`);
+const swaggerDocument = YAML.load(`${path.join(`${__dirname}../../../swagger.yml`)}`);
 const app = express();
 app.use(cors());
 app.use(express.json());

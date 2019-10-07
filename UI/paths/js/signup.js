@@ -6,6 +6,7 @@ const email = document.querySelector('#signup-email');
 const password = document.querySelector('#signup-password');
 const confirmPassword = document.querySelector('#signup-confirm-password');
 const recoveryEmail = document.querySelector('#signup-recoveryEmail');
+const spinner = document.querySelector('.fa');
 
 
 const getUserData = () => {
@@ -28,15 +29,13 @@ const notifyUser = (message) => {
   notifyDiv.innerHTML = notifyParagraph;
   return notifyDiv;
 };
-const removeNotificationMsg = () => {
-  notifyDiv.innerHTML = '';
-  return notifyDiv;
-};
 
 const signupHandler = (event) => {
+  spinner.classList.add('fa-spinner');
   event.preventDefault();
   const formData = getUserData();
   if (formData.password !== formData.confirmPassword) {
+    spinner.classList.remove('fa-spinner');
     return notifyUser('Passwords do not match. Try again');
   }
   delete formData.confirmPassword;
@@ -51,13 +50,20 @@ const signupHandler = (event) => {
     .then((response) => {
       if (response.status === 201) {
         localStorage.setItem('token', response.data[0].token);
-        notifyUser('Signup successful');
-        setTimeout(() => { window.location.replace('/EPIC-Mail/UI/paths/index.html'); }, 2000);
+        localStorage.setItem('email', formData.email);
+        spinner.classList.remove('fa-spinner');
+        window.location.replace('/EPIC-Mail/UI/paths/index.html');
       } else {
+        spinner.classList.remove('fa-spinner');
         return notifyUser(response.error, "An error occurred");
       }
     })
     .catch(err => console.log(err));
+};
+const removeNotificationMsg = () => {
+  spinner.classList.remove('fa-spinner');
+  notifyDiv.innerHTML = '';
+  return notifyDiv;
 };
 
 signupButton.addEventListener('click', signupHandler);

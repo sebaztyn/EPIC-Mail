@@ -37,6 +37,7 @@ header h1 {
   text-align: center;
   height: 100%;
   font-size: 1.3rem;
+  margin-bottom: 0;
 }
 
 .main {
@@ -91,85 +92,29 @@ header h1 {
   text-overflow: ellipsis;
 }
 
-#modal-test {
-  display: none;
-}
-
 .modal-backdrop {
   position: absolute;
   z-index: 1;
   left: 0;
   top: 0;
-  right: 0;
   bottom: 0;
+  width: 0vw;
   background-color: rgba(0, 0, 0, 0.5);
   overflow: hidden;
+  transition: width 0.2s linear;
 }
 
 .homepage-navbar {
-  position: fixed;
+  position: absolute;
   top: 7vh;
   left: 0.1em;
-  width: 70vw;
+  width: 70%;
   height: 94vh;
   opacity: 1;
   background-color: #002D40;
-  visibility: hidden;
   z-index: 2;
   display: flex;
   flex-direction: column;
-}
-
-.homepage-navbar .new-mail-navbar {
-  list-style: none;
-  margin-bottom: 3em;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 20%;
-}
-
-.homepage-navbar .new-mail-navbar li {
-  flex: 1;
-  width: 100%;
-  flex-basis: 100%;
-  display: flex;
-  background-color: #002D40;
-  opacity: 1;
-}
-
-.homepage-navbar .new-mail-navbar li a {
-  text-decoration: none;
-  width: 100%;
-  text-align: end;
-  flex: 1;
-  display: flex;
-  flex-basis: 100%;
-  align-items: center;
-  padding-right: 1em;
-  color: #fff;
-}
-
-.homepage-navbar .new-mail-navbar li a:link {
-  text-decoration: none;
-}
-
-.homepage-navbar .new-mail-navbar li a:visited {
-  text-decoration: none;
-}
-
-.homepage-navbar .new-mail-navbar li a:hover {
-  text-decoration: none;
-  background-color: rgb(7, 16, 66);
-}
-
-.homepage-navbar .new-mail-navbar li a:active {
-  text-decoration: none;
-}
-
-.homepage-navbar .new-mail-navbar li a span {
-  flex-basis: 100%;
 }
 
 .homepage-navbar .all-list {
@@ -227,18 +172,19 @@ header h1 {
 
 .message-header button {
   position: absolute;
-  top: 0.1em;
+  top: 0;
   left: 0.1em;
   border: 0;
   background-color: transparent;
-  font-size: 3em;
-  width: 0.8em;
-  height: 0.8em;
-  line-height: 0.3;
+  font-size: 3.2em;
+  width: 1em;
+  height: 100%;
+  line-height: 0.5;
   text-indent: 5em;
   white-space: nowrap;
   overflow: hidden;
   outline: none;
+  padding: 0;
 }
 
 .message-header button::after {
@@ -250,41 +196,8 @@ header h1 {
   color: #fff;
   text-indent: 0;
   outline: 0;
-}
-
-.toggle-on {
-  animation: slides-out 0.4s ease-in;
-  animation-fill-mode: forwards;
-}
-
-.toggle-off {
-  animation: slides-in 0.4s ease-out;
-  animation-fill-mode: backwards;
-}
-
-@keyframes slides-out {
-  from {
-    visibility: visible;
-    width: 10%;
-  }
-  to {
-    opacity: 1;
-    visibility: visible;
-    width: 70%;
-  }
-}
-
-@keyframes slides-in {
-  from {
-    width: 70%;
-    opacity: 1;
-    visibility: visible;
-  }
-  to {
-    width: 0;
-    opacity: 0;
-    visibility: hidden;
-  }
+  height: 100%;
+  width: 100%
 }
 
 .unread-notification {
@@ -296,13 +209,13 @@ header h1 {
 .unread-notification p:first-child {
   position: absolute;
   width: 100%;
-  top: 50%;
+  top: 40%;
 }
 
 .unread-notification p:nth-child(2) {
   position: absolute;
   width: 100%;
-  top: 53%;
+  top: 44%;
 }
 
 .message-showing {
@@ -381,7 +294,8 @@ i {
   height: 100%;
   width: 100%;
   padding: 0.5em;
-  display: none;
+  display: block;
+  position: relative;
 }
 
 .sender {
@@ -413,14 +327,12 @@ i {
 }
 
 .display-list-message span:first-child {
-  /* border: 1px solid dimgray; */
   padding: 0.3em;
   margin-bottom: 1em;
   font-size: 0.7rem;
 }
 
 .display-list-message span:nth-child(2) {
-  /* border: 1px solid dimgray; */
   position: absolute;
   right: 0;
   padding: 0.3em;
@@ -438,7 +350,33 @@ i {
   cursor: pointer;
 }
 
+.new-msg-container>div:last-child {
+  position: absolute;
+  right: 0;
+  padding: 1em 2em;
+  border-radius: 0.4em;
+  margin: 0 auto -0.5em 0;
+  bottom: -10vh;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(0, 0, 0);
+  color: #fff;
+  transition: bottom 1s linear;
+}
+
 @media(min-width: 35em) {
+  div.modal-backdrop {
+    position: fixed;
+    width: 20vw !important;
+    top: 0;
+    left: 0;
+    background-color: #002D40;
+    height: 100vh;
+    transition: none;
+  }
+  .new-msg-container>div:last-child {
+    width: 60%;
+  }
   .container-header {
     display: block;
     color: dimgray;
@@ -449,14 +387,7 @@ i {
     display: none
   }
   .homepage-navbar {
-    position: fixed;
-    width: 20vw;
-    top: 0;
-    left: 0;
-    background-color: #002D40;
-    height: 100vh;
-    opacity: 1;
-    visibility: visible;
+    width: 100%;
   }
   .main {
     left: 20vw;
@@ -476,17 +407,11 @@ i {
   .message-header button {
     display: none;
   }
-  #modal-test {
-    display: block !important;
-  }
-  .modal-backdrop {
-    display: none;
-  }
   .toggle-off {
-    animation: none !important;
+    animation: none;
   }
   .toggle-on {
-    animation: none !important;
+    animation: none;
   }
 }
 

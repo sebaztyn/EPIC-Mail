@@ -15,7 +15,7 @@ const groupControllers = {
       };
       const { rows } = await dbQuery(groupNameData);
       if (rows.length > 0) {
-        return serverResponse(res, 400, 'status', 'Error', 'Name already exists. Change your group name please');
+        return serverResponse(res, 400, 'status', 'error', 'Name already exists. Change your group name please');
       }
       const newGroupData = {
         text: `INSERT INTO my_group (name,admin_id)
@@ -50,6 +50,24 @@ const groupControllers = {
       };
       const { rows } = await dbQuery(myGroups);
       if (!rows.length) return serverResponse(res, 200, 'status', 'message', 'Create or join a Group');
+      return serverResponse(res, 200, 'status', 'data', rows);
+    } catch (err) {
+      return serverError(res);
+    }
+  },
+  async getAllUsersInGroup(req, res) {
+    try {
+      const { groupId } = req.params;
+      const myGroups = {
+        text: `SELECT users.firstname, users.lastname, users.email, users.id, my_group.name, members.group_members_id
+        FROM my_group_members as members
+         JOIN users ON users.id=members.user_id
+         JOIN my_group ON members.group_id=my_group.group_id
+        WHERE members.group_id=$1;`,
+        values: [groupId]
+      };
+      const { rows } = await dbQuery(myGroups);
+      if (!rows.length) return serverResponse(res, 200, 'status', 'message', 'No member found in group');
       return serverResponse(res, 200, 'status', 'data', rows);
     } catch (err) {
       return serverError(res);
@@ -101,7 +119,7 @@ const groupControllers = {
       };
       const { rows } = await dbQuery(userData);
       if (!rows.length) {
-        return serverResponse(res, 400, 'status', 'Error', 'Email is not valid');
+        return serverResponse(res, 400, 'status', 'error', 'Email not found. Check Email');
       }
       const { id } = rows[0];
 
@@ -111,7 +129,7 @@ const groupControllers = {
       };
       const { rows: groupMemberInfo } = await dbQuery(groupMemberData);
       if (groupMemberInfo.length) {
-        return serverResponse(res, 400, 'status', 'Error', 'User is already a member of the group');
+        return serverResponse(res, 400, 'status', 'error', 'User is already a member of the group');
       }
       const newUserData = {
         text: 'INSERT INTO my_group_members(user_id,user_role, group_id) VALUES($1, $2, $3) RETURNING *',

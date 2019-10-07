@@ -1,9 +1,32 @@
 @import "./message.css";
-.display-pane {
-  background-color: #fff;
-  height: 100vh;
-  text-align: center;
+.main-group {
+  position: fixed;
+  top: 8vh;
+  right: 0;
+  left: 0;
+  height: 92vh;
   overflow: hidden;
+  background-color: #fff;
+}
+
+.display-pane {
+  text-align: center;
+  height: 100%;
+  position: relative;
+}
+
+.main-group>div:last-child {
+  position: absolute;
+  right: 0;
+  padding: 1em 2em;
+  border-radius: 0.4em;
+  margin: 0 auto -0.5em 0;
+  bottom: -10vh;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(0, 0, 0);
+  color: #fff;
+  transition: bottom 1s linear;
 }
 
 .group-header {
@@ -58,6 +81,10 @@
   background-color: #fff;
 }
 
+.group-list-card {
+  height: 100%
+}
+
 .group-list-card ul {
   list-style: none;
   margin: 0;
@@ -73,6 +100,18 @@
   padding: 0.5em;
   flex-grow: 1;
   text-align: center
+}
+
+.group-list-card ul li>p:first-child {
+  margin: 0;
+}
+
+.group-list-card ul li>p:first-child>a {
+  text-decoration: none;
+}
+
+.group-list-card ul li>p:first-child:hover {
+  cursor: pointer;
 }
 
 .group-list-card ul li input {
@@ -95,8 +134,8 @@
   display: none;
 }
 
-.group-name-edit {
-  margin: 15% auto;
+.group-manipulation {
+  margin: 9% auto;
   width: 80%;
   height: 65%;
   text-align: center;
@@ -105,110 +144,107 @@
   border: #002D40 solid 1em;
 }
 
-.group-name-edit div {
+div#group-popup-message {
+  position: absolute;
+  right: 0;
+  padding: 1em 2em;
+  border-radius: 0.4em;
+  margin: 0 auto -0.5em 0;
+  bottom: -10vh;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(0, 0, 0);
+  color: #fff;
+  transition: bottom 1s linear;
+}
+
+.group-manipulation>div {
   position: absolute;
   top: 15%;
   left: 15%;
   height: 70%;
   width: 70%;
-  display: block;
   margin: auto;
   text-align: center;
   padding: 1em;
 }
 
-.group-name-edit div>hr {
+.group-manipulation>div>hr {
   margin: 0 1em 3em 1em
 }
 
-.group-name-edit input {
+.group-manipulation>div>input {
   border: none;
   outline: none;
   width: 90%;
   text-align: center;
 }
 
-.group-name-edit>span {
+.group-manipulation>span {
   display: inline-block;
+  border-radius: 0.2em;
   padding: 0.7em;
   position: absolute;
   top: 1%;
   right: 1%;
-}
-
-.group-name-edit>span:hover {
   background-color: #002D40;
   color: #fff;
+  z-index: 5;
+}
+
+.group-manipulation>span:hover {
+  background-color: rgb(160, 160, 160);
+  color: black;
   cursor: pointer
 }
 
-.group-name-edit div span {
-  padding: 1em;
-}
-
-.group-name-edit div span:hover {
+.group-manipulation>div>span {
+  padding: 0.8em;
+  border-radius: 0.2em;
   background-color: #002D40;
   color: #fff;
+}
+
+.group-manipulation>div>span:hover {
+  background-color: rgb(160, 160, 160);
+  color: black;
   cursor: pointer;
 }
 
-.add-group-member {
-  margin: 15% auto;
-  width: 80%;
-  height: 65%;
-  text-align: center;
-  background-color: #fff;
-  position: relative;
-  border: #002D40 solid 1em;
-  display: none;
+.delete-group-div p {
+  margin-bottom: 5em;
 }
 
-.add-group-member div {
+#new-group-message {
   position: absolute;
-  top: 15%;
-  left: 15%;
-  height: 70%;
-  width: 70%;
-  display: block;
-  margin: auto;
-  text-align: center;
+  top: 2%;
+  width: 100%;
+  height: 85%;
+  left: 0;
+  margin: 0;
+  display: none;
   padding: 1em;
 }
 
-.add-group-member input {
+#new-group-message>input {
   border: none;
   outline: none;
-  width: 90%;
-  text-align: center;
-}
-
-.add-group-member div span {
-  padding: 1em;
-}
-
-.add-group-member div span:hover {
-  background-color: #002D40;
-  color: #fff;
-}
-
-.add-group-member>span {
-  display: inline-block;
-  padding: 0.7em;
-  position: absolute;
-  top: 1%;
-  right: 1%;
-}
-
-.add-group-member>span:hover {
-  background-color: #002D40;
-  color: #fff;
-}
-
-.new-group-message {
-  position: absolute;
-  height: 100%;
+  margin-top: 2em;
   width: 100%;
-  display: none;
+  text-align: start;
+}
+
+#new-group-message>hr {
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  margin-left: 0;
+}
+
+textarea {
+  width: 100%;
+  height: 70%;
+  margin-bottom: 1em;
 }
 
 .tooltip {
@@ -234,10 +270,6 @@
   font-weight: 100;
   font-style: italic;
   z-index: 1;
-}
-
-.group-list-card ul li>span {
-  cursor: pointer;
 }
 
 .group-list-card ul li>span:hover .edit {
@@ -289,29 +321,111 @@
   z-index: 1;
 }
 
+i {
+  width: inherit;
+}
+
 .group-list-card ul li>span:hover .group-message {
   display: inline;
   background-color: #002D40;
   color: #fff;
 }
 
+#group-members-list {
+  width: 100%;
+  height: 80%;
+  left: 0;
+  position: relative;
+}
+
+#group-members-list>ul {
+  list-style: none;
+  padding: 0;
+  overflow-y: auto;
+  height: inherit;
+}
+
+#group-members-list>ul>li {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: nowrap;
+  border-bottom: #002D40 solid 1px;
+  padding: 1em 1em 0;
+}
+
+#group-members-list>ul>li>span:first-child {
+  margin-right: 0.8em;
+  right: 0;
+  text-transform: uppercase;
+  font-size: medium
+}
+
+#group-members-list>ul>li>span:nth-child(2) {
+  font-style: italic;
+  font-stretch: extra-condensed;
+  font-size: small
+}
+
+#group-members-list>div {
+  position: absolute;
+  width: inherit;
+  height: 0%;
+  top: 0;
+  left: 0;
+  display: none;
+  border: #002D40 solid 0.6em;
+  background-color: #fff;
+}
+
+#group-members-list>p:first-child {
+  text-transform: uppercase;
+  font-weight: bolder;
+  font-size: large
+}
+
+#group-members-list>div>span {
+  position: absolute;
+  right: 0;
+}
+
+#group-members-list>ul>li:hover {
+  background-color: #002D40;
+  color: #fff;
+  cursor: pointer;
+  padding-bottom: 1em;
+  font-size: larger
+}
+
 @media(min-width: 35em) {
-  .add-group-member div span {
+  .group-list-card ul li>p:first-child {
+    font-stretch: extra-condensed;
+    font-size: x-small
+  }
+  .main-group>div:last-child {
+    width: 60%;
+  }
+  .group-list-card ul {
+    display: inline-flex;
+    justify-content: space-around;
+    flex-flow: wrap;
+  }
+  .group-list-card ul li {
+    flex-grow: 1;
+  }
+  .group-manipulation>div>span {
     padding: 0.5em;
   }
-  .group-name-edit div span {
-    padding: 0.5em;
-  }
-  .group-name-edit>span {
-    padding: 0.5em;
-  }
-  .add-group-member>span {
+  .group-manipulation>span {
     padding: 0.5em;
   }
   .my-group-modal {
     top: 0;
     height: 100vh;
     left: 20vw;
+  }
+  div#group-popup-message {
+    width: 60%;
   }
   .my-group-header {
     display: block;
@@ -329,7 +443,6 @@
   }
   .group-list-card ul {
     width: 100%;
-    height: 100%
   }
   .group-list-card ul li {
     width: 25%
@@ -340,12 +453,13 @@
   #group-name::placeholder {
     text-align: start;
   }
-  .display-pane {
+  .main-group {
     position: fixed;
+    left: 20vw;
     top: 0;
-    right: 0;
     bottom: 0;
     width: 80vw;
+    height: 100vh;
     padding: 2em;
   }
   .group-header {
