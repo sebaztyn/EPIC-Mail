@@ -14,7 +14,7 @@ const messageControllers = {
         values: [email]
       };
       const { rows: receiverData } = await dbQuery(receiverQuery);
-      if (!receiverQuery.length) return serverResponse(res, 400, 'status', 'error', 'Email is not signed up');
+      if (!receiverData.length) return serverResponse(res, 400, 'status', 'error', 'Email is not signed up');
       const receiverId = receiverData[0].id;
       const messageValues = [message, subject, receiverId, myUserId];
       const inboxValues = [receiverId, myEmail, 'unread'];

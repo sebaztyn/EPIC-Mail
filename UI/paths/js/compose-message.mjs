@@ -6,13 +6,17 @@ const navContainer = document.getElementById('homepage-navbar');
 const modal = document.getElementById('modal-test');
 
 const sendMailButton = document.querySelector('#submit-message');
+let email = document.querySelector('#recipient-email');
+let subject = document.querySelector('#email-subject');
+let message = document.querySelector('#email-message');
+const popMessageDiv = document.querySelector('.new-msg-container>div:last-child');
 
 // Handles sending mails to users
 const sendMailHandler = (event) => {
   event.preventDefault();
-  const email = document.querySelector('#recipient-email').value;
-  const subject = document.querySelector('#email-subject').value;
-  const message = document.querySelector('#email-message').value;
+  email = document.querySelector('#recipient-email').value;
+  subject = document.querySelector('#email-subject').value;
+  message = document.querySelector('#email-message').value;
   const messageObj = { email, subject, message };
   const url = 'https://epic-mail-2018.herokuapp.com/api/v1/messages';
   return fetchPOST(url, 'POST', messageObj);
@@ -35,4 +39,17 @@ window.addEventListener('mouseup', (event) => {
     modal.style.display = 'none';
     // mainBody[0].style.overflow = 'auto';
   }
+});
+
+email.addEventListener('input', () => {
+  popMessageDiv.textContent = '';
+  popMessageDiv.style.bottom = '-10vh';
+});
+subject.addEventListener('input', () => {
+  popMessageDiv.textContent = '';
+  popMessageDiv.style.bottom = '-10vh';
+});
+message.addEventListener('input', () => {
+  popMessageDiv.textContent = '';
+  popMessageDiv.style.bottom = '-10vh';
 });
