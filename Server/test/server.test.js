@@ -684,11 +684,12 @@ describe('GROUP ENDPOINTS', () => {
         expect(res.body).to.haveOwnProperty('status');
         expect(res.body).to.haveOwnProperty('status').that.is.a('number');
         expect(res.body).to.haveOwnProperty('data');
-        expect(res.body).to.haveOwnProperty('data').that.is.an('array');
+        expect(res.body).to.haveOwnProperty('data').that.is.an('object');
         expect(res.status).to.equal(201);
         expect((res.body)).to.be.an('object');
-        expect((res.body.data[0])).to.be.an('object');
-        expect((res.body.data[0].name)).to.be.a('string');
+        expect((res.body.data)).to.be.an('object');
+        expect((res.body.data.name)).to.be.a('string');
+        expect((res.body.data.id)).to.be.a('number');
         expect((res.body)).to.have.all.keys('status', 'data');
         expect((res.body)).to.haveOwnProperty('status').that.equals(201);
         done();
