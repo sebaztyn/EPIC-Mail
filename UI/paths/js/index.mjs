@@ -216,3 +216,16 @@ if (messageReturnButton) {
   }
   );
 }
+
+document.querySelector('#recipient-email').addEventListener('input', () => {
+  popMessage.textContent = '';
+  popMessage.style.bottom = '-10vh';
+});
+document.querySelector('#email-subject').addEventListener('input', () => {
+  popMessage.textContent = '';
+  popMessage.style.bottom = '-10vh';
+});
+document.querySelector('#email-message').addEventListener('input', () => {
+  popMessage.textContent = '';
+  popMessage.style.bottom = '-10vh';
+});
