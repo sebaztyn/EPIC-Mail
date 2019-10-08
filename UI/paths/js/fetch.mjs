@@ -2,11 +2,8 @@
 let ulContainerElement = document.querySelector('div[class="container"] ul');
 const mainContainerElement = document.querySelector('div[class="container"]');
 const inboxBodyTag = document.querySelector('#application-inbox-body-element');
-const deletedBodyTag = document.querySelector('#application-deleted-body-element');
 const sentBodyTag = document.querySelector('#application-sent-body-element');
 const unreadBodyTag = document.querySelector('#application-unread-body-element');
-const draftBodyTag = document.querySelector('#application-draft-body-element');
-const allMailsBodyTag = document.querySelector('#application-allmails-body-element');
 const subject = document.querySelector('.subject');
 const sender = document.querySelector('.sender');
 const messageBody = document.querySelector('.display-the-full-message');
@@ -41,7 +38,7 @@ const displayMessageHandler = (event, url) => {
             sender.innerHTML = `To:<em>${res.data[0].email}</em>`;
           }
           if (res.data[0].status !== 'sent') {
-            sender.innerHTML = `From: <em>${res.data[0].email}</em>`;
+            sender.innerHTML = `From: <em>${res.data[0].sender_email}</em>`;
           }
           subject.innerHTML = `<h4>${res.data[0].subject}</h4>`;
           messageBody.textContent = res.data[0].message;
