@@ -29,10 +29,10 @@ const groupControllers = {
       };
       await dbQuery(firstMember);
       if (newGroup.length > 0) {
-        return serverResponse(res, 201, 'status', 'data', [{
+        return serverResponse(res, 201, 'status', 'data', {
           id: newGroup[0].group_id,
           name: newGroup[0].name
-        }]);
+        });
       }
     } catch (err) {
       return serverError(res, err);

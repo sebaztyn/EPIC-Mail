@@ -2,11 +2,8 @@
 let ulContainerElement = document.querySelector('div[class="container"] ul');
 const mainContainerElement = document.querySelector('div[class="container"]');
 const inboxBodyTag = document.querySelector('#application-inbox-body-element');
-const deletedBodyTag = document.querySelector('#application-deleted-body-element');
 const sentBodyTag = document.querySelector('#application-sent-body-element');
 const unreadBodyTag = document.querySelector('#application-unread-body-element');
-const draftBodyTag = document.querySelector('#application-draft-body-element');
-const allMailsBodyTag = document.querySelector('#application-allmails-body-element');
 const subject = document.querySelector('.subject');
 const sender = document.querySelector('.sender');
 const messageBody = document.querySelector('.display-the-full-message');
